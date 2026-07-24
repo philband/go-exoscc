@@ -18,15 +18,65 @@ type RateLimit struct {
 }
 
 // APIError is an OData error returned by the Admin API (e.g. a Forbidden cmdlet).
+// Message carries the actual cmdlet error (e.g. "...The object '...' already
+// exists.") extracted from error.details, not the generic "Error executing
+// cmdlet" envelope; Type is the underlying exception type name when known.
 type APIError struct {
 	Status   int
-	Code     string `json:"code"`
-	Message  string `json:"message"`
+	Code     string
+	Type     string
+	Message  string
 	InnerRaw json.RawMessage
 }
 
 func (e *APIError) Error() string {
-	return fmt.Sprintf("adminapi: %s (%s, http %d)", e.Message, e.Code, e.Status)
+	code := e.Code
+	if e.Type != "" {
+		code = e.Type
+	}
+	return fmt.Sprintf("adminapi: %s (%s, http %d)", e.Message, code, e.Status)
+}
+
+// odataError is the OData "error" object of an InvokeCommand response.
+type odataError struct {
+	Code       string          `json:"code"`
+	Message    string          `json:"message"`
+	Details    []odataDetail   `json:"details"`
+	InnerError json.RawMessage `json:"innererror"`
+}
+
+// odataDetail carries the real cmdlet error. Its Message is itself a JSON string
+// describing the thrown exception (see cmdletException).
+type odataDetail struct {
+	Code    string `json:"code"`
+	Message string `json:"message"`
+}
+
+// cmdletException is the JSON encoded inside odataDetail.Message.
+type cmdletException struct {
+	Message  string           `json:"Message"`
+	TypeName string           `json:"TypeName"`
+	InnerErr *cmdletException `json:"InnerError"`
+}
+
+// realError digs the actionable cmdlet message + exception type out of the
+// error details, falling back to the generic envelope message.
+func (e *odataError) realError() (msg, typeName string) {
+	for _, d := range e.Details {
+		if d.Message == "" {
+			continue
+		}
+		var ce cmdletException
+		if json.Unmarshal([]byte(d.Message), &ce) == nil && ce.Message != "" {
+			return ce.Message, ce.TypeName
+		}
+	}
+	return e.Message, ""
+}
+
+func (e *odataError) toAPIError(status int) *APIError {
+	msg, typ := e.realError()
+	return &APIError{Status: status, Code: e.Code, Type: typ, Message: msg, InnerRaw: e.InnerError}
 }
 
 // odataResponse is the InvokeCommand response envelope.
@@ -35,11 +85,7 @@ type odataResponse struct {
 	NextLink string           `json:"@odata.nextLink"`
 	Warnings []string         `json:"@adminapi.warnings"`
 	Value    []map[string]any `json:"value"`
-	Error    *struct {
-		Code       string          `json:"code"`
-		Message    string          `json:"message"`
-		InnerError json.RawMessage `json:"innererror"`
-	} `json:"error"`
+	Error    *odataError      `json:"error"`
 }
 
 // Result carries the objects plus per-call metadata.
@@ -92,7 +138,7 @@ func (c *Client) Invoke(ctx context.Context, cmdlet string, params map[string]an
 		return nil, fmt.Errorf("adminapi: decode response: %w", err)
 	}
 	if env.Error != nil {
-		return out, &APIError{Status: resp.StatusCode, Code: env.Error.Code, Message: env.Error.Message, InnerRaw: env.Error.InnerError}
+		return out, env.Error.toAPIError(resp.StatusCode)
 	}
 	out.Value = append(out.Value, env.Value...)
 	out.Warnings = append(out.Warnings, env.Warnings...)
@@ -153,7 +199,7 @@ func (c *Client) getPage(ctx context.Context, cmdlet, url string) (*pageResult, 
 func parseAPIError(status int, raw []byte) error {
 	var env odataResponse
 	if json.Unmarshal(raw, &env) == nil && env.Error != nil {
-		return &APIError{Status: status, Code: env.Error.Code, Message: env.Error.Message, InnerRaw: env.Error.InnerError}
+		return env.Error.toAPIError(status)
 	}
 	msg := strings.TrimSpace(string(raw))
 	if msg == "" {
