@@ -1,0 +1,113 @@
+# go-exoscc
+
+[![CI](https://github.com/philband/go-exoscc/actions/workflows/ci.yml/badge.svg)](https://github.com/philband/go-exoscc/actions/workflows/ci.yml)
+
+A Go client for the **Exchange Online** and **Security & Compliance (Purview)**
+Admin API — the REST/OData service behind the `ExchangeOnlineManagement`
+PowerShell module (`Connect-ExchangeOnline` / `Connect-IPPSSession`). Typed
+bindings for the cmdlets are **generated** from the module's own exported command
+definitions and the OData `$metadata`, so the surface stays in lock-step with the
+service.
+
+> Not affiliated with or endorsed by Microsoft. It calls the same documented
+> admin cmdlets the PowerShell module does, over the same REST transport.
+
+```bash
+go get github.com/philband/go-exoscc
+```
+
+## Quickstart
+
+```go
+import (
+    "github.com/philband/go-exoscc/adminapi"
+    "github.com/philband/go-exoscc/exo"
+    "github.com/philband/go-exoscc/models"
+    "github.com/philband/go-exoscc/msalauth"
+)
+
+// App-only with a certificate (recommended):
+tp, _ := msalauth.NewConfidentialCertPEM(tenantID, appID, pemBytes, "" /*pw*/, "")
+
+c, _ := adminapi.New(adminapi.Options{
+    Cloud:    adminapi.EXO,           // or adminapi.SCC for Purview
+    TenantID: tenantID,
+    Tokens:   tp,
+    Anchor:   "TID:" + tenantID,       // or "UPN:user@contoso.com" (delegated)
+})
+
+svc := exo.New(c)
+res, _ := svc.GetAcceptedDomain(ctx, exo.GetAcceptedDomainParams{})
+
+var domains []models.AcceptedDomain
+_ = res.Decode(&domains)               // typed, from $metadata; or use res.Value ([]map[string]any)
+```
+
+Purview cmdlets live in the `purview` package and use `adminapi.SCC`.
+
+## Auth (`msalauth`)
+
+All backed by [MSAL for Go](https://github.com/AzureAD/microsoft-authentication-library-for-go):
+
+| Constructor | Flow |
+|-------------|------|
+| `NewConfidentialCertPEM` / `NewConfidentialCert` | app-only, certificate (recommended) |
+| `NewConfidentialSecret` | app-only, client secret¹ |
+| `NewConfidentialAssertion` + `GitHubOIDCAssertion` | app-only, **federated** (workload identity / GitHub OIDC, no secret) |
+| `NewDelegated` | interactive user (browser) with silent refresh |
+
+Or implement `adminapi.TokenProvider` yourself. Connection pooling and retries are
+left to the `*http.Client` you pass in — the client only owns the API-specific
+transport (regional redirect, affinity cookie, header parity, OData paging, and
+`Rate-Limit-*` surfacing).
+
+¹ App-only auth needs the **Office 365 Exchange Online → `Exchange.ManageAsApp`**
+application permission plus an Entra directory role (or a custom role group). The
+service historically expects a **certificate**; a client-secret token may be
+rejected — validate against your tenant.
+
+## Packages
+
+| Package | Contents |
+|---------|----------|
+| `adminapi` | client core: transport, `InvokeCommand`, paging, errors, `TokenProvider` |
+| `exo` | generated Exchange Online bindings (829 cmdlets) |
+| `purview` | generated Security & Compliance bindings (353 cmdlets) |
+| `models` | types generated from `$metadata` (enums + structs) for `Result.Decode` |
+| `msalauth` | MSAL-backed token providers |
+
+`cmd/gen-go`, `cmd/gen-models` (generators), `cmd/fetch-spec` (pulls the live spec),
+`cmd/verify` (smoke test). Generated files are `zz_generated_*.go` — **do not edit**.
+
+## How the bindings are generated
+
+```
+Admin API  --cmd/fetch-spec-->  ExchangeOnline.psm1  --generator/extract-catalog.ps1 (PowerShell AST)-->  spec/catalog/*.json
+    │                            $metadata  -----------------------------------------------------------> spec/metadata/*.xml
+    └──────────────────────────────────────────────  cmd/gen-go / cmd/gen-models  ──────────────────────>  exo/ purview/ models/
+```
+
+- `spec/catalog/*.json` and `spec/metadata/*.xml` are the derived, committed inputs.
+- The raw Microsoft `ExchangeOnline.psm1` is fetched **transiently** and never
+  committed.
+- Regenerate locally (app-only cert/secret):
+
+  ```bash
+  ./tools/regen.sh -tenant contoso.onmicrosoft.com -client-id <appId> -cert ./app.pem
+  ```
+
+## CI
+
+- **ci.yml** — `go build` / `go vet` / `gofmt` / `go test -race` on every push & PR.
+- **vuln.yml** — `govulncheck` on PRs and weekly.
+- **refresh-spec.yml** — weekly (and on demand) pulls the live spec app-only via a
+  **GitHub OIDC federated credential** (no secret), regenerates, and opens a PR on
+  change. Configure repo *Variables* `EXOSCC_TENANT_ID` and `EXOSCC_CLIENT_ID`, and
+  add a federated identity credential on the Entra app trusting this repo's OIDC
+  subject (audience `api://AzureADTokenExchange`).
+
+All actions are SHA-pinned; Dependabot keeps modules and actions current.
+
+## License
+
+[MIT](LICENSE) © Philipp Bandow
