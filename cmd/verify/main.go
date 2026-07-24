@@ -64,6 +64,7 @@ func main() {
 		check(err)
 		tid = claim(tok, "tid")
 		anchor = "TID:" + tid
+		fmt.Printf("token: aud=%s appid=%s roles=%s\n", claim(tok, "aud"), claim(tok, "appid"), claimList(tok, "roles"))
 	}
 	if tid == "" {
 		fail("verify: could not determine tenant id")
@@ -108,6 +109,29 @@ func claim(jwt, name string) string {
 	}
 	if v, ok := m[name].(string); ok {
 		return v
+	}
+	return ""
+}
+
+func claimList(jwt, name string) string {
+	parts := strings.Split(jwt, ".")
+	if len(parts) < 2 {
+		return ""
+	}
+	b, err := base64.RawURLEncoding.DecodeString(parts[1])
+	if err != nil {
+		return ""
+	}
+	var m map[string]any
+	if json.Unmarshal(b, &m) != nil {
+		return ""
+	}
+	if arr, ok := m[name].([]any); ok {
+		var out []string
+		for _, v := range arr {
+			out = append(out, fmt.Sprint(v))
+		}
+		return strings.Join(out, ",")
 	}
 	return ""
 }

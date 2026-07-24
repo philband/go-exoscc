@@ -90,6 +90,12 @@ Admin API  --cmd/fetch-spec-->  ExchangeOnline.psm1  --generator/extract-catalog
 - `spec/catalog/*.json` and `spec/metadata/*.xml` are the derived, committed inputs.
 - The raw Microsoft `ExchangeOnline.psm1` is fetched **transiently** and never
   committed.
+- **EXO** refreshes fully app-only (auth + `$metadata` + `EXOModuleFile`). The
+  refreshed cmdlet set tracks the app's role group, so assign a broad one
+  (e.g. Organization Management) for the full surface. **Purview** app-only
+  currently can't resolve the tenant on the compliance backend, so its bindings
+  are maintained from the committed catalog via a delegated capture rather than
+  the CI refresh (the `refresh-spec` workflow defaults to `EXO`).
 - Regenerate locally (app-only cert/secret):
 
   ```bash

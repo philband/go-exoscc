@@ -206,8 +206,8 @@ func (c *Client) FetchAdmin(ctx context.Context, pathTemplate string, bootstrap 
 }
 
 func snippet(b []byte) string {
-	if len(b) > 300 {
-		return string(b[:300])
+	if len(b) > 2000 {
+		return string(b[:2000])
 	}
 	return string(b)
 }
