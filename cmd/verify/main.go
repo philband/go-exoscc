@@ -23,8 +23,8 @@ import (
 	"time"
 
 	"github.com/philband/go-exoscc/adminapi"
+	"github.com/philband/go-exoscc/authx"
 	"github.com/philband/go-exoscc/exo"
-	"github.com/philband/go-exoscc/internal/authenv"
 )
 
 func main() {
@@ -55,11 +55,11 @@ func main() {
 			anchor = "TID:" + tid
 		}
 	} else {
-		var mode string
+		cfg := authx.FromEnv().Merge(authx.Config{TenantID: *tenant, ClientID: *clientID})
 		var err error
-		tp, _, mode, err = authenv.Build(authenv.Config{Tenant: *tenant, ClientID: *clientID})
+		tp, err = cfg.Build()
 		check(err)
-		fmt.Printf("auth=%s\n", mode)
+		fmt.Printf("auth=%s\n", cfg.Method())
 		tok, err := tp.Token(ctx, adminapi.EXO.Resource)
 		check(err)
 		tid = claim(tok, "tid")

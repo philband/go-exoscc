@@ -28,7 +28,7 @@ import (
 	"time"
 
 	"github.com/philband/go-exoscc/adminapi"
-	"github.com/philband/go-exoscc/internal/authenv"
+	"github.com/philband/go-exoscc/authx"
 )
 
 func main() {
@@ -49,12 +49,24 @@ func main() {
 	)
 	flag.Parse()
 
-	tp, _, mode, err := authenv.Build(authenv.Config{
-		Tenant: *tenant, ClientID: *clientID, Auth: *auth,
-		CertPEM: *certPEM, CertPassword: *certPass, Secret: *secret, AuthorityHost: *authHost,
+	cfg := authx.FromEnv().Merge(authx.Config{
+		TenantID: *tenant, ClientID: *clientID, ClientSecret: *secret,
+		ClientCertificatePath: *certPEM, ClientCertificatePassword: *certPass,
 	})
+	if *authHost != "" {
+		cfg.Environment = *authHost
+	}
+	switch strings.ToLower(*auth) {
+	case "cli":
+		cfg.UseCLI = true
+	case "msi":
+		cfg.UseMSI = true
+	case "federated", "oidc":
+		cfg.UseOIDC = true
+	}
+	tp, err := cfg.Build()
 	check(err)
-	fmt.Printf("auth=%s\n", mode)
+	fmt.Printf("auth=%s\n", cfg.Method())
 
 	clouds := map[string]adminapi.Cloud{}
 	switch strings.ToLower(*cloudSel) {
