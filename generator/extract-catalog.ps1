@@ -57,8 +57,8 @@ $catalog = foreach ($f in $funcs) {
             elseif ($attr -is [System.Management.Automation.Language.AttributeAst]) {
                 switch ($attr.TypeName.Name) {
                     'Parameter' {
-                        $set = @{ name = '__AllParameterSets'; mandatory = $false; position = $null;
-                                  valueFromPipeline = $false; valueFromPipelineByPropertyName = $false }
+                        $set = [ordered]@{ name = '__AllParameterSets'; mandatory = $false; position = $null;
+                            valueFromPipeline = $false; valueFromPipelineByPropertyName = $false }
                         foreach ($na in $attr.NamedArguments) {
                             $v = $na.Argument.Extent.Text.Trim("'`"")
                             switch ($na.ArgumentName) {
@@ -76,7 +76,7 @@ $catalog = foreach ($f in $funcs) {
                 }
             }
         }
-        if (-not $sets) { $sets = @(@{ name = '__AllParameterSets'; mandatory = $false; position = $null; valueFromPipeline = $false; valueFromPipelineByPropertyName = $false }) }
+        if (-not $sets) { $sets = @([ordered]@{ name = '__AllParameterSets'; mandatory = $false; position = $null; valueFromPipeline = $false; valueFromPipelineByPropertyName = $false }) }
         [ordered]@{ name = $pname; type = $type; isSwitch = $isSwitch;
                     parameterSets = $sets; validateSet = $validate; aliases = $aliases }
     }
