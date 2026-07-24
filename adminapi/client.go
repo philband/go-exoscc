@@ -8,11 +8,12 @@
 // {"CmdletInput":{"CmdletName","Parameters"}} and sends the module's header set
 // so the traffic is indistinguishable from the PowerShell client.
 //
-// The core is intentionally thin: transport, pooling and retry are left to the
-// *http.Client you pass in (wrap it with your own RoundTripper for retries).
-// Only the API-specific bits live here — regional-host redirect with auth re-add,
-// :446->:443, the affinity cookie jar, the header fidelity set, OData error
-// handling and @odata.nextLink paging.
+// The core is intentionally thin. Transient-error and rate-limit (429 +
+// Retry-After) retries are handled by a shared retrying RoundTripper
+// (github.com/philband/go-msadmin/retry) installed by default; pass NoRetry to
+// opt out. Only the API-specific bits live here — regional-host redirect with
+// auth re-add, :446->:443, the affinity cookie jar, the header fidelity set,
+// OData error handling and @odata.nextLink paging.
 //
 // Auth is abstracted behind TokenProvider; an MSAL-backed implementation lives in
 // the sibling package ./msalauth so this core has no external dependencies.
@@ -24,6 +25,8 @@ import (
 	"net/http"
 	"net/http/cookiejar"
 	"strings"
+
+	"github.com/philband/go-msadmin/retry"
 )
 
 // Cloud selects the service endpoint / token resource.
@@ -72,6 +75,13 @@ type Options struct {
 	Anchor     string
 	HTTPClient *http.Client // optional; a cookie-jar client is created if nil
 
+	// RetryConfig tunes the built-in transient-error / rate-limit (429 +
+	// Retry-After) retrying transport. The zero value uses sensible defaults.
+	RetryConfig retry.Config
+	// NoRetry disables the built-in retrying transport (e.g. when supplying an
+	// HTTPClient whose transport already retries).
+	NoRetry bool
+
 	// Header-fidelity knobs (defaults mimic module 3.10.0 on PowerShell 7.5.2).
 	ModuleVersion string // X-ClientModuleVersion / exomodule-version
 	PSVersion     string // User-Agent PowerShell/<ver>, ps-version
@@ -111,6 +121,12 @@ func New(opt Options) (*Client, error) {
 	}
 	// Never auto-follow: we re-add the bearer + normalize the port manually.
 	hc.CheckRedirect = func(*http.Request, []*http.Request) error { return http.ErrUseLastResponse }
+	// Transparently retry throttling (429 + Retry-After) and transient 5xx.
+	if !opt.NoRetry {
+		if _, already := hc.Transport.(*retry.Transport); !already {
+			hc.Transport = retry.NewTransport(hc.Transport, opt.RetryConfig)
+		}
+	}
 
 	if opt.ModuleVersion == "" {
 		opt.ModuleVersion = "3.10.0"
