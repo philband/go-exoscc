@@ -10,9 +10,13 @@ import (
 	"io"
 	"net/http"
 	"net/url"
+	"os"
 	"runtime"
 	"strings"
 )
+
+// debugEnabled turns on redirect/host tracing to stderr when EXOSCC_DEBUG is set.
+func debugEnabled() bool { return os.Getenv("EXOSCC_DEBUG") != "" }
 
 // newGUID returns a random RFC-4122 v4 GUID string (lowercase).
 func newGUID() string {
@@ -71,6 +75,19 @@ func normalizeURL(raw string) string {
 	return u.String()
 }
 
+// rewriteRedirect normalizes a redirect target. For the compliance cloud, the
+// region-resolving redirect from the generic host lands on the Exchange *admin*
+// backend ({region}.admin.protection.outlook.com); the compliance cmdlets live on
+// {region}.ps.compliance.protection.outlook.com, so swap the suffix (keeping the
+// region prefix) while leaving EXO untouched.
+func (c *Client) rewriteRedirect(loc string) string {
+	loc = normalizeURL(loc)
+	if strings.Contains(c.opt.Cloud.BaseHost, "compliance") {
+		loc = strings.Replace(loc, ".admin.protection.outlook.com", ".ps.compliance.protection.outlook.com", 1)
+	}
+	return loc
+}
+
 // postInvoke sends one InvokeCommand POST, following the regional 302 redirect(s)
 // manually (re-adding auth, normalizing :446->:443, retaining cookies via the jar)
 // and pinning the resolved host for future calls. Returns the final response.
@@ -91,13 +108,16 @@ func (c *Client) postInvoke(ctx context.Context, cmdlet string, body []byte) (*h
 		if err != nil {
 			return nil, err
 		}
+		if debugEnabled() {
+			fmt.Fprintf(os.Stderr, "[POST] %s -> %d\n", target, resp.StatusCode)
+		}
 		if isRedirect(resp.StatusCode) {
 			loc := resp.Header.Get("Location")
 			_ = resp.Body.Close()
 			if loc == "" {
 				return nil, fmt.Errorf("adminapi: %d redirect without Location", resp.StatusCode)
 			}
-			loc = normalizeURL(loc)
+			loc = c.rewriteRedirect(loc)
 			if seen[loc] >= 2 {
 				return nil, fmt.Errorf("adminapi: redirect loop at %s", loc)
 			}
@@ -154,13 +174,16 @@ func (c *Client) getFollow(ctx context.Context, urlStr string, headers map[strin
 		if err != nil {
 			return nil, err
 		}
+		if debugEnabled() {
+			fmt.Fprintf(os.Stderr, "[GET] %s -> %d\n", target, resp.StatusCode)
+		}
 		if isRedirect(resp.StatusCode) {
 			loc := resp.Header.Get("Location")
 			_ = resp.Body.Close()
 			if loc == "" {
 				return nil, fmt.Errorf("adminapi: %d redirect without Location", resp.StatusCode)
 			}
-			loc = normalizeURL(loc)
+			loc = c.rewriteRedirect(loc)
 			if seen[loc] >= 2 {
 				return nil, fmt.Errorf("adminapi: redirect loop at %s", loc)
 			}

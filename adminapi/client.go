@@ -59,11 +59,18 @@ func (s StaticTokenProvider) Token(context.Context, string) (string, error) {
 
 // Options configures a Client.
 type Options struct {
-	Cloud      Cloud
-	TenantID   string        // tenant GUID (from the token 'tid' claim)
-	Tokens     TokenProvider // required
-	Anchor     string        // X-AnchorMailbox value, e.g. "UPN:admin@contoso.com" or "TID:<guid>"
-	HTTPClient *http.Client  // optional; a cookie-jar client is created if nil
+	Cloud    Cloud
+	TenantID string        // tenant GUID (from the token 'tid' claim)
+	Tokens   TokenProvider // required
+	// Organization is the tenant's routing domain (e.g. contoso.onmicrosoft.com).
+	// For app-only it drives the region: the anchor becomes UPN:OAuthUser@<org>,
+	// which the frontend uses to redirect to the tenant's regional backend (this is
+	// how the PowerShell module routes app-only, and is required for Purview/SCC).
+	Organization string
+	// Anchor overrides X-AnchorMailbox. If empty it defaults to
+	// UPN:OAuthUser@<Organization> when Organization is set, else TID:<TenantID>.
+	Anchor     string
+	HTTPClient *http.Client // optional; a cookie-jar client is created if nil
 
 	// Header-fidelity knobs (defaults mimic module 3.10.0 on PowerShell 7.5.2).
 	ModuleVersion string // X-ClientModuleVersion / exomodule-version
@@ -113,6 +120,13 @@ func New(opt Options) (*Client, error) {
 	}
 	if opt.AcceptLang == "" {
 		opt.AcceptLang = "en-US"
+	}
+	if opt.Anchor == "" {
+		if opt.Organization != "" {
+			opt.Anchor = "UPN:OAuthUser@" + opt.Organization
+		} else {
+			opt.Anchor = "TID:" + opt.TenantID
+		}
 	}
 	return &Client{
 		opt:          opt,

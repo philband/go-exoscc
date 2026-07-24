@@ -8,7 +8,7 @@ import (
 	"github.com/philband/go-exoscc/adminapi"
 )
 
-// Service exposes the 829 cmdlets of EXO-ExchangeOnline.psm1 as typed methods.
+// Service exposes the 825 cmdlets of EXO-ExchangeOnline.psm1 as typed methods.
 type Service struct{ C *adminapi.Client }
 
 // New wraps an *adminapi.Client.
@@ -396,7 +396,6 @@ func (s *Service) AddUnifiedGroupLinks(ctx context.Context, p AddUnifiedGroupLin
 // DefaultParameterSetName: Default
 type ApproveElevatedAccessRequestParams struct {
 	Comment        string `ps:"Comment"`
-	Organization   any    `ps:"Organization"`
 	RequestContext any    `ps:"RequestContext"`
 	RequestId      string `ps:"RequestId"`
 }
@@ -405,9 +404,6 @@ func (p ApproveElevatedAccessRequestParams) params() map[string]any {
 	m := map[string]any{}
 	if p.Comment != "" {
 		m["Comment"] = p.Comment
-	}
-	if p.Organization != nil {
-		m["Organization"] = p.Organization
 	}
 	if p.RequestContext != nil {
 		m["RequestContext"] = p.RequestContext
@@ -497,52 +493,6 @@ func (s *Service) ClearMobileDevice(ctx context.Context, p ClearMobileDevicePara
 	return s.C.Invoke(ctx, "Clear-MobileDevice", p.params())
 }
 
-// ClearTextMessagingAccountParams are the parameters of Clear-TextMessagingAccount.
-// DefaultParameterSetName: Identity
-type ClearTextMessagingAccountParams struct {
-	Identity           any  `ps:"Identity"`
-	IgnoreDefaultScope bool `ps:"IgnoreDefaultScope"`
-}
-
-func (p ClearTextMessagingAccountParams) params() map[string]any {
-	m := map[string]any{}
-	if p.Identity != nil {
-		m["Identity"] = p.Identity
-	}
-	if p.IgnoreDefaultScope {
-		m["IgnoreDefaultScope"] = true
-	}
-	return m
-}
-
-// ClearTextMessagingAccount runs the Clear-TextMessagingAccount cmdlet.
-func (s *Service) ClearTextMessagingAccount(ctx context.Context, p ClearTextMessagingAccountParams) (*adminapi.Result, error) {
-	return s.C.Invoke(ctx, "Clear-TextMessagingAccount", p.params())
-}
-
-// CompareTextMessagingVerificationCodeParams are the parameters of Compare-TextMessagingVerificationCode.
-// DefaultParameterSetName: Identity
-type CompareTextMessagingVerificationCodeParams struct {
-	Identity         any    `ps:"Identity"`
-	VerificationCode string `ps:"VerificationCode"`
-}
-
-func (p CompareTextMessagingVerificationCodeParams) params() map[string]any {
-	m := map[string]any{}
-	if p.Identity != nil {
-		m["Identity"] = p.Identity
-	}
-	if p.VerificationCode != "" {
-		m["VerificationCode"] = p.VerificationCode
-	}
-	return m
-}
-
-// CompareTextMessagingVerificationCode runs the Compare-TextMessagingVerificationCode cmdlet.
-func (s *Service) CompareTextMessagingVerificationCode(ctx context.Context, p CompareTextMessagingVerificationCodeParams) (*adminapi.Result, error) {
-	return s.C.Invoke(ctx, "Compare-TextMessagingVerificationCode", p.params())
-}
-
 // CompleteMigrationBatchParams are the parameters of Complete-MigrationBatch.
 type CompleteMigrationBatchParams struct {
 	CompletePublicFolderMigrationWithDataLoss bool `ps:"CompletePublicFolderMigrationWithDataLoss"`
@@ -624,18 +574,14 @@ func (s *Service) DeleteQuarantineMessage(ctx context.Context, p DeleteQuarantin
 // DenyElevatedAccessRequestParams are the parameters of Deny-ElevatedAccessRequest.
 // DefaultParameterSetName: Default
 type DenyElevatedAccessRequestParams struct {
-	Comment      string `ps:"Comment"`
-	Organization any    `ps:"Organization"`
-	RequestId    string `ps:"RequestId"`
+	Comment   string `ps:"Comment"`
+	RequestId string `ps:"RequestId"`
 }
 
 func (p DenyElevatedAccessRequestParams) params() map[string]any {
 	m := map[string]any{}
 	if p.Comment != "" {
 		m["Comment"] = p.Comment
-	}
-	if p.Organization != nil {
-		m["Organization"] = p.Organization
 	}
 	if p.RequestId != "" {
 		m["RequestId"] = p.RequestId
@@ -11079,7 +11025,6 @@ func (s *Service) GetSyncConfig(ctx context.Context, p GetSyncConfigParams) (*ad
 type GetSyncRequestParams struct {
 	Identity     any      `ps:"Identity"`
 	Mailbox      any      `ps:"Mailbox"`
-	Name         string   `ps:"Name"`
 	ResultSize   any      `ps:"ResultSize"`
 	SyncProtocol []string `ps:"SyncProtocol"`
 	WorkloadType any      `ps:"WorkloadType"`
@@ -11092,9 +11037,6 @@ func (p GetSyncRequestParams) params() map[string]any {
 	}
 	if p.Mailbox != nil {
 		m["Mailbox"] = p.Mailbox
-	}
-	if p.Name != "" {
-		m["Name"] = p.Name
 	}
 	if p.ResultSize != nil {
 		m["ResultSize"] = p.ResultSize
@@ -22444,18 +22386,14 @@ func (s *Service) ResumeTenantScanRequest(ctx context.Context, p ResumeTenantSca
 // RevokeElevatedAccessAuthorizationParams are the parameters of Revoke-ElevatedAccessAuthorization.
 // DefaultParameterSetName: Default
 type RevokeElevatedAccessAuthorizationParams struct {
-	Comment      string `ps:"Comment"`
-	Organization any    `ps:"Organization"`
-	RequestId    string `ps:"RequestId"`
+	Comment   string `ps:"Comment"`
+	RequestId string `ps:"RequestId"`
 }
 
 func (p RevokeElevatedAccessAuthorizationParams) params() map[string]any {
 	m := map[string]any{}
 	if p.Comment != "" {
 		m["Comment"] = p.Comment
-	}
-	if p.Organization != nil {
-		m["Organization"] = p.Organization
 	}
 	if p.RequestId != "" {
 		m["RequestId"] = p.RequestId
@@ -22682,25 +22620,6 @@ func (p SearchUnifiedAuditLogParams) params() map[string]any {
 // SearchUnifiedAuditLog runs the Search-UnifiedAuditLog cmdlet.
 func (s *Service) SearchUnifiedAuditLog(ctx context.Context, p SearchUnifiedAuditLogParams) (*adminapi.Result, error) {
 	return s.C.Invoke(ctx, "Search-UnifiedAuditLog", p.params())
-}
-
-// SendTextMessagingVerificationCodeParams are the parameters of Send-TextMessagingVerificationCode.
-// DefaultParameterSetName: Identity
-type SendTextMessagingVerificationCodeParams struct {
-	Identity any `ps:"Identity"`
-}
-
-func (p SendTextMessagingVerificationCodeParams) params() map[string]any {
-	m := map[string]any{}
-	if p.Identity != nil {
-		m["Identity"] = p.Identity
-	}
-	return m
-}
-
-// SendTextMessagingVerificationCode runs the Send-TextMessagingVerificationCode cmdlet.
-func (s *Service) SendTextMessagingVerificationCode(ctx context.Context, p SendTextMessagingVerificationCodeParams) (*adminapi.Result, error) {
-	return s.C.Invoke(ctx, "Send-TextMessagingVerificationCode", p.params())
 }
 
 // SetATPBuiltInProtectionRuleParams are the parameters of Set-ATPBuiltInProtectionRule.
@@ -25178,7 +25097,6 @@ func (s *Service) SetElevatedAccessApprovalPolicy(ctx context.Context, p SetElev
 type SetElevatedAccessRequestParams struct {
 	Comment        string `ps:"Comment"`
 	Decision       any    `ps:"Decision"`
-	Organization   any    `ps:"Organization"`
 	RequestContext any    `ps:"RequestContext"`
 	RequestId      string `ps:"RequestId"`
 }
@@ -25190,9 +25108,6 @@ func (p SetElevatedAccessRequestParams) params() map[string]any {
 	}
 	if p.Decision != nil {
 		m["Decision"] = p.Decision
-	}
-	if p.Organization != nil {
-		m["Organization"] = p.Organization
 	}
 	if p.RequestContext != nil {
 		m["RequestContext"] = p.RequestContext
@@ -27389,7 +27304,6 @@ type SetMailUserParams struct {
 	ModeratedBy                                any      `ps:"ModeratedBy"`
 	ModerationEnabled                          bool     `ps:"ModerationEnabled"`
 	Name                                       string   `ps:"Name"`
-	Password                                   any      `ps:"Password"`
 	PrimarySmtpAddress                         any      `ps:"PrimarySmtpAddress"`
 	RecalculateInactiveMailUser                bool     `ps:"RecalculateInactiveMailUser"`
 	RecipientLimits                            any      `ps:"RecipientLimits"`
@@ -27404,7 +27318,6 @@ type SetMailUserParams struct {
 	RemoveMailboxProvisioningConstraint        bool     `ps:"RemoveMailboxProvisioningConstraint"`
 	RemoveOrphanedHolds                        []string `ps:"RemoveOrphanedHolds"`
 	RequireSenderAuthenticationEnabled         bool     `ps:"RequireSenderAuthenticationEnabled"`
-	ResetPasswordOnNextLogon                   bool     `ps:"ResetPasswordOnNextLogon"`
 	SendModerationNotifications                any      `ps:"SendModerationNotifications"`
 	SimpleDisplayName                          string   `ps:"SimpleDisplayName"`
 	UnblockForwardSyncPostCrossTenantMigration bool     `ps:"UnblockForwardSyncPostCrossTenantMigration"`
@@ -27582,9 +27495,6 @@ func (p SetMailUserParams) params() map[string]any {
 	if p.Name != "" {
 		m["Name"] = p.Name
 	}
-	if p.Password != nil {
-		m["Password"] = p.Password
-	}
 	if p.PrimarySmtpAddress != nil {
 		m["PrimarySmtpAddress"] = p.PrimarySmtpAddress
 	}
@@ -27626,9 +27536,6 @@ func (p SetMailUserParams) params() map[string]any {
 	}
 	if p.RequireSenderAuthenticationEnabled {
 		m["RequireSenderAuthenticationEnabled"] = true
-	}
-	if p.ResetPasswordOnNextLogon {
-		m["ResetPasswordOnNextLogon"] = true
 	}
 	if p.SendModerationNotifications != nil {
 		m["SendModerationNotifications"] = p.SendModerationNotifications
@@ -27751,7 +27658,6 @@ type SetMailboxParams struct {
 	Name                                      string   `ps:"Name"`
 	NonCompliantDevices                       any      `ps:"NonCompliantDevices"`
 	Office                                    string   `ps:"Office"`
-	Password                                  any      `ps:"Password"`
 	ProhibitSendQuota                         any      `ps:"ProhibitSendQuota"`
 	ProhibitSendReceiveQuota                  any      `ps:"ProhibitSendReceiveQuota"`
 	ProvideConsent                            bool     `ps:"ProvideConsent"`
@@ -28056,9 +27962,6 @@ func (p SetMailboxParams) params() map[string]any {
 	}
 	if p.Office != "" {
 		m["Office"] = p.Office
-	}
-	if p.Password != nil {
-		m["Password"] = p.Password
 	}
 	if p.ProhibitSendQuota != nil {
 		m["ProhibitSendQuota"] = p.ProhibitSendQuota
@@ -33713,41 +33616,6 @@ func (s *Service) SetTenantSettingCrossTenantAccessPolicy(ctx context.Context, p
 	return s.C.Invoke(ctx, "Set-TenantSettingCrossTenantAccessPolicy", p.params())
 }
 
-// SetTextMessagingAccountParams are the parameters of Set-TextMessagingAccount.
-// DefaultParameterSetName: Identity
-type SetTextMessagingAccountParams struct {
-	CountryRegionId         any  `ps:"CountryRegionId"`
-	Identity                any  `ps:"Identity"`
-	IgnoreDefaultScope      bool `ps:"IgnoreDefaultScope"`
-	MobileOperatorId        int  `ps:"MobileOperatorId"`
-	NotificationPhoneNumber any  `ps:"NotificationPhoneNumber"`
-}
-
-func (p SetTextMessagingAccountParams) params() map[string]any {
-	m := map[string]any{}
-	if p.CountryRegionId != nil {
-		m["CountryRegionId"] = p.CountryRegionId
-	}
-	if p.Identity != nil {
-		m["Identity"] = p.Identity
-	}
-	if p.IgnoreDefaultScope {
-		m["IgnoreDefaultScope"] = true
-	}
-	if p.MobileOperatorId != 0 {
-		m["MobileOperatorId"] = p.MobileOperatorId
-	}
-	if p.NotificationPhoneNumber != nil {
-		m["NotificationPhoneNumber"] = p.NotificationPhoneNumber
-	}
-	return m
-}
-
-// SetTextMessagingAccount runs the Set-TextMessagingAccount cmdlet.
-func (s *Service) SetTextMessagingAccount(ctx context.Context, p SetTextMessagingAccountParams) (*adminapi.Result, error) {
-	return s.C.Invoke(ctx, "Set-TextMessagingAccount", p.params())
-}
-
 // SetTransportConfigParams are the parameters of Set-TransportConfig.
 // DefaultParameterSetName: Identity
 type SetTransportConfigParams struct {
@@ -36325,7 +36193,6 @@ type UpgradeDistributionGroupParams struct {
 	ActionType    string `ps:"ActionType"`
 	DlIdentities  any    `ps:"DlIdentities"`
 	ExecutingUser any    `ps:"ExecutingUser"`
-	Organization  any    `ps:"Organization"`
 }
 
 func (p UpgradeDistributionGroupParams) params() map[string]any {
@@ -36338,9 +36205,6 @@ func (p UpgradeDistributionGroupParams) params() map[string]any {
 	}
 	if p.ExecutingUser != nil {
 		m["ExecutingUser"] = p.ExecutingUser
-	}
-	if p.Organization != nil {
-		m["Organization"] = p.Organization
 	}
 	return m
 }

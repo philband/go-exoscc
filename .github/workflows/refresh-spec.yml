@@ -21,7 +21,7 @@ on:
     inputs:
       cloud:
         description: "EXO | Purview | Both"
-        default: "EXO"
+        default: "Both"
 
 permissions:
   contents: write
@@ -45,7 +45,7 @@ jobs:
           ARM_TENANT_ID: ${{ vars.ARM_TENANT_ID }}
           ARM_CLIENT_ID: ${{ vars.ARM_CLIENT_ID }}
           ARM_USE_OIDC: "true"
-          CLOUD: ${{ github.event.inputs.cloud || 'EXO' }}
+          CLOUD: ${{ github.event.inputs.cloud || 'Both' }}
         run: |
           test -n "$ARM_TENANT_ID" -a -n "$ARM_CLIENT_ID" || { echo "::error::set ARM_TENANT_ID / ARM_CLIENT_ID repo variables"; exit 1; }
           go run ./cmd/fetch-spec -cloud "$CLOUD" -psm1-dir .spec-cache -metadata-dir spec/metadata

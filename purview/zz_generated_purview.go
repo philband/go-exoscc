@@ -8,7 +8,7 @@ import (
 	"github.com/philband/go-exoscc/adminapi"
 )
 
-// Service exposes the 353 cmdlets of Purview-ExchangeOnline.psm1 as typed methods.
+// Service exposes the 418 cmdlets of Purview-ExchangeOnline.psm1 as typed methods.
 type Service struct{ C *adminapi.Client }
 
 // New wraps an *adminapi.Client.
@@ -39,43 +39,16 @@ func (s *Service) AddComplianceCaseMember(ctx context.Context, p AddComplianceCa
 
 // AddRoleGroupMemberParams are the parameters of Add-RoleGroupMember.
 type AddRoleGroupMemberParams struct {
-	Identity any `ps:"Identity"`
-	Member   any `ps:"Member"`
 }
 
 func (p AddRoleGroupMemberParams) params() map[string]any {
 	m := map[string]any{}
-	if p.Identity != nil {
-		m["Identity"] = p.Identity
-	}
-	if p.Member != nil {
-		m["Member"] = p.Member
-	}
 	return m
 }
 
 // AddRoleGroupMember runs the Add-RoleGroupMember cmdlet.
 func (s *Service) AddRoleGroupMember(ctx context.Context, p AddRoleGroupMemberParams) (*adminapi.Result, error) {
 	return s.C.Invoke(ctx, "Add-RoleGroupMember", p.params())
-}
-
-// AddEDiscoveryCaseAdminParams are the parameters of Add-eDiscoveryCaseAdmin.
-// DefaultParameterSetName: Identity
-type AddEDiscoveryCaseAdminParams struct {
-	User string `ps:"User"`
-}
-
-func (p AddEDiscoveryCaseAdminParams) params() map[string]any {
-	m := map[string]any{}
-	if p.User != "" {
-		m["User"] = p.User
-	}
-	return m
-}
-
-// AddEDiscoveryCaseAdmin runs the Add-eDiscoveryCaseAdmin cmdlet.
-func (s *Service) AddEDiscoveryCaseAdmin(ctx context.Context, p AddEDiscoveryCaseAdminParams) (*adminapi.Result, error) {
-	return s.C.Invoke(ctx, "Add-eDiscoveryCaseAdmin", p.params())
 }
 
 // CancelDlpEdmSessionParams are the parameters of Cancel-DlpEdmSession.
@@ -229,6 +202,24 @@ func (s *Service) CheckPurviewConfig(ctx context.Context, p CheckPurviewConfigPa
 	return s.C.Invoke(ctx, "Check-PurviewConfig", p.params())
 }
 
+// CreateFilePlanFirstRunLabelsParams are the parameters of Create-FilePlanFirstRunLabels.
+type CreateFilePlanFirstRunLabelsParams struct {
+	DomainController any `ps:"DomainController"`
+}
+
+func (p CreateFilePlanFirstRunLabelsParams) params() map[string]any {
+	m := map[string]any{}
+	if p.DomainController != nil {
+		m["DomainController"] = p.DomainController
+	}
+	return m
+}
+
+// CreateFilePlanFirstRunLabels runs the Create-FilePlanFirstRunLabels cmdlet.
+func (s *Service) CreateFilePlanFirstRunLabels(ctx context.Context, p CreateFilePlanFirstRunLabelsParams) (*adminapi.Result, error) {
+	return s.C.Invoke(ctx, "Create-FilePlanFirstRunLabels", p.params())
+}
+
 // DeleteQuarantineMessageParams are the parameters of Delete-QuarantineMessage.
 type DeleteQuarantineMessageParams struct {
 	EntityType       any      `ps:"EntityType"`
@@ -277,6 +268,20 @@ func (s *Service) EnableAdaptiveScopeStorage(ctx context.Context, p EnableAdapti
 	return s.C.Invoke(ctx, "Enable-AdaptiveScopeStorage", p.params())
 }
 
+// EnableComplianceFeatureParams are the parameters of Enable-ComplianceFeature.
+type EnableComplianceFeatureParams struct {
+}
+
+func (p EnableComplianceFeatureParams) params() map[string]any {
+	m := map[string]any{}
+	return m
+}
+
+// EnableComplianceFeature runs the Enable-ComplianceFeature cmdlet.
+func (s *Service) EnableComplianceFeature(ctx context.Context, p EnableComplianceFeatureParams) (*adminapi.Result, error) {
+	return s.C.Invoke(ctx, "Enable-ComplianceFeature", p.params())
+}
+
 // EnableComplianceTagStorageParams are the parameters of Enable-ComplianceTagStorage.
 type EnableComplianceTagStorageParams struct {
 	RecordsManagementSecurityGroupEmail string `ps:"RecordsManagementSecurityGroupEmail"`
@@ -293,6 +298,20 @@ func (p EnableComplianceTagStorageParams) params() map[string]any {
 // EnableComplianceTagStorage runs the Enable-ComplianceTagStorage cmdlet.
 func (s *Service) EnableComplianceTagStorage(ctx context.Context, p EnableComplianceTagStorageParams) (*adminapi.Result, error) {
 	return s.C.Invoke(ctx, "Enable-ComplianceTagStorage", p.params())
+}
+
+// EnableServiceDomainGroupStorageParams are the parameters of Enable-ServiceDomainGroupStorage.
+type EnableServiceDomainGroupStorageParams struct {
+}
+
+func (p EnableServiceDomainGroupStorageParams) params() map[string]any {
+	m := map[string]any{}
+	return m
+}
+
+// EnableServiceDomainGroupStorage runs the Enable-ServiceDomainGroupStorage cmdlet.
+func (s *Service) EnableServiceDomainGroupStorage(ctx context.Context, p EnableServiceDomainGroupStorageParams) (*adminapi.Result, error) {
+	return s.C.Invoke(ctx, "Enable-ServiceDomainGroupStorage", p.params())
 }
 
 // ExecuteAzureAdLabelSyncParams are the parameters of Execute-AzureAdLabelSync.
@@ -539,6 +558,44 @@ func (s *Service) ExportQuarantineMessageV1(ctx context.Context, p ExportQuarant
 	return s.C.Invoke(ctx, "Export-QuarantineMessageV1", p.params())
 }
 
+// FixPurviewConfigParams are the parameters of Fix-PurviewConfig.
+type FixPurviewConfigParams struct {
+	Component    any    `ps:"Component"`
+	Organization any    `ps:"Organization"`
+	PolicyId     string `ps:"PolicyId"`
+	Scenario     any    `ps:"Scenario"`
+	SiteUrl      string `ps:"SiteUrl"`
+	Workload     string `ps:"Workload"`
+}
+
+func (p FixPurviewConfigParams) params() map[string]any {
+	m := map[string]any{}
+	if p.Component != nil {
+		m["Component"] = p.Component
+	}
+	if p.Organization != nil {
+		m["Organization"] = p.Organization
+	}
+	if p.PolicyId != "" {
+		m["PolicyId"] = p.PolicyId
+	}
+	if p.Scenario != nil {
+		m["Scenario"] = p.Scenario
+	}
+	if p.SiteUrl != "" {
+		m["SiteUrl"] = p.SiteUrl
+	}
+	if p.Workload != "" {
+		m["Workload"] = p.Workload
+	}
+	return m
+}
+
+// FixPurviewConfig runs the Fix-PurviewConfig cmdlet.
+func (s *Service) FixPurviewConfig(ctx context.Context, p FixPurviewConfigParams) (*adminapi.Result, error) {
+	return s.C.Invoke(ctx, "Fix-PurviewConfig", p.params())
+}
+
 // GetAadProtectionLevelParams are the parameters of Get-AadProtectionLevel.
 type GetAadProtectionLevelParams struct {
 	IncludeUnavailableItems bool `ps:"IncludeUnavailableItems"`
@@ -555,6 +612,25 @@ func (p GetAadProtectionLevelParams) params() map[string]any {
 // GetAadProtectionLevel runs the Get-AadProtectionLevel cmdlet.
 func (s *Service) GetAadProtectionLevel(ctx context.Context, p GetAadProtectionLevelParams) (*adminapi.Result, error) {
 	return s.C.Invoke(ctx, "Get-AadProtectionLevel", p.params())
+}
+
+// GetActivityAlertParams are the parameters of Get-ActivityAlert.
+// DefaultParameterSetName: Identity
+type GetActivityAlertParams struct {
+	Identity any `ps:"Identity"`
+}
+
+func (p GetActivityAlertParams) params() map[string]any {
+	m := map[string]any{}
+	if p.Identity != nil {
+		m["Identity"] = p.Identity
+	}
+	return m
+}
+
+// GetActivityAlert runs the Get-ActivityAlert cmdlet.
+func (s *Service) GetActivityAlert(ctx context.Context, p GetActivityAlertParams) (*adminapi.Result, error) {
+	return s.C.Invoke(ctx, "Get-ActivityAlert", p.params())
 }
 
 // GetAdaptiveScopeParams are the parameters of Get-AdaptiveScope.
@@ -740,14 +816,62 @@ func (s *Service) GetAuditConfig(ctx context.Context, p GetAuditConfigParams) (*
 	return s.C.Invoke(ctx, "Get-AuditConfig", p.params())
 }
 
+// GetAuditConfigurationPolicyParams are the parameters of Get-AuditConfigurationPolicy.
+// DefaultParameterSetName: Identity
+type GetAuditConfigurationPolicyParams struct {
+	DomainController any `ps:"DomainController"`
+	Identity         any `ps:"Identity"`
+}
+
+func (p GetAuditConfigurationPolicyParams) params() map[string]any {
+	m := map[string]any{}
+	if p.DomainController != nil {
+		m["DomainController"] = p.DomainController
+	}
+	if p.Identity != nil {
+		m["Identity"] = p.Identity
+	}
+	return m
+}
+
+// GetAuditConfigurationPolicy runs the Get-AuditConfigurationPolicy cmdlet.
+func (s *Service) GetAuditConfigurationPolicy(ctx context.Context, p GetAuditConfigurationPolicyParams) (*adminapi.Result, error) {
+	return s.C.Invoke(ctx, "Get-AuditConfigurationPolicy", p.params())
+}
+
+// GetAuditConfigurationRuleParams are the parameters of Get-AuditConfigurationRule.
+// DefaultParameterSetName: Identity
+type GetAuditConfigurationRuleParams struct {
+	DomainController any `ps:"DomainController"`
+	Identity         any `ps:"Identity"`
+}
+
+func (p GetAuditConfigurationRuleParams) params() map[string]any {
+	m := map[string]any{}
+	if p.DomainController != nil {
+		m["DomainController"] = p.DomainController
+	}
+	if p.Identity != nil {
+		m["Identity"] = p.Identity
+	}
+	return m
+}
+
+// GetAuditConfigurationRule runs the Get-AuditConfigurationRule cmdlet.
+func (s *Service) GetAuditConfigurationRule(ctx context.Context, p GetAuditConfigurationRuleParams) (*adminapi.Result, error) {
+	return s.C.Invoke(ctx, "Get-AuditConfigurationRule", p.params())
+}
+
 // GetAutoSensitivityLabelPolicyParams are the parameters of Get-AutoSensitivityLabelPolicy.
 // DefaultParameterSetName: Identity
 type GetAutoSensitivityLabelPolicyParams struct {
-	DistributionDetail      bool `ps:"DistributionDetail"`
-	ForceValidate           bool `ps:"ForceValidate"`
-	Identity                any  `ps:"Identity"`
-	IncludeProgressFeedback bool `ps:"IncludeProgressFeedback"`
-	IncludeTestModeResults  bool `ps:"IncludeTestModeResults"`
+	DistributionDetail          bool `ps:"DistributionDetail"`
+	ForceValidate               bool `ps:"ForceValidate"`
+	Identity                    any  `ps:"Identity"`
+	IncludePolicyGradingDetails bool `ps:"IncludePolicyGradingDetails"`
+	IncludePolicyGradingResults bool `ps:"IncludePolicyGradingResults"`
+	IncludeProgressFeedback     bool `ps:"IncludeProgressFeedback"`
+	IncludeTestModeResults      bool `ps:"IncludeTestModeResults"`
 }
 
 func (p GetAutoSensitivityLabelPolicyParams) params() map[string]any {
@@ -760,6 +884,12 @@ func (p GetAutoSensitivityLabelPolicyParams) params() map[string]any {
 	}
 	if p.Identity != nil {
 		m["Identity"] = p.Identity
+	}
+	if p.IncludePolicyGradingDetails {
+		m["IncludePolicyGradingDetails"] = true
+	}
+	if p.IncludePolicyGradingResults {
+		m["IncludePolicyGradingResults"] = true
 	}
 	if p.IncludeProgressFeedback {
 		m["IncludeProgressFeedback"] = true
@@ -867,6 +997,43 @@ func (s *Service) GetCaseHoldRule(ctx context.Context, p GetCaseHoldRuleParams) 
 	return s.C.Invoke(ctx, "Get-CaseHoldRule", p.params())
 }
 
+// GetClassificationGradingPolicyParams are the parameters of Get-ClassificationGradingPolicy.
+type GetClassificationGradingPolicyParams struct {
+	Identity any `ps:"Identity"`
+}
+
+func (p GetClassificationGradingPolicyParams) params() map[string]any {
+	m := map[string]any{}
+	if p.Identity != nil {
+		m["Identity"] = p.Identity
+	}
+	return m
+}
+
+// GetClassificationGradingPolicy runs the Get-ClassificationGradingPolicy cmdlet.
+func (s *Service) GetClassificationGradingPolicy(ctx context.Context, p GetClassificationGradingPolicyParams) (*adminapi.Result, error) {
+	return s.C.Invoke(ctx, "Get-ClassificationGradingPolicy", p.params())
+}
+
+// GetComplianceBoundaryParams are the parameters of Get-ComplianceBoundary.
+// DefaultParameterSetName: Identity
+type GetComplianceBoundaryParams struct {
+	Identity any `ps:"Identity"`
+}
+
+func (p GetComplianceBoundaryParams) params() map[string]any {
+	m := map[string]any{}
+	if p.Identity != nil {
+		m["Identity"] = p.Identity
+	}
+	return m
+}
+
+// GetComplianceBoundary runs the Get-ComplianceBoundary cmdlet.
+func (s *Service) GetComplianceBoundary(ctx context.Context, p GetComplianceBoundaryParams) (*adminapi.Result, error) {
+	return s.C.Invoke(ctx, "Get-ComplianceBoundary", p.params())
+}
+
 // GetComplianceCaseParams are the parameters of Get-ComplianceCase.
 // DefaultParameterSetName: Identity
 type GetComplianceCaseParams struct {
@@ -908,6 +1075,7 @@ type GetComplianceCaseMemberParams struct {
 	Case             string `ps:"Case"`
 	DomainController any    `ps:"DomainController"`
 	ResultSize       any    `ps:"ResultSize"`
+	RoleGroupOnly    bool   `ps:"RoleGroupOnly"` // one of: True
 	ShowCaseAdmin    bool   `ps:"ShowCaseAdmin"`
 }
 
@@ -922,6 +1090,9 @@ func (p GetComplianceCaseMemberParams) params() map[string]any {
 	if p.ResultSize != nil {
 		m["ResultSize"] = p.ResultSize
 	}
+	if p.RoleGroupOnly {
+		m["RoleGroupOnly"] = true
+	}
 	if p.ShowCaseAdmin {
 		m["ShowCaseAdmin"] = true
 	}
@@ -931,6 +1102,33 @@ func (p GetComplianceCaseMemberParams) params() map[string]any {
 // GetComplianceCaseMember runs the Get-ComplianceCaseMember cmdlet.
 func (s *Service) GetComplianceCaseMember(ctx context.Context, p GetComplianceCaseMemberParams) (*adminapi.Result, error) {
 	return s.C.Invoke(ctx, "Get-ComplianceCaseMember", p.params())
+}
+
+// GetComplianceCaseMemberCandidateParams are the parameters of Get-ComplianceCaseMemberCandidate.
+// DefaultParameterSetName: Identity
+type GetComplianceCaseMemberCandidateParams struct {
+	DomainController any  `ps:"DomainController"`
+	ResultSize       any  `ps:"ResultSize"`
+	RoleGroupOnly    bool `ps:"RoleGroupOnly"`
+}
+
+func (p GetComplianceCaseMemberCandidateParams) params() map[string]any {
+	m := map[string]any{}
+	if p.DomainController != nil {
+		m["DomainController"] = p.DomainController
+	}
+	if p.ResultSize != nil {
+		m["ResultSize"] = p.ResultSize
+	}
+	if p.RoleGroupOnly {
+		m["RoleGroupOnly"] = true
+	}
+	return m
+}
+
+// GetComplianceCaseMemberCandidate runs the Get-ComplianceCaseMemberCandidate cmdlet.
+func (s *Service) GetComplianceCaseMemberCandidate(ctx context.Context, p GetComplianceCaseMemberCandidateParams) (*adminapi.Result, error) {
+	return s.C.Invoke(ctx, "Get-ComplianceCaseMemberCandidate", p.params())
 }
 
 // GetComplianceCaseStatisticsParams are the parameters of Get-ComplianceCaseStatistics.
@@ -950,6 +1148,89 @@ func (p GetComplianceCaseStatisticsParams) params() map[string]any {
 // GetComplianceCaseStatistics runs the Get-ComplianceCaseStatistics cmdlet.
 func (s *Service) GetComplianceCaseStatistics(ctx context.Context, p GetComplianceCaseStatisticsParams) (*adminapi.Result, error) {
 	return s.C.Invoke(ctx, "Get-ComplianceCaseStatistics", p.params())
+}
+
+// GetComplianceCustodianParams are the parameters of Get-ComplianceCustodian.
+// DefaultParameterSetName: Identity
+type GetComplianceCustodianParams struct {
+	Case     string `ps:"Case"`
+	Identity any    `ps:"Identity"`
+}
+
+func (p GetComplianceCustodianParams) params() map[string]any {
+	m := map[string]any{}
+	if p.Case != "" {
+		m["Case"] = p.Case
+	}
+	if p.Identity != nil {
+		m["Identity"] = p.Identity
+	}
+	return m
+}
+
+// GetComplianceCustodian runs the Get-ComplianceCustodian cmdlet.
+func (s *Service) GetComplianceCustodian(ctx context.Context, p GetComplianceCustodianParams) (*adminapi.Result, error) {
+	return s.C.Invoke(ctx, "Get-ComplianceCustodian", p.params())
+}
+
+// GetComplianceEmailSettingParams are the parameters of Get-ComplianceEmailSetting.
+// DefaultParameterSetName: Identity
+type GetComplianceEmailSettingParams struct {
+	Identity any    `ps:"Identity"`
+	NoticeId string `ps:"NoticeId"`
+}
+
+func (p GetComplianceEmailSettingParams) params() map[string]any {
+	m := map[string]any{}
+	if p.Identity != nil {
+		m["Identity"] = p.Identity
+	}
+	if p.NoticeId != "" {
+		m["NoticeId"] = p.NoticeId
+	}
+	return m
+}
+
+// GetComplianceEmailSetting runs the Get-ComplianceEmailSetting cmdlet.
+func (s *Service) GetComplianceEmailSetting(ctx context.Context, p GetComplianceEmailSettingParams) (*adminapi.Result, error) {
+	return s.C.Invoke(ctx, "Get-ComplianceEmailSetting", p.params())
+}
+
+// GetComplianceNoticeParams are the parameters of Get-ComplianceNotice.
+// DefaultParameterSetName: Identity
+type GetComplianceNoticeParams struct {
+	Case     string `ps:"Case"`
+	Identity any    `ps:"Identity"`
+}
+
+func (p GetComplianceNoticeParams) params() map[string]any {
+	m := map[string]any{}
+	if p.Case != "" {
+		m["Case"] = p.Case
+	}
+	if p.Identity != nil {
+		m["Identity"] = p.Identity
+	}
+	return m
+}
+
+// GetComplianceNotice runs the Get-ComplianceNotice cmdlet.
+func (s *Service) GetComplianceNotice(ctx context.Context, p GetComplianceNoticeParams) (*adminapi.Result, error) {
+	return s.C.Invoke(ctx, "Get-ComplianceNotice", p.params())
+}
+
+// GetCompliancePreservationSettingParams are the parameters of Get-CompliancePreservationSetting.
+type GetCompliancePreservationSettingParams struct {
+}
+
+func (p GetCompliancePreservationSettingParams) params() map[string]any {
+	m := map[string]any{}
+	return m
+}
+
+// GetCompliancePreservationSetting runs the Get-CompliancePreservationSetting cmdlet.
+func (s *Service) GetCompliancePreservationSetting(ctx context.Context, p GetCompliancePreservationSettingParams) (*adminapi.Result, error) {
+	return s.C.Invoke(ctx, "Get-CompliancePreservationSetting", p.params())
 }
 
 // GetComplianceRetentionEventParams are the parameters of Get-ComplianceRetentionEvent.
@@ -1046,7 +1327,6 @@ type GetComplianceSearchActionParams struct {
 	Identity          any    `ps:"Identity"`
 	IncludeCredential bool   `ps:"IncludeCredential"`
 	Preview           bool   `ps:"Preview"`
-	Purge             bool   `ps:"Purge"`
 	ResultSize        any    `ps:"ResultSize"`
 }
 
@@ -1070,9 +1350,6 @@ func (p GetComplianceSearchActionParams) params() map[string]any {
 	if p.Preview {
 		m["Preview"] = true
 	}
-	if p.Purge {
-		m["Purge"] = true
-	}
 	if p.ResultSize != nil {
 		m["ResultSize"] = p.ResultSize
 	}
@@ -1087,19 +1364,11 @@ func (s *Service) GetComplianceSearchAction(ctx context.Context, p GetCompliance
 // GetComplianceSecurityFilterParams are the parameters of Get-ComplianceSecurityFilter.
 // DefaultParameterSetName: Identity
 type GetComplianceSecurityFilterParams struct {
-	Action     any    `ps:"Action"`
-	FilterName string `ps:"FilterName"`
-	User       string `ps:"User"`
+	User string `ps:"User"`
 }
 
 func (p GetComplianceSecurityFilterParams) params() map[string]any {
 	m := map[string]any{}
-	if p.Action != nil {
-		m["Action"] = p.Action
-	}
-	if p.FilterName != "" {
-		m["FilterName"] = p.FilterName
-	}
 	if p.User != "" {
 		m["User"] = p.User
 	}
@@ -1116,7 +1385,6 @@ func (s *Service) GetComplianceSecurityFilter(ctx context.Context, p GetComplian
 type GetComplianceTagParams struct {
 	Identity            any  `ps:"Identity"`
 	IncludingLabelState bool `ps:"IncludingLabelState"`
-	PriorityCleanup     bool `ps:"PriorityCleanup"`
 }
 
 func (p GetComplianceTagParams) params() map[string]any {
@@ -1126,9 +1394,6 @@ func (p GetComplianceTagParams) params() map[string]any {
 	}
 	if p.IncludingLabelState {
 		m["IncludingLabelState"] = true
-	}
-	if p.PriorityCleanup {
-		m["PriorityCleanup"] = true
 	}
 	return m
 }
@@ -1537,6 +1802,21 @@ func (s *Service) GetDeviceTenantRule(ctx context.Context, p GetDeviceTenantRule
 	return s.C.Invoke(ctx, "Get-DeviceTenantRule", p.params())
 }
 
+// GetDlpAlertTuningRuleParams are the parameters of Get-DlpAlertTuningRule.
+// DefaultParameterSetName: Identity
+type GetDlpAlertTuningRuleParams struct {
+}
+
+func (p GetDlpAlertTuningRuleParams) params() map[string]any {
+	m := map[string]any{}
+	return m
+}
+
+// GetDlpAlertTuningRule runs the Get-DlpAlertTuningRule cmdlet.
+func (s *Service) GetDlpAlertTuningRule(ctx context.Context, p GetDlpAlertTuningRuleParams) (*adminapi.Result, error) {
+	return s.C.Invoke(ctx, "Get-DlpAlertTuningRule", p.params())
+}
+
 // GetDlpCompliancePolicyParams are the parameters of Get-DlpCompliancePolicy.
 // DefaultParameterSetName: Identity
 type GetDlpCompliancePolicyParams struct {
@@ -1592,15 +1872,20 @@ func (s *Service) GetDlpCompliancePolicy(ctx context.Context, p GetDlpCompliance
 // DefaultParameterSetName: Identity
 type GetDlpComplianceRuleParams struct {
 	DisplayName               string `ps:"DisplayName"`
+	ForceValidate             bool   `ps:"ForceValidate"`
 	Identity                  any    `ps:"Identity"`
 	IncludeExecutionRuleGuids bool   `ps:"IncludeExecutionRuleGuids"`
 	Policy                    any    `ps:"Policy"`
+	Summary                   bool   `ps:"Summary"`
 }
 
 func (p GetDlpComplianceRuleParams) params() map[string]any {
 	m := map[string]any{}
 	if p.DisplayName != "" {
 		m["DisplayName"] = p.DisplayName
+	}
+	if p.ForceValidate {
+		m["ForceValidate"] = true
 	}
 	if p.Identity != nil {
 		m["Identity"] = p.Identity
@@ -1610,6 +1895,9 @@ func (p GetDlpComplianceRuleParams) params() map[string]any {
 	}
 	if p.Policy != nil {
 		m["Policy"] = p.Policy
+	}
+	if p.Summary {
+		m["Summary"] = true
 	}
 	return m
 }
@@ -2114,6 +2402,33 @@ func (s *Service) GetFilePlanPropertySubCategory(ctx context.Context, p GetFileP
 	return s.C.Invoke(ctx, "Get-FilePlanPropertySubCategory", p.params())
 }
 
+// GetGlobalListParams are the parameters of Get-GlobalList.
+// DefaultParameterSetName: Identity
+type GetGlobalListParams struct {
+	GlobalListType any `ps:"GlobalListType"`
+	Identity       any `ps:"Identity"`
+	Organization   any `ps:"Organization"`
+}
+
+func (p GetGlobalListParams) params() map[string]any {
+	m := map[string]any{}
+	if p.GlobalListType != nil {
+		m["GlobalListType"] = p.GlobalListType
+	}
+	if p.Identity != nil {
+		m["Identity"] = p.Identity
+	}
+	if p.Organization != nil {
+		m["Organization"] = p.Organization
+	}
+	return m
+}
+
+// GetGlobalList runs the Get-GlobalList cmdlet.
+func (s *Service) GetGlobalList(ctx context.Context, p GetGlobalListParams) (*adminapi.Result, error) {
+	return s.C.Invoke(ctx, "Get-GlobalList", p.params())
+}
+
 // GetGroupParams are the parameters of Get-Group.
 // DefaultParameterSetName: Identity
 type GetGroupParams struct {
@@ -2325,10 +2640,14 @@ func (s *Service) GetInsiderRiskPolicy(ctx context.Context, p GetInsiderRiskPoli
 // GetJitConfigurationParams are the parameters of Get-JitConfiguration.
 // DefaultParameterSetName: Identity
 type GetJitConfigurationParams struct {
+	Identity any `ps:"Identity"`
 }
 
 func (p GetJitConfigurationParams) params() map[string]any {
 	m := map[string]any{}
+	if p.Identity != nil {
+		m["Identity"] = p.Identity
+	}
 	return m
 }
 
@@ -2370,6 +2689,32 @@ func (p GetLabelParams) params() map[string]any {
 // GetLabel runs the Get-Label cmdlet.
 func (s *Service) GetLabel(ctx context.Context, p GetLabelParams) (*adminapi.Result, error) {
 	return s.C.Invoke(ctx, "Get-Label", p.params())
+}
+
+// GetLabelExplorerConfigParams are the parameters of Get-LabelExplorerConfig.
+type GetLabelExplorerConfigParams struct {
+	DisplayName string `ps:"DisplayName"`
+	Identity    any    `ps:"Identity"`
+	User        string `ps:"User"`
+}
+
+func (p GetLabelExplorerConfigParams) params() map[string]any {
+	m := map[string]any{}
+	if p.DisplayName != "" {
+		m["DisplayName"] = p.DisplayName
+	}
+	if p.Identity != nil {
+		m["Identity"] = p.Identity
+	}
+	if p.User != "" {
+		m["User"] = p.User
+	}
+	return m
+}
+
+// GetLabelExplorerConfig runs the Get-LabelExplorerConfig cmdlet.
+func (s *Service) GetLabelExplorerConfig(ctx context.Context, p GetLabelExplorerConfigParams) (*adminapi.Result, error) {
+	return s.C.Invoke(ctx, "Get-LabelExplorerConfig", p.params())
 }
 
 // GetLabelPolicyParams are the parameters of Get-LabelPolicy.
@@ -2474,6 +2819,60 @@ func (p GetLongTermAuditStatsParams) params() map[string]any {
 // GetLongTermAuditStats runs the Get-LongTermAuditStats cmdlet.
 func (s *Service) GetLongTermAuditStats(ctx context.Context, p GetLongTermAuditStatsParams) (*adminapi.Result, error) {
 	return s.C.Invoke(ctx, "Get-LongTermAuditStats", p.params())
+}
+
+// GetMachineAssistedTagResourceParams are the parameters of Get-MachineAssistedTagResource.
+type GetMachineAssistedTagResourceParams struct {
+	ClassificationResultType any    `ps:"ClassificationResultType"`
+	Identity                 any    `ps:"Identity"`
+	Limit                    int    `ps:"Limit"`
+	ModelId                  any    `ps:"ModelId"`
+	ModuleId                 any    `ps:"ModuleId"`
+	Offset                   string `ps:"Offset"`
+	Resource                 any    `ps:"Resource"`
+	TaskId                   any    `ps:"TaskId"`
+	TrainingId               any    `ps:"TrainingId"`
+	TrainingType             any    `ps:"TrainingType"`
+}
+
+func (p GetMachineAssistedTagResourceParams) params() map[string]any {
+	m := map[string]any{}
+	if p.ClassificationResultType != nil {
+		m["ClassificationResultType"] = p.ClassificationResultType
+	}
+	if p.Identity != nil {
+		m["Identity"] = p.Identity
+	}
+	if p.Limit != 0 {
+		m["Limit"] = p.Limit
+	}
+	if p.ModelId != nil {
+		m["ModelId"] = p.ModelId
+	}
+	if p.ModuleId != nil {
+		m["ModuleId"] = p.ModuleId
+	}
+	if p.Offset != "" {
+		m["Offset"] = p.Offset
+	}
+	if p.Resource != nil {
+		m["Resource"] = p.Resource
+	}
+	if p.TaskId != nil {
+		m["TaskId"] = p.TaskId
+	}
+	if p.TrainingId != nil {
+		m["TrainingId"] = p.TrainingId
+	}
+	if p.TrainingType != nil {
+		m["TrainingType"] = p.TrainingType
+	}
+	return m
+}
+
+// GetMachineAssistedTagResource runs the Get-MachineAssistedTagResource cmdlet.
+func (s *Service) GetMachineAssistedTagResource(ctx context.Context, p GetMachineAssistedTagResourceParams) (*adminapi.Result, error) {
+	return s.C.Invoke(ctx, "Get-MachineAssistedTagResource", p.params())
 }
 
 // GetMailDetailEncryptionReportParams are the parameters of Get-MailDetailEncryptionReport.
@@ -2626,60 +3025,35 @@ func (s *Service) GetMailTrafficEncryptionReport(ctx context.Context, p GetMailT
 	return s.C.Invoke(ctx, "Get-MailTrafficEncryptionReport", p.params())
 }
 
-// GetManagementRoleParams are the parameters of Get-ManagementRole.
-// DefaultParameterSetName: Identity
-type GetManagementRoleParams struct {
-	Cmdlet           string   `ps:"Cmdlet"`
-	CmdletParameters []string `ps:"CmdletParameters"`
-	GetChildren      bool     `ps:"GetChildren"`
-	Identity         any      `ps:"Identity"`
-	Recurse          bool     `ps:"Recurse"`
-	RoleType         any      `ps:"RoleType"`
-	Script           string   `ps:"Script"`
-	ScriptParameters []string `ps:"ScriptParameters"`
+// GetMultiTenantOrganizationConfigParams are the parameters of Get-MultiTenantOrganizationConfig.
+type GetMultiTenantOrganizationConfigParams struct {
+	Identity any `ps:"Identity"`
 }
 
-func (p GetManagementRoleParams) params() map[string]any {
+func (p GetMultiTenantOrganizationConfigParams) params() map[string]any {
 	m := map[string]any{}
-	if p.Cmdlet != "" {
-		m["Cmdlet"] = p.Cmdlet
-	}
-	if len(p.CmdletParameters) > 0 {
-		m["CmdletParameters"] = p.CmdletParameters
-	}
-	if p.GetChildren {
-		m["GetChildren"] = true
-	}
 	if p.Identity != nil {
 		m["Identity"] = p.Identity
-	}
-	if p.Recurse {
-		m["Recurse"] = true
-	}
-	if p.RoleType != nil {
-		m["RoleType"] = p.RoleType
-	}
-	if p.Script != "" {
-		m["Script"] = p.Script
-	}
-	if len(p.ScriptParameters) > 0 {
-		m["ScriptParameters"] = p.ScriptParameters
 	}
 	return m
 }
 
-// GetManagementRole runs the Get-ManagementRole cmdlet.
-func (s *Service) GetManagementRole(ctx context.Context, p GetManagementRoleParams) (*adminapi.Result, error) {
-	return s.C.Invoke(ctx, "Get-ManagementRole", p.params())
+// GetMultiTenantOrganizationConfig runs the Get-MultiTenantOrganizationConfig cmdlet.
+func (s *Service) GetMultiTenantOrganizationConfig(ctx context.Context, p GetMultiTenantOrganizationConfigParams) (*adminapi.Result, error) {
+	return s.C.Invoke(ctx, "Get-MultiTenantOrganizationConfig", p.params())
 }
 
 // GetOcrConfigurationParams are the parameters of Get-OcrConfiguration.
 // DefaultParameterSetName: Identity
 type GetOcrConfigurationParams struct {
+	Identity any `ps:"Identity"`
 }
 
 func (p GetOcrConfigurationParams) params() map[string]any {
 	m := map[string]any{}
+	if p.Identity != nil {
+		m["Identity"] = p.Identity
+	}
 	return m
 }
 
@@ -2709,30 +3083,20 @@ func (s *Service) GetOrganizationSegment(ctx context.Context, p GetOrganizationS
 
 // GetPolicyConfigParams are the parameters of Get-PolicyConfig.
 type GetPolicyConfigParams struct {
+	Identity any `ps:"Identity"`
 }
 
 func (p GetPolicyConfigParams) params() map[string]any {
 	m := map[string]any{}
+	if p.Identity != nil {
+		m["Identity"] = p.Identity
+	}
 	return m
 }
 
 // GetPolicyConfig runs the Get-PolicyConfig cmdlet.
 func (s *Service) GetPolicyConfig(ctx context.Context, p GetPolicyConfigParams) (*adminapi.Result, error) {
 	return s.C.Invoke(ctx, "Get-PolicyConfig", p.params())
-}
-
-// GetPriorityCleanupSettingParams are the parameters of Get-PriorityCleanupSetting.
-type GetPriorityCleanupSettingParams struct {
-}
-
-func (p GetPriorityCleanupSettingParams) params() map[string]any {
-	m := map[string]any{}
-	return m
-}
-
-// GetPriorityCleanupSetting runs the Get-PriorityCleanupSetting cmdlet.
-func (s *Service) GetPriorityCleanupSetting(ctx context.Context, p GetPriorityCleanupSettingParams) (*adminapi.Result, error) {
-	return s.C.Invoke(ctx, "Get-PriorityCleanupSetting", p.params())
 }
 
 // GetPrivacyManagementCaseAdminParams are the parameters of Get-PrivacyManagementCaseAdmin.
@@ -2764,6 +3128,7 @@ type GetPrivacyManagementComplianceCaseMemberParams struct {
 	Case             string `ps:"Case"`
 	DomainController any    `ps:"DomainController"`
 	ResultSize       any    `ps:"ResultSize"`
+	RoleGroupOnly    bool   `ps:"RoleGroupOnly"` // one of: True
 	ShowCaseAdmin    bool   `ps:"ShowCaseAdmin"`
 }
 
@@ -2777,6 +3142,9 @@ func (p GetPrivacyManagementComplianceCaseMemberParams) params() map[string]any 
 	}
 	if p.ResultSize != nil {
 		m["ResultSize"] = p.ResultSize
+	}
+	if p.RoleGroupOnly {
+		m["RoleGroupOnly"] = true
 	}
 	if p.ShowCaseAdmin {
 		m["ShowCaseAdmin"] = true
@@ -2936,7 +3304,10 @@ type GetQuarantineMessageParams struct {
 	Identity                                any      `ps:"Identity"`
 	IncludeMessagesFromBlockedSenderAddress bool     `ps:"IncludeMessagesFromBlockedSenderAddress"`
 	MessageId                               string   `ps:"MessageId"`
+	MoveToQuarantineAdminActionTakenBy      string   `ps:"MoveToQuarantineAdminActionTakenBy"`
+	MoveToQuarantineApprovalId              any      `ps:"MoveToQuarantineApprovalId"`
 	MyItems                                 bool     `ps:"MyItems"`
+	NetworkMessageId                        string   `ps:"NetworkMessageId"`
 	Page                                    any      `ps:"Page"`
 	PageSize                                any      `ps:"PageSize"`
 	PolicyName                              string   `ps:"PolicyName"`
@@ -2946,6 +3317,7 @@ type GetQuarantineMessageParams struct {
 	RecipientTag                            []string `ps:"RecipientTag"`
 	ReleaseStatus                           []string `ps:"ReleaseStatus"`
 	Reported                                any      `ps:"Reported"`
+	SearchTemporaryDeletedMessage           bool     `ps:"SearchTemporaryDeletedMessage"`
 	SenderAddress                           []string `ps:"SenderAddress"`
 	StartExpiresDate                        any      `ps:"StartExpiresDate"`
 	StartReceivedDate                       any      `ps:"StartReceivedDate"`
@@ -2977,8 +3349,17 @@ func (p GetQuarantineMessageParams) params() map[string]any {
 	if p.MessageId != "" {
 		m["MessageId"] = p.MessageId
 	}
+	if p.MoveToQuarantineAdminActionTakenBy != "" {
+		m["MoveToQuarantineAdminActionTakenBy"] = p.MoveToQuarantineAdminActionTakenBy
+	}
+	if p.MoveToQuarantineApprovalId != nil {
+		m["MoveToQuarantineApprovalId"] = p.MoveToQuarantineApprovalId
+	}
 	if p.MyItems {
 		m["MyItems"] = true
+	}
+	if p.NetworkMessageId != "" {
+		m["NetworkMessageId"] = p.NetworkMessageId
 	}
 	if p.Page != nil {
 		m["Page"] = p.Page
@@ -3006,6 +3387,9 @@ func (p GetQuarantineMessageParams) params() map[string]any {
 	}
 	if p.Reported != nil {
 		m["Reported"] = p.Reported
+	}
+	if p.SearchTemporaryDeletedMessage {
+		m["SearchTemporaryDeletedMessage"] = true
 	}
 	if len(p.SenderAddress) > 0 {
 		m["SenderAddress"] = p.SenderAddress
@@ -3167,7 +3551,6 @@ type GetRetentionCompliancePolicyParams struct {
 	ExcludeTeamsPolicy     bool `ps:"ExcludeTeamsPolicy"`
 	Identity               any  `ps:"Identity"`
 	IncludeTestModeResults bool `ps:"IncludeTestModeResults"`
-	PriorityCleanup        bool `ps:"PriorityCleanup"`
 	RetentionRuleTypes     bool `ps:"RetentionRuleTypes"`
 	TeamsPolicyOnly        bool `ps:"TeamsPolicyOnly"`
 }
@@ -3189,9 +3572,6 @@ func (p GetRetentionCompliancePolicyParams) params() map[string]any {
 	if p.IncludeTestModeResults {
 		m["IncludeTestModeResults"] = true
 	}
-	if p.PriorityCleanup {
-		m["PriorityCleanup"] = true
-	}
 	if p.RetentionRuleTypes {
 		m["RetentionRuleTypes"] = true
 	}
@@ -3209,9 +3589,8 @@ func (s *Service) GetRetentionCompliancePolicy(ctx context.Context, p GetRetenti
 // GetRetentionComplianceRuleParams are the parameters of Get-RetentionComplianceRule.
 // DefaultParameterSetName: Identity
 type GetRetentionComplianceRuleParams struct {
-	Identity        any  `ps:"Identity"`
-	Policy          any  `ps:"Policy"`
-	PriorityCleanup bool `ps:"PriorityCleanup"`
+	Identity any `ps:"Identity"`
+	Policy   any `ps:"Policy"`
 }
 
 func (p GetRetentionComplianceRuleParams) params() map[string]any {
@@ -3221,9 +3600,6 @@ func (p GetRetentionComplianceRuleParams) params() map[string]any {
 	}
 	if p.Policy != nil {
 		m["Policy"] = p.Policy
-	}
-	if p.PriorityCleanup {
-		m["PriorityCleanup"] = true
 	}
 	return m
 }
@@ -3331,16 +3707,33 @@ func (s *Service) GetSCInsights(ctx context.Context, p GetSCInsightsParams) (*ad
 	return s.C.Invoke(ctx, "Get-SCInsights", p.params())
 }
 
+// GetScopeAdminsParams are the parameters of Get-ScopeAdmins.
+// DefaultParameterSetName: Identity
+type GetScopeAdminsParams struct {
+	Identity any `ps:"Identity"`
+}
+
+func (p GetScopeAdminsParams) params() map[string]any {
+	m := map[string]any{}
+	if p.Identity != nil {
+		m["Identity"] = p.Identity
+	}
+	return m
+}
+
+// GetScopeAdmins runs the Get-ScopeAdmins cmdlet.
+func (s *Service) GetScopeAdmins(ctx context.Context, p GetScopeAdminsParams) (*adminapi.Result, error) {
+	return s.C.Invoke(ctx, "Get-ScopeAdmins", p.params())
+}
+
 // GetScopeEntitiesParams are the parameters of Get-ScopeEntities.
 // DefaultParameterSetName: Identity
 type GetScopeEntitiesParams struct {
-	Filter             string   `ps:"Filter"`
-	Identity           any      `ps:"Identity"`
-	OrganizationalUnit any      `ps:"OrganizationalUnit"`
-	ResultSize         any      `ps:"ResultSize"`
-	ScopeIds           []string `ps:"ScopeIds"`
-	ScopeRecipientType string   `ps:"ScopeRecipientType"`
-	SortBy             string   `ps:"SortBy"`
+	Filter             string `ps:"Filter"`
+	Identity           any    `ps:"Identity"`
+	ResultSize         any    `ps:"ResultSize"`
+	ScopeRecipientType string `ps:"ScopeRecipientType"`
+	SortBy             string `ps:"SortBy"`
 }
 
 func (p GetScopeEntitiesParams) params() map[string]any {
@@ -3351,14 +3744,8 @@ func (p GetScopeEntitiesParams) params() map[string]any {
 	if p.Identity != nil {
 		m["Identity"] = p.Identity
 	}
-	if p.OrganizationalUnit != nil {
-		m["OrganizationalUnit"] = p.OrganizationalUnit
-	}
 	if p.ResultSize != nil {
 		m["ResultSize"] = p.ResultSize
-	}
-	if len(p.ScopeIds) > 0 {
-		m["ScopeIds"] = p.ScopeIds
 	}
 	if p.ScopeRecipientType != "" {
 		m["ScopeRecipientType"] = p.ScopeRecipientType
@@ -3372,45 +3759,6 @@ func (p GetScopeEntitiesParams) params() map[string]any {
 // GetScopeEntities runs the Get-ScopeEntities cmdlet.
 func (s *Service) GetScopeEntities(ctx context.Context, p GetScopeEntitiesParams) (*adminapi.Result, error) {
 	return s.C.Invoke(ctx, "Get-ScopeEntities", p.params())
-}
-
-// GetSecurityPrincipalParams are the parameters of Get-SecurityPrincipal.
-// DefaultParameterSetName: Identity
-type GetSecurityPrincipalParams struct {
-	Filter              string `ps:"Filter"`
-	Identity            any    `ps:"Identity"`
-	OrganizationalUnit  any    `ps:"OrganizationalUnit"`
-	ResultSize          any    `ps:"ResultSize"`
-	RoleGroupAssignable bool   `ps:"RoleGroupAssignable"`
-	Types               any    `ps:"Types"`
-}
-
-func (p GetSecurityPrincipalParams) params() map[string]any {
-	m := map[string]any{}
-	if p.Filter != "" {
-		m["Filter"] = p.Filter
-	}
-	if p.Identity != nil {
-		m["Identity"] = p.Identity
-	}
-	if p.OrganizationalUnit != nil {
-		m["OrganizationalUnit"] = p.OrganizationalUnit
-	}
-	if p.ResultSize != nil {
-		m["ResultSize"] = p.ResultSize
-	}
-	if p.RoleGroupAssignable {
-		m["RoleGroupAssignable"] = true
-	}
-	if p.Types != nil {
-		m["Types"] = p.Types
-	}
-	return m
-}
-
-// GetSecurityPrincipal runs the Get-SecurityPrincipal cmdlet.
-func (s *Service) GetSecurityPrincipal(ctx context.Context, p GetSecurityPrincipalParams) (*adminapi.Result, error) {
-	return s.C.Invoke(ctx, "Get-SecurityPrincipal", p.params())
 }
 
 // GetSensitiveInformationScanParams are the parameters of Get-SensitiveInformationScan.
@@ -3463,6 +3811,44 @@ func (p GetSensitiveInformationScanRuleParams) params() map[string]any {
 // GetSensitiveInformationScanRule runs the Get-SensitiveInformationScanRule cmdlet.
 func (s *Service) GetSensitiveInformationScanRule(ctx context.Context, p GetSensitiveInformationScanRuleParams) (*adminapi.Result, error) {
 	return s.C.Invoke(ctx, "Get-SensitiveInformationScanRule", p.params())
+}
+
+// GetServiceDomainGroupParams are the parameters of Get-ServiceDomainGroup.
+// DefaultParameterSetName: Identity
+type GetServiceDomainGroupParams struct {
+	Identity     any `ps:"Identity"`
+	Organization any `ps:"Organization"`
+}
+
+func (p GetServiceDomainGroupParams) params() map[string]any {
+	m := map[string]any{}
+	if p.Identity != nil {
+		m["Identity"] = p.Identity
+	}
+	if p.Organization != nil {
+		m["Organization"] = p.Organization
+	}
+	return m
+}
+
+// GetServiceDomainGroup runs the Get-ServiceDomainGroup cmdlet.
+func (s *Service) GetServiceDomainGroup(ctx context.Context, p GetServiceDomainGroupParams) (*adminapi.Result, error) {
+	return s.C.Invoke(ctx, "Get-ServiceDomainGroup", p.params())
+}
+
+// GetServiceDomainGroupStorageParams are the parameters of Get-ServiceDomainGroupStorage.
+// DefaultParameterSetName: Identity
+type GetServiceDomainGroupStorageParams struct {
+}
+
+func (p GetServiceDomainGroupStorageParams) params() map[string]any {
+	m := map[string]any{}
+	return m
+}
+
+// GetServiceDomainGroupStorage runs the Get-ServiceDomainGroupStorage cmdlet.
+func (s *Service) GetServiceDomainGroupStorage(ctx context.Context, p GetServiceDomainGroupStorageParams) (*adminapi.Result, error) {
+	return s.C.Invoke(ctx, "Get-ServiceDomainGroupStorage", p.params())
 }
 
 // GetServicePrincipalParams are the parameters of Get-ServicePrincipal.
@@ -3693,78 +4079,95 @@ func (s *Service) GetSupervisoryReviewTopCasesReport(ctx context.Context, p GetS
 	return s.C.Invoke(ctx, "Get-SupervisoryReviewTopCasesReport", p.params())
 }
 
-// GetTenantAllowBlockListItemsParams are the parameters of Get-TenantAllowBlockListItems.
-// DefaultParameterSetName: Expiration
-type GetTenantAllowBlockListItemsParams struct {
-	Allow          bool     `ps:"Allow"`
-	Block          bool     `ps:"Block"`
-	Entry          string   `ps:"Entry"`
-	ExpirationDate any      `ps:"ExpirationDate"`
-	ListSubType    []string `ps:"ListSubType"`
-	ListType       any      `ps:"ListType"`
-	NoExpiration   bool     `ps:"NoExpiration"`
-	OutputJson     bool     `ps:"OutputJson"`
+// GetTeamsRetentionCompliancePolicyParams are the parameters of Get-TeamsRetentionCompliancePolicy.
+type GetTeamsRetentionCompliancePolicyParams struct {
+	DistributionDetail bool `ps:"DistributionDetail"`
+	Identity           any  `ps:"Identity"`
 }
 
-func (p GetTenantAllowBlockListItemsParams) params() map[string]any {
+func (p GetTeamsRetentionCompliancePolicyParams) params() map[string]any {
 	m := map[string]any{}
-	if p.Allow {
-		m["Allow"] = true
-	}
-	if p.Block {
-		m["Block"] = true
-	}
-	if p.Entry != "" {
-		m["Entry"] = p.Entry
-	}
-	if p.ExpirationDate != nil {
-		m["ExpirationDate"] = p.ExpirationDate
-	}
-	if len(p.ListSubType) > 0 {
-		m["ListSubType"] = p.ListSubType
-	}
-	if p.ListType != nil {
-		m["ListType"] = p.ListType
-	}
-	if p.NoExpiration {
-		m["NoExpiration"] = true
-	}
-	if p.OutputJson {
-		m["OutputJson"] = true
-	}
-	return m
-}
-
-// GetTenantAllowBlockListItems runs the Get-TenantAllowBlockListItems cmdlet.
-func (s *Service) GetTenantAllowBlockListItems(ctx context.Context, p GetTenantAllowBlockListItemsParams) (*adminapi.Result, error) {
-	return s.C.Invoke(ctx, "Get-TenantAllowBlockListItems", p.params())
-}
-
-// GetTenantAllowBlockListSpoofItemsParams are the parameters of Get-TenantAllowBlockListSpoofItems.
-// DefaultParameterSetName: Identity
-type GetTenantAllowBlockListSpoofItemsParams struct {
-	Action    string `ps:"Action"`
-	Identity  any    `ps:"Identity"`
-	SpoofType string `ps:"SpoofType"`
-}
-
-func (p GetTenantAllowBlockListSpoofItemsParams) params() map[string]any {
-	m := map[string]any{}
-	if p.Action != "" {
-		m["Action"] = p.Action
+	if p.DistributionDetail {
+		m["DistributionDetail"] = true
 	}
 	if p.Identity != nil {
 		m["Identity"] = p.Identity
 	}
-	if p.SpoofType != "" {
-		m["SpoofType"] = p.SpoofType
+	return m
+}
+
+// GetTeamsRetentionCompliancePolicy runs the Get-TeamsRetentionCompliancePolicy cmdlet.
+func (s *Service) GetTeamsRetentionCompliancePolicy(ctx context.Context, p GetTeamsRetentionCompliancePolicyParams) (*adminapi.Result, error) {
+	return s.C.Invoke(ctx, "Get-TeamsRetentionCompliancePolicy", p.params())
+}
+
+// GetTeamsRetentionComplianceRuleParams are the parameters of Get-TeamsRetentionComplianceRule.
+// DefaultParameterSetName: Identity
+type GetTeamsRetentionComplianceRuleParams struct {
+	Identity any `ps:"Identity"`
+	Policy   any `ps:"Policy"`
+}
+
+func (p GetTeamsRetentionComplianceRuleParams) params() map[string]any {
+	m := map[string]any{}
+	if p.Identity != nil {
+		m["Identity"] = p.Identity
+	}
+	if p.Policy != nil {
+		m["Policy"] = p.Policy
 	}
 	return m
 }
 
-// GetTenantAllowBlockListSpoofItems runs the Get-TenantAllowBlockListSpoofItems cmdlet.
-func (s *Service) GetTenantAllowBlockListSpoofItems(ctx context.Context, p GetTenantAllowBlockListSpoofItemsParams) (*adminapi.Result, error) {
-	return s.C.Invoke(ctx, "Get-TenantAllowBlockListSpoofItems", p.params())
+// GetTeamsRetentionComplianceRule runs the Get-TeamsRetentionComplianceRule cmdlet.
+func (s *Service) GetTeamsRetentionComplianceRule(ctx context.Context, p GetTeamsRetentionComplianceRuleParams) (*adminapi.Result, error) {
+	return s.C.Invoke(ctx, "Get-TeamsRetentionComplianceRule", p.params())
+}
+
+// GetThreatResponsePolicyParams are the parameters of Get-ThreatResponsePolicy.
+// DefaultParameterSetName: Identity
+type GetThreatResponsePolicyParams struct {
+	DistributionDetail bool `ps:"DistributionDetail"`
+	Identity           any  `ps:"Identity"`
+}
+
+func (p GetThreatResponsePolicyParams) params() map[string]any {
+	m := map[string]any{}
+	if p.DistributionDetail {
+		m["DistributionDetail"] = true
+	}
+	if p.Identity != nil {
+		m["Identity"] = p.Identity
+	}
+	return m
+}
+
+// GetThreatResponsePolicy runs the Get-ThreatResponsePolicy cmdlet.
+func (s *Service) GetThreatResponsePolicy(ctx context.Context, p GetThreatResponsePolicyParams) (*adminapi.Result, error) {
+	return s.C.Invoke(ctx, "Get-ThreatResponsePolicy", p.params())
+}
+
+// GetThreatResponseRuleParams are the parameters of Get-ThreatResponseRule.
+// DefaultParameterSetName: Identity
+type GetThreatResponseRuleParams struct {
+	Identity any `ps:"Identity"`
+	Policy   any `ps:"Policy"`
+}
+
+func (p GetThreatResponseRuleParams) params() map[string]any {
+	m := map[string]any{}
+	if p.Identity != nil {
+		m["Identity"] = p.Identity
+	}
+	if p.Policy != nil {
+		m["Policy"] = p.Policy
+	}
+	return m
+}
+
+// GetThreatResponseRule runs the Get-ThreatResponseRule cmdlet.
+func (s *Service) GetThreatResponseRule(ctx context.Context, p GetThreatResponseRuleParams) (*adminapi.Result, error) {
+	return s.C.Invoke(ctx, "Get-ThreatResponseRule", p.params())
 }
 
 // GetUnifiedAuditLogRetentionPolicyParams are the parameters of Get-UnifiedAuditLogRetentionPolicy.
@@ -3837,29 +4240,6 @@ func (s *Service) GetUser(ctx context.Context, p GetUserParams) (*adminapi.Resul
 	return s.C.Invoke(ctx, "Get-User", p.params())
 }
 
-// GetEDiscoveryCaseAdminParams are the parameters of Get-eDiscoveryCaseAdmin.
-// DefaultParameterSetName: Identity
-type GetEDiscoveryCaseAdminParams struct {
-	DomainController any `ps:"DomainController"`
-	ResultSize       any `ps:"ResultSize"`
-}
-
-func (p GetEDiscoveryCaseAdminParams) params() map[string]any {
-	m := map[string]any{}
-	if p.DomainController != nil {
-		m["DomainController"] = p.DomainController
-	}
-	if p.ResultSize != nil {
-		m["ResultSize"] = p.ResultSize
-	}
-	return m
-}
-
-// GetEDiscoveryCaseAdmin runs the Get-eDiscoveryCaseAdmin cmdlet.
-func (s *Service) GetEDiscoveryCaseAdmin(ctx context.Context, p GetEDiscoveryCaseAdminParams) (*adminapi.Result, error) {
-	return s.C.Invoke(ctx, "Get-eDiscoveryCaseAdmin", p.params())
-}
-
 // ImportDlpComplianceRuleCollectionParams are the parameters of Import-DlpComplianceRuleCollection.
 type ImportDlpComplianceRuleCollectionParams struct {
 	ExtendedWorkloadPolicies []string `ps:"ExtendedWorkloadPolicies"`
@@ -3896,6 +4276,24 @@ func (p ImportDlpComplianceRuleCollectionParams) params() map[string]any {
 // ImportDlpComplianceRuleCollection runs the Import-DlpComplianceRuleCollection cmdlet.
 func (s *Service) ImportDlpComplianceRuleCollection(ctx context.Context, p ImportDlpComplianceRuleCollectionParams) (*adminapi.Result, error) {
 	return s.C.Invoke(ctx, "Import-DlpComplianceRuleCollection", p.params())
+}
+
+// ImportExchangeDlpPolicyParams are the parameters of Import-ExchangeDlpPolicy.
+type ImportExchangeDlpPolicyParams struct {
+	Check bool `ps:"Check"`
+}
+
+func (p ImportExchangeDlpPolicyParams) params() map[string]any {
+	m := map[string]any{}
+	if p.Check {
+		m["Check"] = true
+	}
+	return m
+}
+
+// ImportExchangeDlpPolicy runs the Import-ExchangeDlpPolicy cmdlet.
+func (s *Service) ImportExchangeDlpPolicy(ctx context.Context, p ImportExchangeDlpPolicyParams) (*adminapi.Result, error) {
+	return s.C.Invoke(ctx, "Import-ExchangeDlpPolicy", p.params())
 }
 
 // ImportFilePlanPropertyParams are the parameters of Import-FilePlanProperty.
@@ -4024,6 +4422,56 @@ func (s *Service) InvokeHoldRemovalAction(ctx context.Context, p InvokeHoldRemov
 	return s.C.Invoke(ctx, "Invoke-HoldRemovalAction", p.params())
 }
 
+// InvokeMachineAssistedTagActionParams are the parameters of Invoke-MachineAssistedTagAction.
+type InvokeMachineAssistedTagActionParams struct {
+	Identity                        any    `ps:"Identity"`
+	ModelIds                        any    `ps:"ModelIds"`
+	ModuleId                        any    `ps:"ModuleId"`
+	Resource                        any    `ps:"Resource"`
+	TaskId                          any    `ps:"TaskId"`
+	TrainingId                      any    `ps:"TrainingId"`
+	TrueNegativeSharePointLocations any    `ps:"TrueNegativeSharePointLocations"`
+	TruePositiveSharePointLocations any    `ps:"TruePositiveSharePointLocations"`
+	Unsupervised                    string `ps:"Unsupervised"`
+}
+
+func (p InvokeMachineAssistedTagActionParams) params() map[string]any {
+	m := map[string]any{}
+	if p.Identity != nil {
+		m["Identity"] = p.Identity
+	}
+	if p.ModelIds != nil {
+		m["ModelIds"] = p.ModelIds
+	}
+	if p.ModuleId != nil {
+		m["ModuleId"] = p.ModuleId
+	}
+	if p.Resource != nil {
+		m["Resource"] = p.Resource
+	}
+	if p.TaskId != nil {
+		m["TaskId"] = p.TaskId
+	}
+	if p.TrainingId != nil {
+		m["TrainingId"] = p.TrainingId
+	}
+	if p.TrueNegativeSharePointLocations != nil {
+		m["TrueNegativeSharePointLocations"] = p.TrueNegativeSharePointLocations
+	}
+	if p.TruePositiveSharePointLocations != nil {
+		m["TruePositiveSharePointLocations"] = p.TruePositiveSharePointLocations
+	}
+	if p.Unsupervised != "" {
+		m["Unsupervised"] = p.Unsupervised
+	}
+	return m
+}
+
+// InvokeMachineAssistedTagAction runs the Invoke-MachineAssistedTagAction cmdlet.
+func (s *Service) InvokeMachineAssistedTagAction(ctx context.Context, p InvokeMachineAssistedTagActionParams) (*adminapi.Result, error) {
+	return s.C.Invoke(ctx, "Invoke-MachineAssistedTagAction", p.params())
+}
+
 // MigrateDlpFingerprintParams are the parameters of Migrate-DlpFingerprint.
 type MigrateDlpFingerprintParams struct {
 }
@@ -4038,14 +4486,95 @@ func (s *Service) MigrateDlpFingerprint(ctx context.Context, p MigrateDlpFingerp
 	return s.C.Invoke(ctx, "Migrate-DlpFingerprint", p.params())
 }
 
+// NewActivityAlertParams are the parameters of New-ActivityAlert.
+type NewActivityAlertParams struct {
+	Category     any    `ps:"Category"`
+	Condition    string `ps:"Condition"`
+	Description  string `ps:"Description"`
+	Disabled     bool   `ps:"Disabled"`
+	EmailCulture any    `ps:"EmailCulture"`
+	Multiplier   any    `ps:"Multiplier"`
+	Name         string `ps:"Name"`
+	NotifyUser   any    `ps:"NotifyUser"`
+	Operation    any    `ps:"Operation"`
+	RecordType   any    `ps:"RecordType"`
+	ScopeLevel   any    `ps:"ScopeLevel"`
+	Severity     any    `ps:"Severity"`
+	Threshold    int    `ps:"Threshold"`
+	TimeWindow   int    `ps:"TimeWindow"`
+	Type         any    `ps:"Type"`
+	UserId       any    `ps:"UserId"`
+}
+
+func (p NewActivityAlertParams) params() map[string]any {
+	m := map[string]any{}
+	if p.Category != nil {
+		m["Category"] = p.Category
+	}
+	if p.Condition != "" {
+		m["Condition"] = p.Condition
+	}
+	if p.Description != "" {
+		m["Description"] = p.Description
+	}
+	if p.Disabled {
+		m["Disabled"] = true
+	}
+	if p.EmailCulture != nil {
+		m["EmailCulture"] = p.EmailCulture
+	}
+	if p.Multiplier != nil {
+		m["Multiplier"] = p.Multiplier
+	}
+	if p.Name != "" {
+		m["Name"] = p.Name
+	}
+	if p.NotifyUser != nil {
+		m["NotifyUser"] = p.NotifyUser
+	}
+	if p.Operation != nil {
+		m["Operation"] = p.Operation
+	}
+	if p.RecordType != nil {
+		m["RecordType"] = p.RecordType
+	}
+	if p.ScopeLevel != nil {
+		m["ScopeLevel"] = p.ScopeLevel
+	}
+	if p.Severity != nil {
+		m["Severity"] = p.Severity
+	}
+	if p.Threshold != 0 {
+		m["Threshold"] = p.Threshold
+	}
+	if p.TimeWindow != 0 {
+		m["TimeWindow"] = p.TimeWindow
+	}
+	if p.Type != nil {
+		m["Type"] = p.Type
+	}
+	if p.UserId != nil {
+		m["UserId"] = p.UserId
+	}
+	return m
+}
+
+// NewActivityAlert runs the New-ActivityAlert cmdlet.
+func (s *Service) NewActivityAlert(ctx context.Context, p NewActivityAlertParams) (*adminapi.Result, error) {
+	return s.C.Invoke(ctx, "New-ActivityAlert", p.params())
+}
+
 // NewAdaptiveScopeParams are the parameters of New-AdaptiveScope.
 type NewAdaptiveScopeParams struct {
-	AdministrativeUnit any    `ps:"AdministrativeUnit"`
-	Comment            string `ps:"Comment"`
-	FilterConditions   any    `ps:"FilterConditions"`
-	LocationType       any    `ps:"LocationType"`
-	Name               string `ps:"Name"`
-	RawQuery           string `ps:"RawQuery"`
+	AdministrativeUnit           any      `ps:"AdministrativeUnit"`
+	Comment                      string   `ps:"Comment"`
+	EnabledStates                []string `ps:"EnabledStates"`
+	FilterConditions             any      `ps:"FilterConditions"`
+	LinkedRecipientEnabledStates []string `ps:"LinkedRecipientEnabledStates"`
+	LocationType                 any      `ps:"LocationType"`
+	Name                         string   `ps:"Name"`
+	RawQuery                     string   `ps:"RawQuery"`
+	UseKql                       any      `ps:"UseKql"`
 }
 
 func (p NewAdaptiveScopeParams) params() map[string]any {
@@ -4056,8 +4585,14 @@ func (p NewAdaptiveScopeParams) params() map[string]any {
 	if p.Comment != "" {
 		m["Comment"] = p.Comment
 	}
+	if len(p.EnabledStates) > 0 {
+		m["EnabledStates"] = p.EnabledStates
+	}
 	if p.FilterConditions != nil {
 		m["FilterConditions"] = p.FilterConditions
+	}
+	if len(p.LinkedRecipientEnabledStates) > 0 {
+		m["LinkedRecipientEnabledStates"] = p.LinkedRecipientEnabledStates
 	}
 	if p.LocationType != nil {
 		m["LocationType"] = p.LocationType
@@ -4067,6 +4602,9 @@ func (p NewAdaptiveScopeParams) params() map[string]any {
 	}
 	if p.RawQuery != "" {
 		m["RawQuery"] = p.RawQuery
+	}
+	if p.UseKql != nil {
+		m["UseKql"] = p.UseKql
 	}
 	return m
 }
@@ -4078,9 +4616,13 @@ func (s *Service) NewAdaptiveScope(ctx context.Context, p NewAdaptiveScopeParams
 
 // NewAdministrativeUnitExtensionParams are the parameters of New-AdministrativeUnitExtension.
 type NewAdministrativeUnitExtensionParams struct {
-	AdministrativeUnit any `ps:"AdministrativeUnit"`
-	FilterConditions   any `ps:"FilterConditions"`
-	LocationType       any `ps:"LocationType"`
+	AdministrativeUnit           any      `ps:"AdministrativeUnit"`
+	EnabledStates                []string `ps:"EnabledStates"`
+	FilterConditions             any      `ps:"FilterConditions"`
+	LinkedRecipientEnabledStates []string `ps:"LinkedRecipientEnabledStates"`
+	LocationType                 any      `ps:"LocationType"`
+	RawQuery                     string   `ps:"RawQuery"`
+	UseKql                       any      `ps:"UseKql"`
 }
 
 func (p NewAdministrativeUnitExtensionParams) params() map[string]any {
@@ -4088,11 +4630,23 @@ func (p NewAdministrativeUnitExtensionParams) params() map[string]any {
 	if p.AdministrativeUnit != nil {
 		m["AdministrativeUnit"] = p.AdministrativeUnit
 	}
+	if len(p.EnabledStates) > 0 {
+		m["EnabledStates"] = p.EnabledStates
+	}
 	if p.FilterConditions != nil {
 		m["FilterConditions"] = p.FilterConditions
 	}
+	if len(p.LinkedRecipientEnabledStates) > 0 {
+		m["LinkedRecipientEnabledStates"] = p.LinkedRecipientEnabledStates
+	}
 	if p.LocationType != nil {
 		m["LocationType"] = p.LocationType
+	}
+	if p.RawQuery != "" {
+		m["RawQuery"] = p.RawQuery
+	}
+	if p.UseKql != nil {
+		m["UseKql"] = p.UseKql
 	}
 	return m
 }
@@ -4111,6 +4665,7 @@ type NewAppRetentionCompliancePolicyParams struct {
 	ExchangeLocation             any      `ps:"ExchangeLocation"`
 	ExchangeLocationException    any      `ps:"ExchangeLocationException"`
 	Force                        bool     `ps:"Force"`
+	Locations                    string   `ps:"Locations"`
 	ModernGroupLocation          any      `ps:"ModernGroupLocation"`
 	ModernGroupLocationException any      `ps:"ModernGroupLocationException"`
 	Name                         string   `ps:"Name"`
@@ -4141,6 +4696,9 @@ func (p NewAppRetentionCompliancePolicyParams) params() map[string]any {
 	if p.Force {
 		m["Force"] = true
 	}
+	if p.Locations != "" {
+		m["Locations"] = p.Locations
+	}
 	if p.ModernGroupLocation != nil {
 		m["ModernGroupLocation"] = p.ModernGroupLocation
 	}
@@ -4166,6 +4724,7 @@ func (s *Service) NewAppRetentionCompliancePolicy(ctx context.Context, p NewAppR
 
 // NewAppRetentionComplianceRuleParams are the parameters of New-AppRetentionComplianceRule.
 type NewAppRetentionComplianceRuleParams struct {
+	ApplyComplianceTag                  string   `ps:"ApplyComplianceTag"`
 	Comment                             string   `ps:"Comment"`
 	ContentContainsSensitiveInformation []string `ps:"ContentContainsSensitiveInformation"`
 	ContentMatchQuery                   string   `ps:"ContentMatchQuery"`
@@ -4174,6 +4733,7 @@ type NewAppRetentionComplianceRuleParams struct {
 	MachineLearningModelIDs             any      `ps:"MachineLearningModelIDs"`
 	Name                                string   `ps:"Name"`
 	Policy                              any      `ps:"Policy"`
+	PublishComplianceTag                string   `ps:"PublishComplianceTag"`
 	RetentionComplianceAction           string   `ps:"RetentionComplianceAction"`
 	RetentionDuration                   any      `ps:"RetentionDuration"`
 	RetentionDurationDisplayHint        any      `ps:"RetentionDurationDisplayHint"`
@@ -4181,6 +4741,9 @@ type NewAppRetentionComplianceRuleParams struct {
 
 func (p NewAppRetentionComplianceRuleParams) params() map[string]any {
 	m := map[string]any{}
+	if p.ApplyComplianceTag != "" {
+		m["ApplyComplianceTag"] = p.ApplyComplianceTag
+	}
 	if p.Comment != "" {
 		m["Comment"] = p.Comment
 	}
@@ -4205,6 +4768,9 @@ func (p NewAppRetentionComplianceRuleParams) params() map[string]any {
 	if p.Policy != nil {
 		m["Policy"] = p.Policy
 	}
+	if p.PublishComplianceTag != "" {
+		m["PublishComplianceTag"] = p.PublishComplianceTag
+	}
 	if p.RetentionComplianceAction != "" {
 		m["RetentionComplianceAction"] = p.RetentionComplianceAction
 	}
@@ -4220,6 +4786,54 @@ func (p NewAppRetentionComplianceRuleParams) params() map[string]any {
 // NewAppRetentionComplianceRule runs the New-AppRetentionComplianceRule cmdlet.
 func (s *Service) NewAppRetentionComplianceRule(ctx context.Context, p NewAppRetentionComplianceRuleParams) (*adminapi.Result, error) {
 	return s.C.Invoke(ctx, "New-AppRetentionComplianceRule", p.params())
+}
+
+// NewAuditConfigurationPolicyParams are the parameters of New-AuditConfigurationPolicy.
+type NewAuditConfigurationPolicyParams struct {
+	DomainController any `ps:"DomainController"`
+	Workload         any `ps:"Workload"`
+}
+
+func (p NewAuditConfigurationPolicyParams) params() map[string]any {
+	m := map[string]any{}
+	if p.DomainController != nil {
+		m["DomainController"] = p.DomainController
+	}
+	if p.Workload != nil {
+		m["Workload"] = p.Workload
+	}
+	return m
+}
+
+// NewAuditConfigurationPolicy runs the New-AuditConfigurationPolicy cmdlet.
+func (s *Service) NewAuditConfigurationPolicy(ctx context.Context, p NewAuditConfigurationPolicyParams) (*adminapi.Result, error) {
+	return s.C.Invoke(ctx, "New-AuditConfigurationPolicy", p.params())
+}
+
+// NewAuditConfigurationRuleParams are the parameters of New-AuditConfigurationRule.
+type NewAuditConfigurationRuleParams struct {
+	AuditOperation   any `ps:"AuditOperation"`
+	DomainController any `ps:"DomainController"`
+	Workload         any `ps:"Workload"`
+}
+
+func (p NewAuditConfigurationRuleParams) params() map[string]any {
+	m := map[string]any{}
+	if p.AuditOperation != nil {
+		m["AuditOperation"] = p.AuditOperation
+	}
+	if p.DomainController != nil {
+		m["DomainController"] = p.DomainController
+	}
+	if p.Workload != nil {
+		m["Workload"] = p.Workload
+	}
+	return m
+}
+
+// NewAuditConfigurationRule runs the New-AuditConfigurationRule cmdlet.
+func (s *Service) NewAuditConfigurationRule(ctx context.Context, p NewAuditConfigurationRuleParams) (*adminapi.Result, error) {
+	return s.C.Invoke(ctx, "New-AuditConfigurationRule", p.params())
 }
 
 // NewAutoSensitivityLabelPolicyParams are the parameters of New-AutoSensitivityLabelPolicy.
@@ -4253,6 +4867,8 @@ type NewAutoSensitivityLabelPolicyParams struct {
 	OverwriteLabel                          bool     `ps:"OverwriteLabel"`
 	PolicyRBACScopes                        any      `ps:"PolicyRBACScopes"`
 	PolicyTemplateInfo                      any      `ps:"PolicyTemplateInfo"`
+	PowerBILocation                         any      `ps:"PowerBILocation"`
+	PowerBILocationException                any      `ps:"PowerBILocationException"`
 	Priority                                any      `ps:"Priority"`
 	RemoveLabel                             bool     `ps:"RemoveLabel"`
 	SharePointAdaptiveScopes                any      `ps:"SharePointAdaptiveScopes"`
@@ -4351,6 +4967,12 @@ func (p NewAutoSensitivityLabelPolicyParams) params() map[string]any {
 	if p.PolicyTemplateInfo != nil {
 		m["PolicyTemplateInfo"] = p.PolicyTemplateInfo
 	}
+	if p.PowerBILocation != nil {
+		m["PowerBILocation"] = p.PowerBILocation
+	}
+	if p.PowerBILocationException != nil {
+		m["PowerBILocationException"] = p.PowerBILocationException
+	}
 	if p.Priority != nil {
 		m["Priority"] = p.Priority
 	}
@@ -4392,6 +5014,7 @@ type NewAutoSensitivityLabelRuleParams struct {
 	ContentExtensionMatchesWords                 any      `ps:"ContentExtensionMatchesWords"`
 	ContentIsNotLabeled                          bool     `ps:"ContentIsNotLabeled"`
 	ContentPropertyContainsWords                 any      `ps:"ContentPropertyContainsWords"`
+	DefaultSpoDocLibraryHasLabel                 bool     `ps:"DefaultSpoDocLibraryHasLabel"`
 	Disabled                                     bool     `ps:"Disabled"`
 	DocumentCreatedBy                            any      `ps:"DocumentCreatedBy"`
 	DocumentIsPasswordProtected                  bool     `ps:"DocumentIsPasswordProtected"`
@@ -4477,6 +5100,9 @@ func (p NewAutoSensitivityLabelRuleParams) params() map[string]any {
 	}
 	if p.ContentPropertyContainsWords != nil {
 		m["ContentPropertyContainsWords"] = p.ContentPropertyContainsWords
+	}
+	if p.DefaultSpoDocLibraryHasLabel {
+		m["DefaultSpoDocLibraryHasLabel"] = true
 	}
 	if p.Disabled {
 		m["Disabled"] = true
@@ -4691,6 +5317,8 @@ func (s *Service) NewCaseHoldPolicy(ctx context.Context, p NewCaseHoldPolicyPara
 // NewCaseHoldRuleParams are the parameters of New-CaseHoldRule.
 type NewCaseHoldRuleParams struct {
 	Comment           string `ps:"Comment"`
+	ContentDateFrom   any    `ps:"ContentDateFrom"`
+	ContentDateTo     any    `ps:"ContentDateTo"`
 	ContentMatchQuery string `ps:"ContentMatchQuery"`
 	Disabled          bool   `ps:"Disabled"`
 	Name              string `ps:"Name"`
@@ -4701,6 +5329,12 @@ func (p NewCaseHoldRuleParams) params() map[string]any {
 	m := map[string]any{}
 	if p.Comment != "" {
 		m["Comment"] = p.Comment
+	}
+	if p.ContentDateFrom != nil {
+		m["ContentDateFrom"] = p.ContentDateFrom
+	}
+	if p.ContentDateTo != nil {
+		m["ContentDateTo"] = p.ContentDateTo
 	}
 	if p.ContentMatchQuery != "" {
 		m["ContentMatchQuery"] = p.ContentMatchQuery
@@ -4722,16 +5356,77 @@ func (s *Service) NewCaseHoldRule(ctx context.Context, p NewCaseHoldRuleParams) 
 	return s.C.Invoke(ctx, "New-CaseHoldRule", p.params())
 }
 
+// NewClassificationGradingPolicyParams are the parameters of New-ClassificationGradingPolicy.
+type NewClassificationGradingPolicyParams struct {
+	EndDateTime                 any      `ps:"EndDateTime"`
+	GraderId                    any      `ps:"GraderId"`
+	Name                        string   `ps:"Name"`
+	SensitiveInformationTypeIds []string `ps:"SensitiveInformationTypeIds"`
+	StartDateTime               any      `ps:"StartDateTime"`
+}
+
+func (p NewClassificationGradingPolicyParams) params() map[string]any {
+	m := map[string]any{}
+	if p.EndDateTime != nil {
+		m["EndDateTime"] = p.EndDateTime
+	}
+	if p.GraderId != nil {
+		m["GraderId"] = p.GraderId
+	}
+	if p.Name != "" {
+		m["Name"] = p.Name
+	}
+	if len(p.SensitiveInformationTypeIds) > 0 {
+		m["SensitiveInformationTypeIds"] = p.SensitiveInformationTypeIds
+	}
+	if p.StartDateTime != nil {
+		m["StartDateTime"] = p.StartDateTime
+	}
+	return m
+}
+
+// NewClassificationGradingPolicy runs the New-ClassificationGradingPolicy cmdlet.
+func (s *Service) NewClassificationGradingPolicy(ctx context.Context, p NewClassificationGradingPolicyParams) (*adminapi.Result, error) {
+	return s.C.Invoke(ctx, "New-ClassificationGradingPolicy", p.params())
+}
+
+// NewComplianceBoundaryParams are the parameters of New-ComplianceBoundary.
+type NewComplianceBoundaryParams struct {
+	Comment               string `ps:"Comment"`
+	CustomRecipientFilter string `ps:"CustomRecipientFilter"`
+	Name                  string `ps:"Name"`
+}
+
+func (p NewComplianceBoundaryParams) params() map[string]any {
+	m := map[string]any{}
+	if p.Comment != "" {
+		m["Comment"] = p.Comment
+	}
+	if p.CustomRecipientFilter != "" {
+		m["CustomRecipientFilter"] = p.CustomRecipientFilter
+	}
+	if p.Name != "" {
+		m["Name"] = p.Name
+	}
+	return m
+}
+
+// NewComplianceBoundary runs the New-ComplianceBoundary cmdlet.
+func (s *Service) NewComplianceBoundary(ctx context.Context, p NewComplianceBoundaryParams) (*adminapi.Result, error) {
+	return s.C.Invoke(ctx, "New-ComplianceBoundary", p.params())
+}
+
 // NewComplianceCaseParams are the parameters of New-ComplianceCase.
 // DefaultParameterSetName: Identity
 type NewComplianceCaseParams struct {
-	CaseType          any    `ps:"CaseType"`
-	Description       string `ps:"Description"`
-	DomainController  any    `ps:"DomainController"`
-	ExternalId        string `ps:"ExternalId"`
-	Name              string `ps:"Name"`
-	SecondaryCaseType string `ps:"SecondaryCaseType"`
-	SourceCaseType    string `ps:"SourceCaseType"`
+	CaseType          any      `ps:"CaseType"`
+	Description       string   `ps:"Description"`
+	DomainController  any      `ps:"DomainController"`
+	ExternalId        string   `ps:"ExternalId"`
+	Name              string   `ps:"Name"`
+	SecondaryCaseType string   `ps:"SecondaryCaseType"`
+	SourceCaseType    string   `ps:"SourceCaseType"`
+	Sources           []string `ps:"Sources"`
 }
 
 func (p NewComplianceCaseParams) params() map[string]any {
@@ -4757,12 +5452,105 @@ func (p NewComplianceCaseParams) params() map[string]any {
 	if p.SourceCaseType != "" {
 		m["SourceCaseType"] = p.SourceCaseType
 	}
+	if len(p.Sources) > 0 {
+		m["Sources"] = p.Sources
+	}
 	return m
 }
 
 // NewComplianceCase runs the New-ComplianceCase cmdlet.
 func (s *Service) NewComplianceCase(ctx context.Context, p NewComplianceCaseParams) (*adminapi.Result, error) {
 	return s.C.Invoke(ctx, "New-ComplianceCase", p.params())
+}
+
+// NewComplianceCustodianParams are the parameters of New-ComplianceCustodian.
+// DefaultParameterSetName: Identity
+type NewComplianceCustodianParams struct {
+	Case                 string   `ps:"Case"`
+	ContactEmail         string   `ps:"ContactEmail"`
+	ExchangeLocation     []string `ps:"ExchangeLocation"`
+	Name                 string   `ps:"Name"`
+	PublicFolderLocation []string `ps:"PublicFolderLocation"`
+	SharePointLocation   []string `ps:"SharePointLocation"`
+}
+
+func (p NewComplianceCustodianParams) params() map[string]any {
+	m := map[string]any{}
+	if p.Case != "" {
+		m["Case"] = p.Case
+	}
+	if p.ContactEmail != "" {
+		m["ContactEmail"] = p.ContactEmail
+	}
+	if len(p.ExchangeLocation) > 0 {
+		m["ExchangeLocation"] = p.ExchangeLocation
+	}
+	if p.Name != "" {
+		m["Name"] = p.Name
+	}
+	if len(p.PublicFolderLocation) > 0 {
+		m["PublicFolderLocation"] = p.PublicFolderLocation
+	}
+	if len(p.SharePointLocation) > 0 {
+		m["SharePointLocation"] = p.SharePointLocation
+	}
+	return m
+}
+
+// NewComplianceCustodian runs the New-ComplianceCustodian cmdlet.
+func (s *Service) NewComplianceCustodian(ctx context.Context, p NewComplianceCustodianParams) (*adminapi.Result, error) {
+	return s.C.Invoke(ctx, "New-ComplianceCustodian", p.params())
+}
+
+// NewComplianceNoticeParams are the parameters of New-ComplianceNotice.
+// DefaultParameterSetName: Identity
+type NewComplianceNoticeParams struct {
+	Case           string   `ps:"Case"`
+	ContentBody    string   `ps:"ContentBody"`
+	CustodianIds   []string `ps:"CustodianIds"`
+	From           string   `ps:"From"`
+	IsHighPriority bool     `ps:"IsHighPriority"`
+	Name           string   `ps:"Name"`
+	Subject        string   `ps:"Subject"`
+	Type           string   `ps:"Type"`
+	UrlPattern     string   `ps:"UrlPattern"`
+}
+
+func (p NewComplianceNoticeParams) params() map[string]any {
+	m := map[string]any{}
+	if p.Case != "" {
+		m["Case"] = p.Case
+	}
+	if p.ContentBody != "" {
+		m["ContentBody"] = p.ContentBody
+	}
+	if len(p.CustodianIds) > 0 {
+		m["CustodianIds"] = p.CustodianIds
+	}
+	if p.From != "" {
+		m["From"] = p.From
+	}
+	if p.IsHighPriority {
+		m["IsHighPriority"] = true
+	}
+	if p.Name != "" {
+		m["Name"] = p.Name
+	}
+	if p.Subject != "" {
+		m["Subject"] = p.Subject
+	}
+	if p.Type != "" {
+		m["Type"] = p.Type
+	}
+	if p.UrlPattern != "" {
+		m["UrlPattern"] = p.UrlPattern
+	}
+	return m
+}
+
+// NewComplianceNotice runs the New-ComplianceNotice cmdlet.
+func (s *Service) NewComplianceNotice(ctx context.Context, p NewComplianceNoticeParams) (*adminapi.Result, error) {
+	return s.C.Invoke(ctx, "New-ComplianceNotice", p.params())
 }
 
 // NewComplianceRetentionEventParams are the parameters of New-ComplianceRetentionEvent.
@@ -4855,11 +5643,17 @@ type NewComplianceSearchParams struct {
 	IncludeOrgContent                     bool     `ps:"IncludeOrgContent"`
 	IncludeUserAppContent                 bool     `ps:"IncludeUserAppContent"`
 	Language                              any      `ps:"Language"`
+	LogLevel                              any      `ps:"LogLevel"`
 	Name                                  string   `ps:"Name"`
+	OneDriveLocation                      []string `ps:"OneDriveLocation"`
+	OneDriveLocationExclusion             []string `ps:"OneDriveLocationExclusion"`
 	PublicFolderLocation                  []string `ps:"PublicFolderLocation"`
+	PublicFolderLocationExclusion         []string `ps:"PublicFolderLocationExclusion"`
 	RefinerNames                          []string `ps:"RefinerNames"`
+	SearchNames                           []string `ps:"SearchNames"`
 	SharePointLocation                    []string `ps:"SharePointLocation"`
 	SharePointLocationExclusion           []string `ps:"SharePointLocationExclusion"`
+	StatusMailRecipients                  []string `ps:"StatusMailRecipients"`
 }
 
 func (p NewComplianceSearchParams) params() map[string]any {
@@ -4897,20 +5691,38 @@ func (p NewComplianceSearchParams) params() map[string]any {
 	if p.Language != nil {
 		m["Language"] = p.Language
 	}
+	if p.LogLevel != nil {
+		m["LogLevel"] = p.LogLevel
+	}
 	if p.Name != "" {
 		m["Name"] = p.Name
+	}
+	if len(p.OneDriveLocation) > 0 {
+		m["OneDriveLocation"] = p.OneDriveLocation
+	}
+	if len(p.OneDriveLocationExclusion) > 0 {
+		m["OneDriveLocationExclusion"] = p.OneDriveLocationExclusion
 	}
 	if len(p.PublicFolderLocation) > 0 {
 		m["PublicFolderLocation"] = p.PublicFolderLocation
 	}
+	if len(p.PublicFolderLocationExclusion) > 0 {
+		m["PublicFolderLocationExclusion"] = p.PublicFolderLocationExclusion
+	}
 	if len(p.RefinerNames) > 0 {
 		m["RefinerNames"] = p.RefinerNames
+	}
+	if len(p.SearchNames) > 0 {
+		m["SearchNames"] = p.SearchNames
 	}
 	if len(p.SharePointLocation) > 0 {
 		m["SharePointLocation"] = p.SharePointLocation
 	}
 	if len(p.SharePointLocationExclusion) > 0 {
 		m["SharePointLocationExclusion"] = p.SharePointLocationExclusion
+	}
+	if len(p.StatusMailRecipients) > 0 {
+		m["StatusMailRecipients"] = p.StatusMailRecipients
 	}
 	return m
 }
@@ -4930,14 +5742,14 @@ type NewComplianceSearchActionParams struct {
 	IncludeCredential                   bool     `ps:"IncludeCredential"`
 	IncludeSharePointDocumentVersions   bool     `ps:"IncludeSharePointDocumentVersions"`
 	JobOptions                          int      `ps:"JobOptions"`
-	Purge                               bool     `ps:"Purge"`
-	PurgeType                           any      `ps:"PurgeType"`
+	MaxUnindexedSize                    int      `ps:"MaxUnindexedSize"`
 	ReferenceActionName                 string   `ps:"ReferenceActionName"`
 	Region                              string   `ps:"Region"`
 	Report                              bool     `ps:"Report"`
 	RetentionReport                     bool     `ps:"RetentionReport"`
 	RetryOnError                        bool     `ps:"RetryOnError"`
 	Scope                               any      `ps:"Scope"` // one of: IndexedItemsOnly, UnindexedItemsOnly, BothIndexedAndUnindexedItems
+	ScopeDetails                        []string `ps:"ScopeDetails"`
 	SearchName                          []string `ps:"SearchName"`
 	SearchNames                         []string `ps:"SearchNames"`
 	Version                             string   `ps:"Version"`
@@ -4966,11 +5778,8 @@ func (p NewComplianceSearchActionParams) params() map[string]any {
 	if p.JobOptions != 0 {
 		m["JobOptions"] = p.JobOptions
 	}
-	if p.Purge {
-		m["Purge"] = true
-	}
-	if p.PurgeType != nil {
-		m["PurgeType"] = p.PurgeType
+	if p.MaxUnindexedSize != 0 {
+		m["MaxUnindexedSize"] = p.MaxUnindexedSize
 	}
 	if p.ReferenceActionName != "" {
 		m["ReferenceActionName"] = p.ReferenceActionName
@@ -4990,6 +5799,9 @@ func (p NewComplianceSearchActionParams) params() map[string]any {
 	if p.Scope != nil {
 		m["Scope"] = p.Scope
 	}
+	if len(p.ScopeDetails) > 0 {
+		m["ScopeDetails"] = p.ScopeDetails
+	}
 	if len(p.SearchName) > 0 {
 		m["SearchName"] = p.SearchName
 	}
@@ -5007,48 +5819,12 @@ func (s *Service) NewComplianceSearchAction(ctx context.Context, p NewCompliance
 	return s.C.Invoke(ctx, "New-ComplianceSearchAction", p.params())
 }
 
-// NewComplianceSecurityFilterParams are the parameters of New-ComplianceSecurityFilter.
-// DefaultParameterSetName: Identity
-type NewComplianceSecurityFilterParams struct {
-	Action      any    `ps:"Action"`
-	Description string `ps:"Description"`
-	FilterName  string `ps:"FilterName"`
-	Filters     any    `ps:"Filters"`
-	Region      string `ps:"Region"`
-	Users       any    `ps:"Users"`
-}
-
-func (p NewComplianceSecurityFilterParams) params() map[string]any {
-	m := map[string]any{}
-	if p.Action != nil {
-		m["Action"] = p.Action
-	}
-	if p.Description != "" {
-		m["Description"] = p.Description
-	}
-	if p.FilterName != "" {
-		m["FilterName"] = p.FilterName
-	}
-	if p.Filters != nil {
-		m["Filters"] = p.Filters
-	}
-	if p.Region != "" {
-		m["Region"] = p.Region
-	}
-	if p.Users != nil {
-		m["Users"] = p.Users
-	}
-	return m
-}
-
-// NewComplianceSecurityFilter runs the New-ComplianceSecurityFilter cmdlet.
-func (s *Service) NewComplianceSecurityFilter(ctx context.Context, p NewComplianceSecurityFilterParams) (*adminapi.Result, error) {
-	return s.C.Invoke(ctx, "New-ComplianceSecurityFilter", p.params())
-}
-
 // NewComplianceTagParams are the parameters of New-ComplianceTag.
 // DefaultParameterSetName: Default
 type NewComplianceTagParams struct {
+	ArchiveEnabled            bool     `ps:"ArchiveEnabled"`
+	ArchiveTriggerBasedOn     string   `ps:"ArchiveTriggerBasedOn"`
+	ArchiveTriggerInDays      any      `ps:"ArchiveTriggerInDays"`
 	AutoApprovalPeriod        any      `ps:"AutoApprovalPeriod"`
 	Comment                   string   `ps:"Comment"`
 	ComplianceTagForNextStage string   `ps:"ComplianceTagForNextStage"`
@@ -5061,16 +5837,25 @@ type NewComplianceTagParams struct {
 	MultiStageReviewProperty  string   `ps:"MultiStageReviewProperty"`
 	Name                      string   `ps:"Name"`
 	Notes                     string   `ps:"Notes"`
-	PriorityCleanup           bool     `ps:"PriorityCleanup"`
 	Regulatory                bool     `ps:"Regulatory"`
 	RetentionAction           string   `ps:"RetentionAction"`
 	RetentionDuration         any      `ps:"RetentionDuration"`
 	RetentionType             string   `ps:"RetentionType"`
 	ReviewerEmail             []string `ps:"ReviewerEmail"`
+	WebHookUrl                string   `ps:"WebHookUrl"`
 }
 
 func (p NewComplianceTagParams) params() map[string]any {
 	m := map[string]any{}
+	if p.ArchiveEnabled {
+		m["ArchiveEnabled"] = true
+	}
+	if p.ArchiveTriggerBasedOn != "" {
+		m["ArchiveTriggerBasedOn"] = p.ArchiveTriggerBasedOn
+	}
+	if p.ArchiveTriggerInDays != nil {
+		m["ArchiveTriggerInDays"] = p.ArchiveTriggerInDays
+	}
 	if p.AutoApprovalPeriod != nil {
 		m["AutoApprovalPeriod"] = p.AutoApprovalPeriod
 	}
@@ -5107,9 +5892,6 @@ func (p NewComplianceTagParams) params() map[string]any {
 	if p.Notes != "" {
 		m["Notes"] = p.Notes
 	}
-	if p.PriorityCleanup {
-		m["PriorityCleanup"] = true
-	}
 	if p.Regulatory {
 		m["Regulatory"] = true
 	}
@@ -5124,6 +5906,9 @@ func (p NewComplianceTagParams) params() map[string]any {
 	}
 	if len(p.ReviewerEmail) > 0 {
 		m["ReviewerEmail"] = p.ReviewerEmail
+	}
+	if p.WebHookUrl != "" {
+		m["WebHookUrl"] = p.WebHookUrl
 	}
 	return m
 }
@@ -5736,6 +6521,63 @@ func (s *Service) NewDeviceTenantRule(ctx context.Context, p NewDeviceTenantRule
 	return s.C.Invoke(ctx, "New-DeviceTenantRule", p.params())
 }
 
+// NewDlpAIPoweredSensitiveInformationTypeParams are the parameters of New-DlpAIPoweredSensitiveInformationType.
+type NewDlpAIPoweredSensitiveInformationTypeParams struct {
+	BaseId any `ps:"BaseId"`
+}
+
+func (p NewDlpAIPoweredSensitiveInformationTypeParams) params() map[string]any {
+	m := map[string]any{}
+	if p.BaseId != nil {
+		m["BaseId"] = p.BaseId
+	}
+	return m
+}
+
+// NewDlpAIPoweredSensitiveInformationType runs the New-DlpAIPoweredSensitiveInformationType cmdlet.
+func (s *Service) NewDlpAIPoweredSensitiveInformationType(ctx context.Context, p NewDlpAIPoweredSensitiveInformationTypeParams) (*adminapi.Result, error) {
+	return s.C.Invoke(ctx, "New-DlpAIPoweredSensitiveInformationType", p.params())
+}
+
+// NewDlpAlertTuningRuleParams are the parameters of New-DlpAlertTuningRule.
+// DefaultParameterSetName: Identity
+type NewDlpAlertTuningRuleParams struct {
+	Actions        string `ps:"Actions"`
+	ApplicableTags string `ps:"ApplicableTags"`
+	Conditions     string `ps:"Conditions"`
+	Description    string `ps:"Description"`
+	Enabled        string `ps:"Enabled"`
+	Name           string `ps:"Name"`
+}
+
+func (p NewDlpAlertTuningRuleParams) params() map[string]any {
+	m := map[string]any{}
+	if p.Actions != "" {
+		m["Actions"] = p.Actions
+	}
+	if p.ApplicableTags != "" {
+		m["ApplicableTags"] = p.ApplicableTags
+	}
+	if p.Conditions != "" {
+		m["Conditions"] = p.Conditions
+	}
+	if p.Description != "" {
+		m["Description"] = p.Description
+	}
+	if p.Enabled != "" {
+		m["Enabled"] = p.Enabled
+	}
+	if p.Name != "" {
+		m["Name"] = p.Name
+	}
+	return m
+}
+
+// NewDlpAlertTuningRule runs the New-DlpAlertTuningRule cmdlet.
+func (s *Service) NewDlpAlertTuningRule(ctx context.Context, p NewDlpAlertTuningRuleParams) (*adminapi.Result, error) {
+	return s.C.Invoke(ctx, "New-DlpAlertTuningRule", p.params())
+}
+
 // NewDlpCompliancePolicyParams are the parameters of New-DlpCompliancePolicy.
 type NewDlpCompliancePolicyParams struct {
 	Comment                               string   `ps:"Comment"`
@@ -5751,6 +6593,9 @@ type NewDlpCompliancePolicyParams struct {
 	ExchangeAdaptiveScopes                any      `ps:"ExchangeAdaptiveScopes"`
 	ExchangeAdaptiveScopesException       any      `ps:"ExchangeAdaptiveScopesException"`
 	ExchangeLocation                      any      `ps:"ExchangeLocation"`
+	ExchangeOnPremisesLocation            any      `ps:"ExchangeOnPremisesLocation"`
+	ExchangeSender                        []string `ps:"ExchangeSender"`
+	ExchangeSenderException               []string `ps:"ExchangeSenderException"`
 	ExchangeSenderMemberOf                []string `ps:"ExchangeSenderMemberOf"`
 	ExchangeSenderMemberOfException       []string `ps:"ExchangeSenderMemberOfException"`
 	Force                                 bool     `ps:"Force"`
@@ -5775,6 +6620,8 @@ type NewDlpCompliancePolicyParams struct {
 	SharePointAdaptiveScopesException     any      `ps:"SharePointAdaptiveScopesException"`
 	SharePointLocation                    any      `ps:"SharePointLocation"`
 	SharePointLocationException           any      `ps:"SharePointLocationException"`
+	SharePointOnPremisesLocationException any      `ps:"SharePointOnPremisesLocationException"`
+	SharePointServerLocation              any      `ps:"SharePointServerLocation"`
 	TeamsAdaptiveScopes                   any      `ps:"TeamsAdaptiveScopes"`
 	TeamsAdaptiveScopesException          any      `ps:"TeamsAdaptiveScopesException"`
 	TeamsLocation                         any      `ps:"TeamsLocation"`
@@ -5824,6 +6671,15 @@ func (p NewDlpCompliancePolicyParams) params() map[string]any {
 	}
 	if p.ExchangeLocation != nil {
 		m["ExchangeLocation"] = p.ExchangeLocation
+	}
+	if p.ExchangeOnPremisesLocation != nil {
+		m["ExchangeOnPremisesLocation"] = p.ExchangeOnPremisesLocation
+	}
+	if len(p.ExchangeSender) > 0 {
+		m["ExchangeSender"] = p.ExchangeSender
+	}
+	if len(p.ExchangeSenderException) > 0 {
+		m["ExchangeSenderException"] = p.ExchangeSenderException
 	}
 	if len(p.ExchangeSenderMemberOf) > 0 {
 		m["ExchangeSenderMemberOf"] = p.ExchangeSenderMemberOf
@@ -5897,6 +6753,12 @@ func (p NewDlpCompliancePolicyParams) params() map[string]any {
 	if p.SharePointLocationException != nil {
 		m["SharePointLocationException"] = p.SharePointLocationException
 	}
+	if p.SharePointOnPremisesLocationException != nil {
+		m["SharePointOnPremisesLocationException"] = p.SharePointOnPremisesLocationException
+	}
+	if p.SharePointServerLocation != nil {
+		m["SharePointServerLocation"] = p.SharePointServerLocation
+	}
 	if p.TeamsAdaptiveScopes != nil {
 		m["TeamsAdaptiveScopes"] = p.TeamsAdaptiveScopes
 	}
@@ -5928,7 +6790,10 @@ func (s *Service) NewDlpCompliancePolicy(ctx context.Context, p NewDlpCompliance
 
 // NewDlpComplianceRuleParams are the parameters of New-DlpComplianceRule.
 type NewDlpComplianceRuleParams struct {
+	AccessedBy                                   []string `ps:"AccessedBy"`
+	AccessedByMemberOf                           []string `ps:"AccessedByMemberOf"`
 	AccessScope                                  any      `ps:"AccessScope"`
+	AccessTimeControl                            any      `ps:"AccessTimeControl"`
 	ActivationDate                               any      `ps:"ActivationDate"`
 	AddRecipients                                any      `ps:"AddRecipients"`
 	AdvancedRule                                 string   `ps:"AdvancedRule"`
@@ -5937,6 +6802,7 @@ type NewDlpComplianceRuleParams struct {
 	AnyOfRecipientAddressMatchesPatterns         any      `ps:"AnyOfRecipientAddressMatchesPatterns"`
 	ApplyBrandingTemplate                        string   `ps:"ApplyBrandingTemplate"`
 	ApplyHtmlDisclaimer                          any      `ps:"ApplyHtmlDisclaimer"`
+	AttachmentCountOver                          any      `ps:"AttachmentCountOver"`
 	AttachmentIsNotLabeled                       bool     `ps:"AttachmentIsNotLabeled"`
 	BlockAccess                                  bool     `ps:"BlockAccess"`
 	BlockAccessScope                             any      `ps:"BlockAccessScope"`
@@ -5947,7 +6813,10 @@ type NewDlpComplianceRuleParams struct {
 	ContentFileTypeMatches                       any      `ps:"ContentFileTypeMatches"`
 	ContentIsNotLabeled                          bool     `ps:"ContentIsNotLabeled"`
 	ContentIsShared                              bool     `ps:"ContentIsShared"`
+	ContentMissingSensitivityLabel               any      `ps:"ContentMissingSensitivityLabel"`
 	ContentPropertyContainsWords                 any      `ps:"ContentPropertyContainsWords"`
+	ContextPropertiesContainWords                any      `ps:"ContextPropertiesContainWords"`
+	DeviceManagementType                         any      `ps:"DeviceManagementType"` // one of: Managed, Unmanaged
 	Disabled                                     bool     `ps:"Disabled"`
 	DisplayName                                  string   `ps:"DisplayName"`
 	DocumentContainsWords                        any      `ps:"DocumentContainsWords"`
@@ -5964,6 +6833,8 @@ type NewDlpComplianceRuleParams struct {
 	EndpointDlpRestrictions                      []string `ps:"EndpointDlpRestrictions"`
 	EnforcePortalAccess                          bool     `ps:"EnforcePortalAccess"`
 	EvaluateRulePerComponent                     bool     `ps:"EvaluateRulePerComponent"`
+	ExceptIfAccessedBy                           []string `ps:"ExceptIfAccessedBy"`
+	ExceptIfAccessedByMemberOf                   []string `ps:"ExceptIfAccessedByMemberOf"`
 	ExceptIfAccessScope                          any      `ps:"ExceptIfAccessScope"`
 	ExceptIfAnyOfRecipientAddressContainsWords   any      `ps:"ExceptIfAnyOfRecipientAddressContainsWords"`
 	ExceptIfAnyOfRecipientAddressMatchesPatterns any      `ps:"ExceptIfAnyOfRecipientAddressMatchesPatterns"`
@@ -5973,6 +6844,8 @@ type NewDlpComplianceRuleParams struct {
 	ExceptIfContentFileTypeMatches               any      `ps:"ExceptIfContentFileTypeMatches"`
 	ExceptIfContentIsShared                      bool     `ps:"ExceptIfContentIsShared"`
 	ExceptIfContentPropertyContainsWords         any      `ps:"ExceptIfContentPropertyContainsWords"`
+	ExceptIfContextPropertiesContainWords        any      `ps:"ExceptIfContextPropertiesContainWords"`
+	ExceptIfDeviceManagementType                 any      `ps:"ExceptIfDeviceManagementType"` // one of: Managed, Unmanaged
 	ExceptIfDocumentContainsWords                any      `ps:"ExceptIfDocumentContainsWords"`
 	ExceptIfDocumentCreatedBy                    any      `ps:"ExceptIfDocumentCreatedBy"`
 	ExceptIfDocumentCreatedByMemberOf            []string `ps:"ExceptIfDocumentCreatedByMemberOf"`
@@ -5988,8 +6861,10 @@ type NewDlpComplianceRuleParams struct {
 	ExceptIfFromMemberOf                         []string `ps:"ExceptIfFromMemberOf"`
 	ExceptIfFromScope                            any      `ps:"ExceptIfFromScope"`
 	ExceptIfHasSenderOverride                    bool     `ps:"ExceptIfHasSenderOverride"`
+	ExceptIfHeaderContainsTokens                 any      `ps:"ExceptIfHeaderContainsTokens"`
 	ExceptIfHeaderContainsWords                  any      `ps:"ExceptIfHeaderContainsWords"`
 	ExceptIfHeaderMatchesPatterns                any      `ps:"ExceptIfHeaderMatchesPatterns"`
+	ExceptIfMessageLabelChangeDetected           any      `ps:"ExceptIfMessageLabelChangeDetected"`
 	ExceptIfMessageSizeOver                      any      `ps:"ExceptIfMessageSizeOver"`
 	ExceptIfMessageTypeMatches                   any      `ps:"ExceptIfMessageTypeMatches"`
 	ExceptIfProcessingLimitExceeded              bool     `ps:"ExceptIfProcessingLimitExceeded"`
@@ -6002,11 +6877,14 @@ type NewDlpComplianceRuleParams struct {
 	ExceptIfSenderIPRanges                       any      `ps:"ExceptIfSenderIPRanges"`
 	ExceptIfSentTo                               any      `ps:"ExceptIfSentTo"`
 	ExceptIfSentToMemberOf                       []string `ps:"ExceptIfSentToMemberOf"`
+	ExceptIfSharedWithDomain                     any      `ps:"ExceptIfSharedWithDomain"`
 	ExceptIfSubjectContainsWords                 any      `ps:"ExceptIfSubjectContainsWords"`
 	ExceptIfSubjectMatchesPatterns               any      `ps:"ExceptIfSubjectMatchesPatterns"`
 	ExceptIfSubjectOrBodyContainsWords           any      `ps:"ExceptIfSubjectOrBodyContainsWords"`
 	ExceptIfSubjectOrBodyMatchesPatterns         any      `ps:"ExceptIfSubjectOrBodyMatchesPatterns"`
+	ExceptIfTeamsSharedWithParticipantCategory   any      `ps:"ExceptIfTeamsSharedWithParticipantCategory"`
 	ExceptIfUnscannableDocumentExtensionIs       any      `ps:"ExceptIfUnscannableDocumentExtensionIs"`
+	ExceptIfUrlContainsText                      any      `ps:"ExceptIfUrlContainsText"`
 	ExceptIfWithImportance                       any      `ps:"ExceptIfWithImportance"`
 	ExpiryDate                                   any      `ps:"ExpiryDate"`
 	From                                         []string `ps:"From"`
@@ -6017,17 +6895,22 @@ type NewDlpComplianceRuleParams struct {
 	GenerateAlert                                any      `ps:"GenerateAlert"`
 	GenerateIncidentReport                       any      `ps:"GenerateIncidentReport"`
 	HasActivity                                  any      `ps:"HasActivity"`
+	HasLabelDowngradedFrom                       any      `ps:"HasLabelDowngradedFrom"`
 	HasSenderOverride                            bool     `ps:"HasSenderOverride"`
+	HeaderContainsTokens                         any      `ps:"HeaderContainsTokens"`
 	HeaderContainsWords                          any      `ps:"HeaderContainsWords"`
 	HeaderMatchesPatterns                        any      `ps:"HeaderMatchesPatterns"`
 	ImmutableId                                  any      `ps:"ImmutableId"`
 	IncidentReportContent                        []string `ps:"IncidentReportContent"`
+	MapRecipients                                any      `ps:"MapRecipients"`
 	MessageIsNotLabeled                          bool     `ps:"MessageIsNotLabeled"`
+	MessageLabelChangeDetected                   any      `ps:"MessageLabelChangeDetected"`
 	MessageSizeOver                              any      `ps:"MessageSizeOver"`
 	MessageTypeMatches                           any      `ps:"MessageTypeMatches"`
 	MipRestrictAccess                            []string `ps:"MipRestrictAccess"`
 	Moderate                                     any      `ps:"Moderate"`
 	ModifySubject                                any      `ps:"ModifySubject"`
+	MoveToQuarantineLocation                     bool     `ps:"MoveToQuarantineLocation"`
 	Name                                         string   `ps:"Name"`
 	NonBifurcatingAccessScope                    any      `ps:"NonBifurcatingAccessScope"`
 	NotifyAllowOverride                          []string `ps:"NotifyAllowOverride"`
@@ -6037,6 +6920,8 @@ type NewDlpComplianceRuleParams struct {
 	NotifyEmailExchangeIncludeAttachment         bool     `ps:"NotifyEmailExchangeIncludeAttachment"`
 	NotifyEmailOnedriveRemediationActions        any      `ps:"NotifyEmailOnedriveRemediationActions"`
 	NotifyEndpointUser                           any      `ps:"NotifyEndpointUser"`
+	NotifyJustificationCustomText                string   `ps:"NotifyJustificationCustomText"`
+	NotifyJustificationCustomTextTranslations    any      `ps:"NotifyJustificationCustomTextTranslations"`
 	NotifyOverrideRequirements                   any      `ps:"NotifyOverrideRequirements"`
 	NotifyPolicyTipCustomDialog                  string   `ps:"NotifyPolicyTipCustomDialog"`
 	NotifyPolicyTipCustomText                    string   `ps:"NotifyPolicyTipCustomText"`
@@ -6047,6 +6932,7 @@ type NewDlpComplianceRuleParams struct {
 	NotifyUserType                               any      `ps:"NotifyUserType"`
 	OnPremisesScannerDlpRestrictions             []string `ps:"OnPremisesScannerDlpRestrictions"`
 	Policy                                       any      `ps:"Policy"`
+	PowerBIDlpRestrictions                       []string `ps:"PowerBIDlpRestrictions"`
 	PrependSubject                               string   `ps:"PrependSubject"`
 	Priority                                     any      `ps:"Priority"`
 	ProcessingLimitExceeded                      bool     `ps:"ProcessingLimitExceeded"`
@@ -6054,6 +6940,7 @@ type NewDlpComplianceRuleParams struct {
 	RecipientADAttributeContainsWords            any      `ps:"RecipientADAttributeContainsWords"`
 	RecipientADAttributeMatchesPatterns          any      `ps:"RecipientADAttributeMatchesPatterns"`
 	RecipientDomainIs                            any      `ps:"RecipientDomainIs"`
+	RedactSensitiveInfo                          any      `ps:"RedactSensitiveInfo"`
 	RedirectMessageTo                            []string `ps:"RedirectMessageTo"`
 	RemoveHeader                                 any      `ps:"RemoveHeader"`
 	RemoveRMSTemplate                            bool     `ps:"RemoveRMSTemplate"`
@@ -6067,10 +6954,13 @@ type NewDlpComplianceRuleParams struct {
 	SenderAddressLocation                        any      `ps:"SenderAddressLocation"`
 	SenderDomainIs                               any      `ps:"SenderDomainIs"`
 	SenderIPRanges                               any      `ps:"SenderIPRanges"`
+	SenderType                                   any      `ps:"SenderType"`
 	SentTo                                       any      `ps:"SentTo"`
 	SentToMemberOf                               []string `ps:"SentToMemberOf"`
 	SetHeader                                    any      `ps:"SetHeader"`
+	SharedByIRMAgentRisk                         any      `ps:"SharedByIRMAgentRisk"`
 	SharedByIRMUserRisk                          any      `ps:"SharedByIRMUserRisk"`
+	SharedWithDomain                             any      `ps:"SharedWithDomain"`
 	SharepointBlockDomains                       any      `ps:"SharepointBlockDomains"`
 	SharepointBlockDomainsExcept                 any      `ps:"SharepointBlockDomainsExcept"`
 	SharepointBlockDomainsOrUsers                bool     `ps:"SharepointBlockDomainsOrUsers"`
@@ -6082,17 +6972,28 @@ type NewDlpComplianceRuleParams struct {
 	SubjectMatchesPatterns                       any      `ps:"SubjectMatchesPatterns"`
 	SubjectOrBodyContainsWords                   any      `ps:"SubjectOrBodyContainsWords"`
 	SubjectOrBodyMatchesPatterns                 any      `ps:"SubjectOrBodyMatchesPatterns"`
+	TeamsSharedWithParticipantCategory           any      `ps:"TeamsSharedWithParticipantCategory"`
 	ThirdPartyAppDlpRestrictions                 []string `ps:"ThirdPartyAppDlpRestrictions"`
 	TriggerPowerAutomateFlow                     string   `ps:"TriggerPowerAutomateFlow"`
 	UnscannableDocumentExtensionIs               any      `ps:"UnscannableDocumentExtensionIs"`
+	UrlContainsText                              any      `ps:"UrlContainsText"`
 	ValidateRule                                 bool     `ps:"ValidateRule"`
 	WithImportance                               any      `ps:"WithImportance"`
 }
 
 func (p NewDlpComplianceRuleParams) params() map[string]any {
 	m := map[string]any{}
+	if len(p.AccessedBy) > 0 {
+		m["AccessedBy"] = p.AccessedBy
+	}
+	if len(p.AccessedByMemberOf) > 0 {
+		m["AccessedByMemberOf"] = p.AccessedByMemberOf
+	}
 	if p.AccessScope != nil {
 		m["AccessScope"] = p.AccessScope
+	}
+	if p.AccessTimeControl != nil {
+		m["AccessTimeControl"] = p.AccessTimeControl
 	}
 	if p.ActivationDate != nil {
 		m["ActivationDate"] = p.ActivationDate
@@ -6117,6 +7018,9 @@ func (p NewDlpComplianceRuleParams) params() map[string]any {
 	}
 	if p.ApplyHtmlDisclaimer != nil {
 		m["ApplyHtmlDisclaimer"] = p.ApplyHtmlDisclaimer
+	}
+	if p.AttachmentCountOver != nil {
+		m["AttachmentCountOver"] = p.AttachmentCountOver
 	}
 	if p.AttachmentIsNotLabeled {
 		m["AttachmentIsNotLabeled"] = true
@@ -6148,8 +7052,17 @@ func (p NewDlpComplianceRuleParams) params() map[string]any {
 	if p.ContentIsShared {
 		m["ContentIsShared"] = true
 	}
+	if p.ContentMissingSensitivityLabel != nil {
+		m["ContentMissingSensitivityLabel"] = p.ContentMissingSensitivityLabel
+	}
 	if p.ContentPropertyContainsWords != nil {
 		m["ContentPropertyContainsWords"] = p.ContentPropertyContainsWords
+	}
+	if p.ContextPropertiesContainWords != nil {
+		m["ContextPropertiesContainWords"] = p.ContextPropertiesContainWords
+	}
+	if p.DeviceManagementType != nil {
+		m["DeviceManagementType"] = p.DeviceManagementType
 	}
 	if p.Disabled {
 		m["Disabled"] = true
@@ -6199,6 +7112,12 @@ func (p NewDlpComplianceRuleParams) params() map[string]any {
 	if p.EvaluateRulePerComponent {
 		m["EvaluateRulePerComponent"] = true
 	}
+	if len(p.ExceptIfAccessedBy) > 0 {
+		m["ExceptIfAccessedBy"] = p.ExceptIfAccessedBy
+	}
+	if len(p.ExceptIfAccessedByMemberOf) > 0 {
+		m["ExceptIfAccessedByMemberOf"] = p.ExceptIfAccessedByMemberOf
+	}
 	if p.ExceptIfAccessScope != nil {
 		m["ExceptIfAccessScope"] = p.ExceptIfAccessScope
 	}
@@ -6225,6 +7144,12 @@ func (p NewDlpComplianceRuleParams) params() map[string]any {
 	}
 	if p.ExceptIfContentPropertyContainsWords != nil {
 		m["ExceptIfContentPropertyContainsWords"] = p.ExceptIfContentPropertyContainsWords
+	}
+	if p.ExceptIfContextPropertiesContainWords != nil {
+		m["ExceptIfContextPropertiesContainWords"] = p.ExceptIfContextPropertiesContainWords
+	}
+	if p.ExceptIfDeviceManagementType != nil {
+		m["ExceptIfDeviceManagementType"] = p.ExceptIfDeviceManagementType
 	}
 	if p.ExceptIfDocumentContainsWords != nil {
 		m["ExceptIfDocumentContainsWords"] = p.ExceptIfDocumentContainsWords
@@ -6271,11 +7196,17 @@ func (p NewDlpComplianceRuleParams) params() map[string]any {
 	if p.ExceptIfHasSenderOverride {
 		m["ExceptIfHasSenderOverride"] = true
 	}
+	if p.ExceptIfHeaderContainsTokens != nil {
+		m["ExceptIfHeaderContainsTokens"] = p.ExceptIfHeaderContainsTokens
+	}
 	if p.ExceptIfHeaderContainsWords != nil {
 		m["ExceptIfHeaderContainsWords"] = p.ExceptIfHeaderContainsWords
 	}
 	if p.ExceptIfHeaderMatchesPatterns != nil {
 		m["ExceptIfHeaderMatchesPatterns"] = p.ExceptIfHeaderMatchesPatterns
+	}
+	if p.ExceptIfMessageLabelChangeDetected != nil {
+		m["ExceptIfMessageLabelChangeDetected"] = p.ExceptIfMessageLabelChangeDetected
 	}
 	if p.ExceptIfMessageSizeOver != nil {
 		m["ExceptIfMessageSizeOver"] = p.ExceptIfMessageSizeOver
@@ -6313,6 +7244,9 @@ func (p NewDlpComplianceRuleParams) params() map[string]any {
 	if len(p.ExceptIfSentToMemberOf) > 0 {
 		m["ExceptIfSentToMemberOf"] = p.ExceptIfSentToMemberOf
 	}
+	if p.ExceptIfSharedWithDomain != nil {
+		m["ExceptIfSharedWithDomain"] = p.ExceptIfSharedWithDomain
+	}
 	if p.ExceptIfSubjectContainsWords != nil {
 		m["ExceptIfSubjectContainsWords"] = p.ExceptIfSubjectContainsWords
 	}
@@ -6325,8 +7259,14 @@ func (p NewDlpComplianceRuleParams) params() map[string]any {
 	if p.ExceptIfSubjectOrBodyMatchesPatterns != nil {
 		m["ExceptIfSubjectOrBodyMatchesPatterns"] = p.ExceptIfSubjectOrBodyMatchesPatterns
 	}
+	if p.ExceptIfTeamsSharedWithParticipantCategory != nil {
+		m["ExceptIfTeamsSharedWithParticipantCategory"] = p.ExceptIfTeamsSharedWithParticipantCategory
+	}
 	if p.ExceptIfUnscannableDocumentExtensionIs != nil {
 		m["ExceptIfUnscannableDocumentExtensionIs"] = p.ExceptIfUnscannableDocumentExtensionIs
+	}
+	if p.ExceptIfUrlContainsText != nil {
+		m["ExceptIfUrlContainsText"] = p.ExceptIfUrlContainsText
 	}
 	if p.ExceptIfWithImportance != nil {
 		m["ExceptIfWithImportance"] = p.ExceptIfWithImportance
@@ -6358,8 +7298,14 @@ func (p NewDlpComplianceRuleParams) params() map[string]any {
 	if p.HasActivity != nil {
 		m["HasActivity"] = p.HasActivity
 	}
+	if p.HasLabelDowngradedFrom != nil {
+		m["HasLabelDowngradedFrom"] = p.HasLabelDowngradedFrom
+	}
 	if p.HasSenderOverride {
 		m["HasSenderOverride"] = true
+	}
+	if p.HeaderContainsTokens != nil {
+		m["HeaderContainsTokens"] = p.HeaderContainsTokens
 	}
 	if p.HeaderContainsWords != nil {
 		m["HeaderContainsWords"] = p.HeaderContainsWords
@@ -6373,8 +7319,14 @@ func (p NewDlpComplianceRuleParams) params() map[string]any {
 	if len(p.IncidentReportContent) > 0 {
 		m["IncidentReportContent"] = p.IncidentReportContent
 	}
+	if p.MapRecipients != nil {
+		m["MapRecipients"] = p.MapRecipients
+	}
 	if p.MessageIsNotLabeled {
 		m["MessageIsNotLabeled"] = true
+	}
+	if p.MessageLabelChangeDetected != nil {
+		m["MessageLabelChangeDetected"] = p.MessageLabelChangeDetected
 	}
 	if p.MessageSizeOver != nil {
 		m["MessageSizeOver"] = p.MessageSizeOver
@@ -6390,6 +7342,9 @@ func (p NewDlpComplianceRuleParams) params() map[string]any {
 	}
 	if p.ModifySubject != nil {
 		m["ModifySubject"] = p.ModifySubject
+	}
+	if p.MoveToQuarantineLocation {
+		m["MoveToQuarantineLocation"] = true
 	}
 	if p.Name != "" {
 		m["Name"] = p.Name
@@ -6417,6 +7372,12 @@ func (p NewDlpComplianceRuleParams) params() map[string]any {
 	}
 	if p.NotifyEndpointUser != nil {
 		m["NotifyEndpointUser"] = p.NotifyEndpointUser
+	}
+	if p.NotifyJustificationCustomText != "" {
+		m["NotifyJustificationCustomText"] = p.NotifyJustificationCustomText
+	}
+	if p.NotifyJustificationCustomTextTranslations != nil {
+		m["NotifyJustificationCustomTextTranslations"] = p.NotifyJustificationCustomTextTranslations
 	}
 	if p.NotifyOverrideRequirements != nil {
 		m["NotifyOverrideRequirements"] = p.NotifyOverrideRequirements
@@ -6448,6 +7409,9 @@ func (p NewDlpComplianceRuleParams) params() map[string]any {
 	if p.Policy != nil {
 		m["Policy"] = p.Policy
 	}
+	if len(p.PowerBIDlpRestrictions) > 0 {
+		m["PowerBIDlpRestrictions"] = p.PowerBIDlpRestrictions
+	}
 	if p.PrependSubject != "" {
 		m["PrependSubject"] = p.PrependSubject
 	}
@@ -6468,6 +7432,9 @@ func (p NewDlpComplianceRuleParams) params() map[string]any {
 	}
 	if p.RecipientDomainIs != nil {
 		m["RecipientDomainIs"] = p.RecipientDomainIs
+	}
+	if p.RedactSensitiveInfo != nil {
+		m["RedactSensitiveInfo"] = p.RedactSensitiveInfo
 	}
 	if len(p.RedirectMessageTo) > 0 {
 		m["RedirectMessageTo"] = p.RedirectMessageTo
@@ -6508,6 +7475,9 @@ func (p NewDlpComplianceRuleParams) params() map[string]any {
 	if p.SenderIPRanges != nil {
 		m["SenderIPRanges"] = p.SenderIPRanges
 	}
+	if p.SenderType != nil {
+		m["SenderType"] = p.SenderType
+	}
 	if p.SentTo != nil {
 		m["SentTo"] = p.SentTo
 	}
@@ -6517,8 +7487,14 @@ func (p NewDlpComplianceRuleParams) params() map[string]any {
 	if p.SetHeader != nil {
 		m["SetHeader"] = p.SetHeader
 	}
+	if p.SharedByIRMAgentRisk != nil {
+		m["SharedByIRMAgentRisk"] = p.SharedByIRMAgentRisk
+	}
 	if p.SharedByIRMUserRisk != nil {
 		m["SharedByIRMUserRisk"] = p.SharedByIRMUserRisk
+	}
+	if p.SharedWithDomain != nil {
+		m["SharedWithDomain"] = p.SharedWithDomain
 	}
 	if p.SharepointBlockDomains != nil {
 		m["SharepointBlockDomains"] = p.SharepointBlockDomains
@@ -6553,6 +7529,9 @@ func (p NewDlpComplianceRuleParams) params() map[string]any {
 	if p.SubjectOrBodyMatchesPatterns != nil {
 		m["SubjectOrBodyMatchesPatterns"] = p.SubjectOrBodyMatchesPatterns
 	}
+	if p.TeamsSharedWithParticipantCategory != nil {
+		m["TeamsSharedWithParticipantCategory"] = p.TeamsSharedWithParticipantCategory
+	}
 	if len(p.ThirdPartyAppDlpRestrictions) > 0 {
 		m["ThirdPartyAppDlpRestrictions"] = p.ThirdPartyAppDlpRestrictions
 	}
@@ -6561,6 +7540,9 @@ func (p NewDlpComplianceRuleParams) params() map[string]any {
 	}
 	if p.UnscannableDocumentExtensionIs != nil {
 		m["UnscannableDocumentExtensionIs"] = p.UnscannableDocumentExtensionIs
+	}
+	if p.UrlContainsText != nil {
+		m["UrlContainsText"] = p.UrlContainsText
 	}
 	if p.ValidateRule {
 		m["ValidateRule"] = true
@@ -6599,6 +7581,7 @@ type NewDlpFingerprintParams struct {
 	Description     string   `ps:"Description"`
 	FileData        []string `ps:"FileData"`
 	IsExact         bool     `ps:"IsExact"`
+	Threshold       any      `ps:"Threshold"`
 	ThresholdConfig any      `ps:"ThresholdConfig"`
 }
 
@@ -6613,6 +7596,9 @@ func (p NewDlpFingerprintParams) params() map[string]any {
 	if p.IsExact {
 		m["IsExact"] = true
 	}
+	if p.Threshold != nil {
+		m["Threshold"] = p.Threshold
+	}
 	if p.ThresholdConfig != nil {
 		m["ThresholdConfig"] = p.ThresholdConfig
 	}
@@ -6626,17 +7612,22 @@ func (s *Service) NewDlpFingerprint(ctx context.Context, p NewDlpFingerprintPara
 
 // NewDlpKeywordDictionaryParams are the parameters of New-DlpKeywordDictionary.
 type NewDlpKeywordDictionaryParams struct {
-	Description          string   `ps:"Description"`
-	DoNotPersistKeywords bool     `ps:"DoNotPersistKeywords"`
-	FileData             []string `ps:"FileData"`
-	MatchStyle           string   `ps:"MatchStyle"` // one of: word, string
-	Name                 string   `ps:"Name"`
+	Description            string   `ps:"Description"`
+	DoNotPersistDictionary bool     `ps:"DoNotPersistDictionary"`
+	DoNotPersistKeywords   bool     `ps:"DoNotPersistKeywords"`
+	FileData               []string `ps:"FileData"`
+	MatchStyle             string   `ps:"MatchStyle"` // one of: word, string
+	Name                   string   `ps:"Name"`
+	Organization           any      `ps:"Organization"`
 }
 
 func (p NewDlpKeywordDictionaryParams) params() map[string]any {
 	m := map[string]any{}
 	if p.Description != "" {
 		m["Description"] = p.Description
+	}
+	if p.DoNotPersistDictionary {
+		m["DoNotPersistDictionary"] = true
 	}
 	if p.DoNotPersistKeywords {
 		m["DoNotPersistKeywords"] = true
@@ -6649,6 +7640,9 @@ func (p NewDlpKeywordDictionaryParams) params() map[string]any {
 	}
 	if p.Name != "" {
 		m["Name"] = p.Name
+	}
+	if p.Organization != nil {
+		m["Organization"] = p.Organization
 	}
 	return m
 }
@@ -6666,6 +7660,7 @@ type NewDlpSensitiveInformationTypeParams struct {
 	IsExact         bool     `ps:"IsExact"`
 	Locale          any      `ps:"Locale"`
 	Name            string   `ps:"Name"`
+	Threshold       any      `ps:"Threshold"`
 	ThresholdConfig any      `ps:"ThresholdConfig"`
 }
 
@@ -6688,6 +7683,9 @@ func (p NewDlpSensitiveInformationTypeParams) params() map[string]any {
 	}
 	if p.Name != "" {
 		m["Name"] = p.Name
+	}
+	if p.Threshold != nil {
+		m["Threshold"] = p.Threshold
 	}
 	if p.ThresholdConfig != nil {
 		m["ThresholdConfig"] = p.ThresholdConfig
@@ -6751,12 +7749,13 @@ func (s *Service) NewDspmPolicy(ctx context.Context, p NewDspmPolicyParams) (*ad
 
 // NewFeatureConfigurationParams are the parameters of New-FeatureConfiguration.
 type NewFeatureConfigurationParams struct {
-	Comment         string `ps:"Comment"`
-	FeatureScenario any    `ps:"FeatureScenario"`
-	Locations       string `ps:"Locations"`
-	Mode            any    `ps:"Mode"`
-	Name            string `ps:"Name"`
-	ScenarioConfig  string `ps:"ScenarioConfig"`
+	Comment          string `ps:"Comment"`
+	FeatureScenario  any    `ps:"FeatureScenario"`
+	Locations        string `ps:"Locations"`
+	Mode             any    `ps:"Mode"`
+	Name             string `ps:"Name"`
+	PolicyRBACScopes any    `ps:"PolicyRBACScopes"`
+	ScenarioConfig   string `ps:"ScenarioConfig"`
 }
 
 func (p NewFeatureConfigurationParams) params() map[string]any {
@@ -6775,6 +7774,9 @@ func (p NewFeatureConfigurationParams) params() map[string]any {
 	}
 	if p.Name != "" {
 		m["Name"] = p.Name
+	}
+	if p.PolicyRBACScopes != nil {
+		m["PolicyRBACScopes"] = p.PolicyRBACScopes
 	}
 	if p.ScenarioConfig != "" {
 		m["ScenarioConfig"] = p.ScenarioConfig
@@ -6905,6 +7907,41 @@ func (p NewFilePlanPropertySubCategoryParams) params() map[string]any {
 // NewFilePlanPropertySubCategory runs the New-FilePlanPropertySubCategory cmdlet.
 func (s *Service) NewFilePlanPropertySubCategory(ctx context.Context, p NewFilePlanPropertySubCategoryParams) (*adminapi.Result, error) {
 	return s.C.Invoke(ctx, "New-FilePlanPropertySubCategory", p.params())
+}
+
+// NewGlobalListParams are the parameters of New-GlobalList.
+// DefaultParameterSetName: Default
+type NewGlobalListParams struct {
+	Comment         string `ps:"Comment"`
+	GlobalListType  any    `ps:"GlobalListType"`
+	GlobalListValue any    `ps:"GlobalListValue"`
+	Name            string `ps:"Name"`
+	Organization    any    `ps:"Organization"`
+}
+
+func (p NewGlobalListParams) params() map[string]any {
+	m := map[string]any{}
+	if p.Comment != "" {
+		m["Comment"] = p.Comment
+	}
+	if p.GlobalListType != nil {
+		m["GlobalListType"] = p.GlobalListType
+	}
+	if p.GlobalListValue != nil {
+		m["GlobalListValue"] = p.GlobalListValue
+	}
+	if p.Name != "" {
+		m["Name"] = p.Name
+	}
+	if p.Organization != nil {
+		m["Organization"] = p.Organization
+	}
+	return m
+}
+
+// NewGlobalList runs the New-GlobalList cmdlet.
+func (s *Service) NewGlobalList(ctx context.Context, p NewGlobalListParams) (*adminapi.Result, error) {
+	return s.C.Invoke(ctx, "New-GlobalList", p.params())
 }
 
 // NewHoldCompliancePolicyParams are the parameters of New-HoldCompliancePolicy.
@@ -7268,6 +8305,7 @@ type NewJitConfigurationParams struct {
 	OneDriveLocationException        any      `ps:"OneDriveLocationException"`
 	OneDriveSharedBy                 []string `ps:"OneDriveSharedBy"`
 	OneDriveSharedByMemberOf         []string `ps:"OneDriveSharedByMemberOf"`
+	Organization                     any      `ps:"Organization"`
 	SharePointLocation               any      `ps:"SharePointLocation"`
 	SharePointLocationException      any      `ps:"SharePointLocationException"`
 }
@@ -7310,6 +8348,9 @@ func (p NewJitConfigurationParams) params() map[string]any {
 	if len(p.OneDriveSharedByMemberOf) > 0 {
 		m["OneDriveSharedByMemberOf"] = p.OneDriveSharedByMemberOf
 	}
+	if p.Organization != nil {
+		m["Organization"] = p.Organization
+	}
 	if p.SharePointLocation != nil {
 		m["SharePointLocation"] = p.SharePointLocation
 	}
@@ -7326,6 +8367,7 @@ func (s *Service) NewJitConfiguration(ctx context.Context, p NewJitConfiguration
 
 // NewLabelParams are the parameters of New-Label.
 type NewLabelParams struct {
+	AbacEnabled                                           any    `ps:"AbacEnabled"`
 	AdvancedSettings                                      any    `ps:"AdvancedSettings"`
 	ApplyContentMarkingFooterAlignment                    any    `ps:"ApplyContentMarkingFooterAlignment"`
 	ApplyContentMarkingFooterEnabled                      any    `ps:"ApplyContentMarkingFooterEnabled"`
@@ -7342,6 +8384,8 @@ type NewLabelParams struct {
 	ApplyContentMarkingHeaderMargin                       any    `ps:"ApplyContentMarkingHeaderMargin"`
 	ApplyContentMarkingHeaderText                         string `ps:"ApplyContentMarkingHeaderText"`
 	ApplyDynamicWatermarkingEnabled                       any    `ps:"ApplyDynamicWatermarkingEnabled"`
+	ApplyMessageMetaData                                  any    `ps:"ApplyMessageMetaData"`
+	ApplyMessageMetaDataEnabled                           any    `ps:"ApplyMessageMetaDataEnabled"`
 	ApplyWaterMarkingEnabled                              any    `ps:"ApplyWaterMarkingEnabled"`
 	ApplyWaterMarkingFontColor                            string `ps:"ApplyWaterMarkingFontColor"`
 	ApplyWaterMarkingFontName                             string `ps:"ApplyWaterMarkingFontName"`
@@ -7350,13 +8394,20 @@ type NewLabelParams struct {
 	ApplyWaterMarkingText                                 string `ps:"ApplyWaterMarkingText"`
 	ColumnAssetCondition                                  string `ps:"ColumnAssetCondition"`
 	Comment                                               string `ps:"Comment"`
+	ConditionalAccessAuthContext                          string `ps:"ConditionalAccessAuthContext"`
 	Conditions                                            any    `ps:"Conditions"`
 	ContentType                                           any    `ps:"ContentType"`
 	DefaultContentLabel                                   string `ps:"DefaultContentLabel"`
+	DenyAccessEnabled                                     any    `ps:"DenyAccessEnabled"`
+	DenyAccessExcludedPrincipals                          string `ps:"DenyAccessExcludedPrincipals"`
+	DenyAccessIncludedPrincipals                          string `ps:"DenyAccessIncludedPrincipals"`
+	DenyAccessRights                                      string `ps:"DenyAccessRights"`
+	DenyAccessWorkload                                    string `ps:"DenyAccessWorkload"`
 	DisplayName                                           string `ps:"DisplayName"`
 	DynamicWatermarkDisplay                               string `ps:"DynamicWatermarkDisplay"`
 	EncryptionAipTemplateScopes                           string `ps:"EncryptionAipTemplateScopes"`
 	EncryptionContentExpiredOnDateInDaysOrNever           string `ps:"EncryptionContentExpiredOnDateInDaysOrNever"`
+	EncryptionDisableAutomaticOwnerRights                 any    `ps:"EncryptionDisableAutomaticOwnerRights"`
 	EncryptionDoNotForward                                any    `ps:"EncryptionDoNotForward"`
 	EncryptionDoubleKeyEncryptionUrl                      string `ps:"EncryptionDoubleKeyEncryptionUrl"`
 	EncryptionEnabled                                     any    `ps:"EncryptionEnabled"`
@@ -7369,12 +8420,15 @@ type NewLabelParams struct {
 	EncryptionRightsUrl                                   string `ps:"EncryptionRightsUrl"`
 	EncryptionTemplateId                                  string `ps:"EncryptionTemplateId"`
 	Identity                                              any    `ps:"Identity"`
+	InformationProtectionAttributeRequired                any    `ps:"InformationProtectionAttributeRequired"`
+	InheritToChildItems                                   any    `ps:"InheritToChildItems"`
 	IsLabelGroup                                          bool   `ps:"IsLabelGroup"`
 	LabelActions                                          any    `ps:"LabelActions"`
 	LocaleSettings                                        any    `ps:"LocaleSettings"`
 	MigrationId                                           string `ps:"MigrationId"`
 	Name                                                  string `ps:"Name"`
 	ParentId                                              any    `ps:"ParentId"`
+	RuleBlob                                              string `ps:"RuleBlob"`
 	SchematizedDataCondition                              string `ps:"SchematizedDataCondition"`
 	Setting                                               any    `ps:"Setting"`
 	Settings                                              any    `ps:"Settings"`
@@ -7411,6 +8465,9 @@ type NewLabelParams struct {
 
 func (p NewLabelParams) params() map[string]any {
 	m := map[string]any{}
+	if p.AbacEnabled != nil {
+		m["AbacEnabled"] = p.AbacEnabled
+	}
 	if p.AdvancedSettings != nil {
 		m["AdvancedSettings"] = p.AdvancedSettings
 	}
@@ -7459,6 +8516,12 @@ func (p NewLabelParams) params() map[string]any {
 	if p.ApplyDynamicWatermarkingEnabled != nil {
 		m["ApplyDynamicWatermarkingEnabled"] = p.ApplyDynamicWatermarkingEnabled
 	}
+	if p.ApplyMessageMetaData != nil {
+		m["ApplyMessageMetaData"] = p.ApplyMessageMetaData
+	}
+	if p.ApplyMessageMetaDataEnabled != nil {
+		m["ApplyMessageMetaDataEnabled"] = p.ApplyMessageMetaDataEnabled
+	}
 	if p.ApplyWaterMarkingEnabled != nil {
 		m["ApplyWaterMarkingEnabled"] = p.ApplyWaterMarkingEnabled
 	}
@@ -7483,6 +8546,9 @@ func (p NewLabelParams) params() map[string]any {
 	if p.Comment != "" {
 		m["Comment"] = p.Comment
 	}
+	if p.ConditionalAccessAuthContext != "" {
+		m["ConditionalAccessAuthContext"] = p.ConditionalAccessAuthContext
+	}
 	if p.Conditions != nil {
 		m["Conditions"] = p.Conditions
 	}
@@ -7491,6 +8557,21 @@ func (p NewLabelParams) params() map[string]any {
 	}
 	if p.DefaultContentLabel != "" {
 		m["DefaultContentLabel"] = p.DefaultContentLabel
+	}
+	if p.DenyAccessEnabled != nil {
+		m["DenyAccessEnabled"] = p.DenyAccessEnabled
+	}
+	if p.DenyAccessExcludedPrincipals != "" {
+		m["DenyAccessExcludedPrincipals"] = p.DenyAccessExcludedPrincipals
+	}
+	if p.DenyAccessIncludedPrincipals != "" {
+		m["DenyAccessIncludedPrincipals"] = p.DenyAccessIncludedPrincipals
+	}
+	if p.DenyAccessRights != "" {
+		m["DenyAccessRights"] = p.DenyAccessRights
+	}
+	if p.DenyAccessWorkload != "" {
+		m["DenyAccessWorkload"] = p.DenyAccessWorkload
 	}
 	if p.DisplayName != "" {
 		m["DisplayName"] = p.DisplayName
@@ -7503,6 +8584,9 @@ func (p NewLabelParams) params() map[string]any {
 	}
 	if p.EncryptionContentExpiredOnDateInDaysOrNever != "" {
 		m["EncryptionContentExpiredOnDateInDaysOrNever"] = p.EncryptionContentExpiredOnDateInDaysOrNever
+	}
+	if p.EncryptionDisableAutomaticOwnerRights != nil {
+		m["EncryptionDisableAutomaticOwnerRights"] = p.EncryptionDisableAutomaticOwnerRights
 	}
 	if p.EncryptionDoNotForward != nil {
 		m["EncryptionDoNotForward"] = p.EncryptionDoNotForward
@@ -7540,6 +8624,12 @@ func (p NewLabelParams) params() map[string]any {
 	if p.Identity != nil {
 		m["Identity"] = p.Identity
 	}
+	if p.InformationProtectionAttributeRequired != nil {
+		m["InformationProtectionAttributeRequired"] = p.InformationProtectionAttributeRequired
+	}
+	if p.InheritToChildItems != nil {
+		m["InheritToChildItems"] = p.InheritToChildItems
+	}
 	if p.IsLabelGroup {
 		m["IsLabelGroup"] = true
 	}
@@ -7557,6 +8647,9 @@ func (p NewLabelParams) params() map[string]any {
 	}
 	if p.ParentId != nil {
 		m["ParentId"] = p.ParentId
+	}
+	if p.RuleBlob != "" {
+		m["RuleBlob"] = p.RuleBlob
 	}
 	if p.SchematizedDataCondition != "" {
 		m["SchematizedDataCondition"] = p.SchematizedDataCondition
@@ -7662,6 +8755,44 @@ func (s *Service) NewLabel(ctx context.Context, p NewLabelParams) (*adminapi.Res
 	return s.C.Invoke(ctx, "New-Label", p.params())
 }
 
+// NewLabelExplorerConfigParams are the parameters of New-LabelExplorerConfig.
+type NewLabelExplorerConfigParams struct {
+	Actions     any    `ps:"Actions"`
+	DisplayName string `ps:"DisplayName"`
+	Filter      string `ps:"Filter"`
+	Labels      any    `ps:"Labels"`
+	Name        string `ps:"Name"`
+	Users       any    `ps:"Users"`
+}
+
+func (p NewLabelExplorerConfigParams) params() map[string]any {
+	m := map[string]any{}
+	if p.Actions != nil {
+		m["Actions"] = p.Actions
+	}
+	if p.DisplayName != "" {
+		m["DisplayName"] = p.DisplayName
+	}
+	if p.Filter != "" {
+		m["Filter"] = p.Filter
+	}
+	if p.Labels != nil {
+		m["Labels"] = p.Labels
+	}
+	if p.Name != "" {
+		m["Name"] = p.Name
+	}
+	if p.Users != nil {
+		m["Users"] = p.Users
+	}
+	return m
+}
+
+// NewLabelExplorerConfig runs the New-LabelExplorerConfig cmdlet.
+func (s *Service) NewLabelExplorerConfig(ctx context.Context, p NewLabelExplorerConfigParams) (*adminapi.Result, error) {
+	return s.C.Invoke(ctx, "New-LabelExplorerConfig", p.params())
+}
+
 // NewLabelPolicyParams are the parameters of New-LabelPolicy.
 type NewLabelPolicyParams struct {
 	AdvancedSettings                any    `ps:"AdvancedSettings"`
@@ -7672,6 +8803,7 @@ type NewLabelPolicyParams struct {
 	ExchangeLocationException       any    `ps:"ExchangeLocationException"`
 	Force                           bool   `ps:"Force"`
 	Labels                          any    `ps:"Labels"`
+	Locations                       string `ps:"Locations"`
 	MigrationId                     string `ps:"MigrationId"`
 	ModernGroupLocation             any    `ps:"ModernGroupLocation"`
 	ModernGroupLocationException    any    `ps:"ModernGroupLocationException"`
@@ -7713,6 +8845,9 @@ func (p NewLabelPolicyParams) params() map[string]any {
 	}
 	if p.Labels != nil {
 		m["Labels"] = p.Labels
+	}
+	if p.Locations != "" {
+		m["Locations"] = p.Locations
 	}
 	if p.MigrationId != "" {
 		m["MigrationId"] = p.MigrationId
@@ -7764,11 +8899,58 @@ func (s *Service) NewLabelPolicy(ctx context.Context, p NewLabelPolicyParams) (*
 	return s.C.Invoke(ctx, "New-LabelPolicy", p.params())
 }
 
+// NewMachineAssistedTagResourceParams are the parameters of New-MachineAssistedTagResource.
+type NewMachineAssistedTagResourceParams struct {
+	Description  string `ps:"Description"`
+	ModelIds     any    `ps:"ModelIds"`
+	Name         string `ps:"Name"`
+	Resource     any    `ps:"Resource"`
+	TaskId       any    `ps:"TaskId"`
+	TaskType     any    `ps:"TaskType"`
+	TrainingId   any    `ps:"TrainingId"`
+	TrainingSite string `ps:"TrainingSite"`
+}
+
+func (p NewMachineAssistedTagResourceParams) params() map[string]any {
+	m := map[string]any{}
+	if p.Description != "" {
+		m["Description"] = p.Description
+	}
+	if p.ModelIds != nil {
+		m["ModelIds"] = p.ModelIds
+	}
+	if p.Name != "" {
+		m["Name"] = p.Name
+	}
+	if p.Resource != nil {
+		m["Resource"] = p.Resource
+	}
+	if p.TaskId != nil {
+		m["TaskId"] = p.TaskId
+	}
+	if p.TaskType != nil {
+		m["TaskType"] = p.TaskType
+	}
+	if p.TrainingId != nil {
+		m["TrainingId"] = p.TrainingId
+	}
+	if p.TrainingSite != "" {
+		m["TrainingSite"] = p.TrainingSite
+	}
+	return m
+}
+
+// NewMachineAssistedTagResource runs the New-MachineAssistedTagResource cmdlet.
+func (s *Service) NewMachineAssistedTagResource(ctx context.Context, p NewMachineAssistedTagResourceParams) (*adminapi.Result, error) {
+	return s.C.Invoke(ctx, "New-MachineAssistedTagResource", p.params())
+}
+
 // NewOcrConfigurationParams are the parameters of New-OcrConfiguration.
 type NewOcrConfigurationParams struct {
 	Comment                              string   `ps:"Comment"`
 	EndpointDlpLocation                  any      `ps:"EndpointDlpLocation"`
 	EndpointDlpLocationException         any      `ps:"EndpointDlpLocationException"`
+	EnforcementPlanes                    any      `ps:"EnforcementPlanes"`
 	ExceptIfOneDriveSharedBy             []string `ps:"ExceptIfOneDriveSharedBy"`
 	ExceptIfOneDriveSharedByMemberOf     []string `ps:"ExceptIfOneDriveSharedByMemberOf"`
 	ExchangeLocation                     any      `ps:"ExchangeLocation"`
@@ -7778,6 +8960,7 @@ type NewOcrConfigurationParams struct {
 	ExchangeSenderException              []string `ps:"ExchangeSenderException"`
 	ExchangeSenderMemberOf               []string `ps:"ExchangeSenderMemberOf"`
 	ExchangeSenderMemberOfException      []string `ps:"ExchangeSenderMemberOfException"`
+	Locations                            string   `ps:"Locations"`
 	Mode                                 any      `ps:"Mode"`
 	Name                                 string   `ps:"Name"`
 	OcrMode                              any      `ps:"OcrMode"`
@@ -7801,6 +8984,9 @@ func (p NewOcrConfigurationParams) params() map[string]any {
 	}
 	if p.EndpointDlpLocationException != nil {
 		m["EndpointDlpLocationException"] = p.EndpointDlpLocationException
+	}
+	if p.EnforcementPlanes != nil {
+		m["EnforcementPlanes"] = p.EnforcementPlanes
 	}
 	if len(p.ExceptIfOneDriveSharedBy) > 0 {
 		m["ExceptIfOneDriveSharedBy"] = p.ExceptIfOneDriveSharedBy
@@ -7828,6 +9014,9 @@ func (p NewOcrConfigurationParams) params() map[string]any {
 	}
 	if len(p.ExchangeSenderMemberOfException) > 0 {
 		m["ExchangeSenderMemberOfException"] = p.ExchangeSenderMemberOfException
+	}
+	if p.Locations != "" {
+		m["Locations"] = p.Locations
 	}
 	if p.Mode != nil {
 		m["Mode"] = p.Mode
@@ -8089,6 +9278,25 @@ func (s *Service) NewPrivacyManagementRule(ctx context.Context, p NewPrivacyMana
 	return s.C.Invoke(ctx, "New-PrivacyManagementRule", p.params())
 }
 
+// NewProcessComplianceReviewRecordsParams are the parameters of New-ProcessComplianceReviewRecords.
+// DefaultParameterSetName: Identity
+type NewProcessComplianceReviewRecordsParams struct {
+	RecordReviewDecisionPayload string `ps:"RecordReviewDecisionPayload"`
+}
+
+func (p NewProcessComplianceReviewRecordsParams) params() map[string]any {
+	m := map[string]any{}
+	if p.RecordReviewDecisionPayload != "" {
+		m["RecordReviewDecisionPayload"] = p.RecordReviewDecisionPayload
+	}
+	return m
+}
+
+// NewProcessComplianceReviewRecords runs the New-ProcessComplianceReviewRecords cmdlet.
+func (s *Service) NewProcessComplianceReviewRecords(ctx context.Context, p NewProcessComplianceReviewRecordsParams) (*adminapi.Result, error) {
+	return s.C.Invoke(ctx, "New-ProcessComplianceReviewRecords", p.params())
+}
+
 // NewProtectionAlertParams are the parameters of New-ProtectionAlert.
 // DefaultParameterSetName: Identity
 type NewProtectionAlertParams struct {
@@ -8101,6 +9309,7 @@ type NewProtectionAlertParams struct {
 	CustomProperties                                            any    `ps:"CustomProperties"`
 	Description                                                 string `ps:"Description"`
 	Disabled                                                    bool   `ps:"Disabled"`
+	ExternalScenarioData                                        any    `ps:"ExternalScenarioData"`
 	Filter                                                      string `ps:"Filter"`
 	LogicalOperationName                                        string `ps:"LogicalOperationName"`
 	Name                                                        string `ps:"Name"`
@@ -8116,6 +9325,7 @@ type NewProtectionAlertParams struct {
 	PrivacyManagementScopedSensitiveInformationTypesForCounting any    `ps:"PrivacyManagementScopedSensitiveInformationTypesForCounting"`
 	PrivacyManagementScopedSensitiveInformationTypesThreshold   any    `ps:"PrivacyManagementScopedSensitiveInformationTypesThreshold"`
 	Severity                                                    any    `ps:"Severity"`
+	StreamType                                                  any    `ps:"StreamType"`
 	ThreatType                                                  any    `ps:"ThreatType"`
 	Threshold                                                   any    `ps:"Threshold"`
 	TimeWindow                                                  any    `ps:"TimeWindow"`
@@ -8151,6 +9361,9 @@ func (p NewProtectionAlertParams) params() map[string]any {
 	}
 	if p.Disabled {
 		m["Disabled"] = true
+	}
+	if p.ExternalScenarioData != nil {
+		m["ExternalScenarioData"] = p.ExternalScenarioData
 	}
 	if p.Filter != "" {
 		m["Filter"] = p.Filter
@@ -8196,6 +9409,9 @@ func (p NewProtectionAlertParams) params() map[string]any {
 	}
 	if p.Severity != nil {
 		m["Severity"] = p.Severity
+	}
+	if p.StreamType != nil {
+		m["StreamType"] = p.StreamType
 	}
 	if p.ThreatType != nil {
 		m["ThreatType"] = p.ThreatType
@@ -8282,34 +9498,34 @@ func (s *Service) NewProtectionComplianceRule(ctx context.Context, p NewProtecti
 
 // NewRetentionCompliancePolicyParams are the parameters of New-RetentionCompliancePolicy.
 type NewRetentionCompliancePolicyParams struct {
-	AdaptiveScopeLocation           any    `ps:"AdaptiveScopeLocation"`
-	Applications                    any    `ps:"Applications"`
-	Comment                         string `ps:"Comment"`
-	Enabled                         bool   `ps:"Enabled"`
-	ExchangeLocation                any    `ps:"ExchangeLocation"`
-	ExchangeLocationException       any    `ps:"ExchangeLocationException"`
-	Force                           bool   `ps:"Force"`
-	IsSimulation                    bool   `ps:"IsSimulation"`
-	ModernGroupLocation             any    `ps:"ModernGroupLocation"`
-	ModernGroupLocationException    any    `ps:"ModernGroupLocationException"`
-	Name                            string `ps:"Name"`
-	OneDriveLocation                any    `ps:"OneDriveLocation"`
-	OneDriveLocationException       any    `ps:"OneDriveLocationException"`
-	PolicyRBACScopes                any    `ps:"PolicyRBACScopes"`
-	PolicyTemplateInfo              any    `ps:"PolicyTemplateInfo"`
-	PriorityCleanup                 bool   `ps:"PriorityCleanup"`
-	PublicFolderLocation            any    `ps:"PublicFolderLocation"`
-	RestrictiveRetention            bool   `ps:"RestrictiveRetention"`
-	RetainCloudAttachment           bool   `ps:"RetainCloudAttachment"`
-	SharePointLocation              any    `ps:"SharePointLocation"`
-	SharePointLocationException     any    `ps:"SharePointLocationException"`
-	SkipPriorityCleanupConfirmation bool   `ps:"SkipPriorityCleanupConfirmation"`
-	SkypeLocation                   any    `ps:"SkypeLocation"`
-	SkypeLocationException          any    `ps:"SkypeLocationException"`
-	TeamsChannelLocation            any    `ps:"TeamsChannelLocation"`
-	TeamsChannelLocationException   any    `ps:"TeamsChannelLocationException"`
-	TeamsChatLocation               any    `ps:"TeamsChatLocation"`
-	TeamsChatLocationException      any    `ps:"TeamsChatLocationException"`
+	AdaptiveScopeLocation         any    `ps:"AdaptiveScopeLocation"`
+	Applications                  any    `ps:"Applications"`
+	Comment                       string `ps:"Comment"`
+	Enabled                       bool   `ps:"Enabled"`
+	ExchangeLocation              any    `ps:"ExchangeLocation"`
+	ExchangeLocationException     any    `ps:"ExchangeLocationException"`
+	ExcludeSPE                    bool   `ps:"ExcludeSPE"`
+	Force                         bool   `ps:"Force"`
+	IncludeUserOwnedContainers    bool   `ps:"IncludeUserOwnedContainers"`
+	IsSimulation                  bool   `ps:"IsSimulation"`
+	ModernGroupLocation           any    `ps:"ModernGroupLocation"`
+	ModernGroupLocationException  any    `ps:"ModernGroupLocationException"`
+	Name                          string `ps:"Name"`
+	OneDriveLocation              any    `ps:"OneDriveLocation"`
+	OneDriveLocationException     any    `ps:"OneDriveLocationException"`
+	PolicyRBACScopes              any    `ps:"PolicyRBACScopes"`
+	PolicyTemplateInfo            any    `ps:"PolicyTemplateInfo"`
+	PublicFolderLocation          any    `ps:"PublicFolderLocation"`
+	RestrictiveRetention          bool   `ps:"RestrictiveRetention"`
+	RetainCloudAttachment         bool   `ps:"RetainCloudAttachment"`
+	SharePointLocation            any    `ps:"SharePointLocation"`
+	SharePointLocationException   any    `ps:"SharePointLocationException"`
+	SkypeLocation                 any    `ps:"SkypeLocation"`
+	SkypeLocationException        any    `ps:"SkypeLocationException"`
+	TeamsChannelLocation          any    `ps:"TeamsChannelLocation"`
+	TeamsChannelLocationException any    `ps:"TeamsChannelLocationException"`
+	TeamsChatLocation             any    `ps:"TeamsChatLocation"`
+	TeamsChatLocationException    any    `ps:"TeamsChatLocationException"`
 }
 
 func (p NewRetentionCompliancePolicyParams) params() map[string]any {
@@ -8332,8 +9548,14 @@ func (p NewRetentionCompliancePolicyParams) params() map[string]any {
 	if p.ExchangeLocationException != nil {
 		m["ExchangeLocationException"] = p.ExchangeLocationException
 	}
+	if p.ExcludeSPE {
+		m["ExcludeSPE"] = true
+	}
 	if p.Force {
 		m["Force"] = true
+	}
+	if p.IncludeUserOwnedContainers {
+		m["IncludeUserOwnedContainers"] = true
 	}
 	if p.IsSimulation {
 		m["IsSimulation"] = true
@@ -8359,9 +9581,6 @@ func (p NewRetentionCompliancePolicyParams) params() map[string]any {
 	if p.PolicyTemplateInfo != nil {
 		m["PolicyTemplateInfo"] = p.PolicyTemplateInfo
 	}
-	if p.PriorityCleanup {
-		m["PriorityCleanup"] = true
-	}
 	if p.PublicFolderLocation != nil {
 		m["PublicFolderLocation"] = p.PublicFolderLocation
 	}
@@ -8376,9 +9595,6 @@ func (p NewRetentionCompliancePolicyParams) params() map[string]any {
 	}
 	if p.SharePointLocationException != nil {
 		m["SharePointLocationException"] = p.SharePointLocationException
-	}
-	if p.SkipPriorityCleanupConfirmation {
-		m["SkipPriorityCleanupConfirmation"] = true
 	}
 	if p.SkypeLocation != nil {
 		m["SkypeLocation"] = p.SkypeLocation
@@ -8409,6 +9625,9 @@ func (s *Service) NewRetentionCompliancePolicy(ctx context.Context, p NewRetenti
 // NewRetentionComplianceRuleParams are the parameters of New-RetentionComplianceRule.
 type NewRetentionComplianceRuleParams struct {
 	ApplyComplianceTag                  string   `ps:"ApplyComplianceTag"`
+	ArchiveEnabled                      bool     `ps:"ArchiveEnabled"`
+	ArchiveTriggerBasedOn               string   `ps:"ArchiveTriggerBasedOn"`
+	ArchiveTriggerInDays                any      `ps:"ArchiveTriggerInDays"`
 	Comment                             string   `ps:"Comment"`
 	ContentContainsSensitiveInformation []string `ps:"ContentContainsSensitiveInformation"`
 	ContentMatchQuery                   string   `ps:"ContentMatchQuery"`
@@ -8418,7 +9637,6 @@ type NewRetentionComplianceRuleParams struct {
 	MachineLearningModelIDs             any      `ps:"MachineLearningModelIDs"`
 	Name                                string   `ps:"Name"`
 	Policy                              any      `ps:"Policy"`
-	PriorityCleanup                     bool     `ps:"PriorityCleanup"`
 	PublishComplianceTag                string   `ps:"PublishComplianceTag"`
 	RetentionComplianceAction           string   `ps:"RetentionComplianceAction"`
 	RetentionDuration                   any      `ps:"RetentionDuration"`
@@ -8429,6 +9647,15 @@ func (p NewRetentionComplianceRuleParams) params() map[string]any {
 	m := map[string]any{}
 	if p.ApplyComplianceTag != "" {
 		m["ApplyComplianceTag"] = p.ApplyComplianceTag
+	}
+	if p.ArchiveEnabled {
+		m["ArchiveEnabled"] = true
+	}
+	if p.ArchiveTriggerBasedOn != "" {
+		m["ArchiveTriggerBasedOn"] = p.ArchiveTriggerBasedOn
+	}
+	if p.ArchiveTriggerInDays != nil {
+		m["ArchiveTriggerInDays"] = p.ArchiveTriggerInDays
 	}
 	if p.Comment != "" {
 		m["Comment"] = p.Comment
@@ -8457,9 +9684,6 @@ func (p NewRetentionComplianceRuleParams) params() map[string]any {
 	if p.Policy != nil {
 		m["Policy"] = p.Policy
 	}
-	if p.PriorityCleanup {
-		m["PriorityCleanup"] = true
-	}
 	if p.PublishComplianceTag != "" {
 		m["PublishComplianceTag"] = p.PublishComplianceTag
 	}
@@ -8478,49 +9702,6 @@ func (p NewRetentionComplianceRuleParams) params() map[string]any {
 // NewRetentionComplianceRule runs the New-RetentionComplianceRule cmdlet.
 func (s *Service) NewRetentionComplianceRule(ctx context.Context, p NewRetentionComplianceRuleParams) (*adminapi.Result, error) {
 	return s.C.Invoke(ctx, "New-RetentionComplianceRule", p.params())
-}
-
-// NewRoleGroupParams are the parameters of New-RoleGroup.
-// DefaultParameterSetName: default
-type NewRoleGroupParams struct {
-	Description string   `ps:"Description"`
-	DisplayName string   `ps:"DisplayName"`
-	Force       bool     `ps:"Force"`
-	Id          any      `ps:"Id"`
-	Members     any      `ps:"Members"`
-	Name        string   `ps:"Name"`
-	Roles       []string `ps:"Roles"`
-}
-
-func (p NewRoleGroupParams) params() map[string]any {
-	m := map[string]any{}
-	if p.Description != "" {
-		m["Description"] = p.Description
-	}
-	if p.DisplayName != "" {
-		m["DisplayName"] = p.DisplayName
-	}
-	if p.Force {
-		m["Force"] = true
-	}
-	if p.Id != nil {
-		m["Id"] = p.Id
-	}
-	if p.Members != nil {
-		m["Members"] = p.Members
-	}
-	if p.Name != "" {
-		m["Name"] = p.Name
-	}
-	if len(p.Roles) > 0 {
-		m["Roles"] = p.Roles
-	}
-	return m
-}
-
-// NewRoleGroup runs the New-RoleGroup cmdlet.
-func (s *Service) NewRoleGroup(ctx context.Context, p NewRoleGroupParams) (*adminapi.Result, error) {
-	return s.C.Invoke(ctx, "New-RoleGroup", p.params())
 }
 
 // NewSensitiveInformationScanParams are the parameters of New-SensitiveInformationScan.
@@ -8743,6 +9924,37 @@ func (s *Service) NewSensitiveInformationScanRule(ctx context.Context, p NewSens
 	return s.C.Invoke(ctx, "New-SensitiveInformationScanRule", p.params())
 }
 
+// NewServiceDomainGroupParams are the parameters of New-ServiceDomainGroup.
+// DefaultParameterSetName: Default
+type NewServiceDomainGroupParams struct {
+	Name          string `ps:"Name"`
+	Organization  any    `ps:"Organization"`
+	SiteAddresses string `ps:"SiteAddresses"`
+	SiteGroupId   string `ps:"SiteGroupId"`
+}
+
+func (p NewServiceDomainGroupParams) params() map[string]any {
+	m := map[string]any{}
+	if p.Name != "" {
+		m["Name"] = p.Name
+	}
+	if p.Organization != nil {
+		m["Organization"] = p.Organization
+	}
+	if p.SiteAddresses != "" {
+		m["SiteAddresses"] = p.SiteAddresses
+	}
+	if p.SiteGroupId != "" {
+		m["SiteGroupId"] = p.SiteGroupId
+	}
+	return m
+}
+
+// NewServiceDomainGroup runs the New-ServiceDomainGroup cmdlet.
+func (s *Service) NewServiceDomainGroup(ctx context.Context, p NewServiceDomainGroupParams) (*adminapi.Result, error) {
+	return s.C.Invoke(ctx, "New-ServiceDomainGroup", p.params())
+}
+
 // NewServicePrincipalParams are the parameters of New-ServicePrincipal.
 type NewServicePrincipalParams struct {
 	AppId        string `ps:"AppId"`
@@ -8775,6 +9987,28 @@ func (p NewServicePrincipalParams) params() map[string]any {
 // NewServicePrincipal runs the New-ServicePrincipal cmdlet.
 func (s *Service) NewServicePrincipal(ctx context.Context, p NewServicePrincipalParams) (*adminapi.Result, error) {
 	return s.C.Invoke(ctx, "New-ServicePrincipal", p.params())
+}
+
+// NewSupervisoryReviewPolicyMailboxFoldersParams are the parameters of New-SupervisoryReviewPolicyMailboxFolders.
+type NewSupervisoryReviewPolicyMailboxFoldersParams struct {
+	PolicyName string   `ps:"PolicyName"`
+	Reviewers  []string `ps:"Reviewers"`
+}
+
+func (p NewSupervisoryReviewPolicyMailboxFoldersParams) params() map[string]any {
+	m := map[string]any{}
+	if p.PolicyName != "" {
+		m["PolicyName"] = p.PolicyName
+	}
+	if len(p.Reviewers) > 0 {
+		m["Reviewers"] = p.Reviewers
+	}
+	return m
+}
+
+// NewSupervisoryReviewPolicyMailboxFolders runs the New-SupervisoryReviewPolicyMailboxFolders cmdlet.
+func (s *Service) NewSupervisoryReviewPolicyMailboxFolders(ctx context.Context, p NewSupervisoryReviewPolicyMailboxFoldersParams) (*adminapi.Result, error) {
+	return s.C.Invoke(ctx, "New-SupervisoryReviewPolicyMailboxFolders", p.params())
 }
 
 // NewSupervisoryReviewPolicyV2Params are the parameters of New-SupervisoryReviewPolicyV2.
@@ -8929,97 +10163,286 @@ func (s *Service) NewSupervisoryReviewRule(ctx context.Context, p NewSupervisory
 	return s.C.Invoke(ctx, "New-SupervisoryReviewRule", p.params())
 }
 
-// NewTenantAllowBlockListItemsParams are the parameters of New-TenantAllowBlockListItems.
-type NewTenantAllowBlockListItemsParams struct {
-	Allow          bool     `ps:"Allow"`
-	Block          bool     `ps:"Block"`
-	Entries        []string `ps:"Entries"`
-	ExpirationDate any      `ps:"ExpirationDate"`
-	ListSubType    any      `ps:"ListSubType"`
-	ListType       any      `ps:"ListType"`
-	NoExpiration   bool     `ps:"NoExpiration"`
-	Notes          string   `ps:"Notes"`
-	OutputJson     bool     `ps:"OutputJson"`
-	RemoveAfter    int      `ps:"RemoveAfter"`
-	SubmissionID   string   `ps:"SubmissionID"`
+// NewTeamsRetentionCompliancePolicyParams are the parameters of New-TeamsRetentionCompliancePolicy.
+type NewTeamsRetentionCompliancePolicyParams struct {
+	Comment                       string `ps:"Comment"`
+	Enabled                       bool   `ps:"Enabled"`
+	Force                         bool   `ps:"Force"`
+	Name                          string `ps:"Name"`
+	RestrictiveRetention          bool   `ps:"RestrictiveRetention"`
+	TeamsChannelLocation          any    `ps:"TeamsChannelLocation"`
+	TeamsChannelLocationException any    `ps:"TeamsChannelLocationException"`
+	TeamsChatLocation             any    `ps:"TeamsChatLocation"`
+	TeamsChatLocationException    any    `ps:"TeamsChatLocationException"`
 }
 
-func (p NewTenantAllowBlockListItemsParams) params() map[string]any {
+func (p NewTeamsRetentionCompliancePolicyParams) params() map[string]any {
 	m := map[string]any{}
-	if p.Allow {
-		m["Allow"] = true
+	if p.Comment != "" {
+		m["Comment"] = p.Comment
 	}
-	if p.Block {
-		m["Block"] = true
+	if p.Enabled {
+		m["Enabled"] = true
 	}
-	if len(p.Entries) > 0 {
-		m["Entries"] = p.Entries
+	if p.Force {
+		m["Force"] = true
 	}
-	if p.ExpirationDate != nil {
-		m["ExpirationDate"] = p.ExpirationDate
+	if p.Name != "" {
+		m["Name"] = p.Name
 	}
-	if p.ListSubType != nil {
-		m["ListSubType"] = p.ListSubType
+	if p.RestrictiveRetention {
+		m["RestrictiveRetention"] = true
 	}
-	if p.ListType != nil {
-		m["ListType"] = p.ListType
+	if p.TeamsChannelLocation != nil {
+		m["TeamsChannelLocation"] = p.TeamsChannelLocation
 	}
-	if p.NoExpiration {
-		m["NoExpiration"] = true
+	if p.TeamsChannelLocationException != nil {
+		m["TeamsChannelLocationException"] = p.TeamsChannelLocationException
 	}
-	if p.Notes != "" {
-		m["Notes"] = p.Notes
+	if p.TeamsChatLocation != nil {
+		m["TeamsChatLocation"] = p.TeamsChatLocation
 	}
-	if p.OutputJson {
-		m["OutputJson"] = true
-	}
-	if p.RemoveAfter != 0 {
-		m["RemoveAfter"] = p.RemoveAfter
-	}
-	if p.SubmissionID != "" {
-		m["SubmissionID"] = p.SubmissionID
+	if p.TeamsChatLocationException != nil {
+		m["TeamsChatLocationException"] = p.TeamsChatLocationException
 	}
 	return m
 }
 
-// NewTenantAllowBlockListItems runs the New-TenantAllowBlockListItems cmdlet.
-func (s *Service) NewTenantAllowBlockListItems(ctx context.Context, p NewTenantAllowBlockListItemsParams) (*adminapi.Result, error) {
-	return s.C.Invoke(ctx, "New-TenantAllowBlockListItems", p.params())
+// NewTeamsRetentionCompliancePolicy runs the New-TeamsRetentionCompliancePolicy cmdlet.
+func (s *Service) NewTeamsRetentionCompliancePolicy(ctx context.Context, p NewTeamsRetentionCompliancePolicyParams) (*adminapi.Result, error) {
+	return s.C.Invoke(ctx, "New-TeamsRetentionCompliancePolicy", p.params())
 }
 
-// NewTenantAllowBlockListSpoofItemsParams are the parameters of New-TenantAllowBlockListSpoofItems.
-// DefaultParameterSetName: Identity
-type NewTenantAllowBlockListSpoofItemsParams struct {
-	Action                string `ps:"Action"`
-	Identity              any    `ps:"Identity"`
-	SendingInfrastructure string `ps:"SendingInfrastructure"`
-	SpoofedUser           string `ps:"SpoofedUser"`
-	SpoofType             string `ps:"SpoofType"`
+// NewTeamsRetentionComplianceRuleParams are the parameters of New-TeamsRetentionComplianceRule.
+type NewTeamsRetentionComplianceRuleParams struct {
+	Comment                   string `ps:"Comment"`
+	Name                      string `ps:"Name"`
+	Policy                    any    `ps:"Policy"`
+	RetentionComplianceAction string `ps:"RetentionComplianceAction"`
+	RetentionDuration         any    `ps:"RetentionDuration"`
 }
 
-func (p NewTenantAllowBlockListSpoofItemsParams) params() map[string]any {
+func (p NewTeamsRetentionComplianceRuleParams) params() map[string]any {
 	m := map[string]any{}
-	if p.Action != "" {
-		m["Action"] = p.Action
+	if p.Comment != "" {
+		m["Comment"] = p.Comment
 	}
-	if p.Identity != nil {
-		m["Identity"] = p.Identity
+	if p.Name != "" {
+		m["Name"] = p.Name
 	}
-	if p.SendingInfrastructure != "" {
-		m["SendingInfrastructure"] = p.SendingInfrastructure
+	if p.Policy != nil {
+		m["Policy"] = p.Policy
 	}
-	if p.SpoofedUser != "" {
-		m["SpoofedUser"] = p.SpoofedUser
+	if p.RetentionComplianceAction != "" {
+		m["RetentionComplianceAction"] = p.RetentionComplianceAction
 	}
-	if p.SpoofType != "" {
-		m["SpoofType"] = p.SpoofType
+	if p.RetentionDuration != nil {
+		m["RetentionDuration"] = p.RetentionDuration
 	}
 	return m
 }
 
-// NewTenantAllowBlockListSpoofItems runs the New-TenantAllowBlockListSpoofItems cmdlet.
-func (s *Service) NewTenantAllowBlockListSpoofItems(ctx context.Context, p NewTenantAllowBlockListSpoofItemsParams) (*adminapi.Result, error) {
-	return s.C.Invoke(ctx, "New-TenantAllowBlockListSpoofItems", p.params())
+// NewTeamsRetentionComplianceRule runs the New-TeamsRetentionComplianceRule cmdlet.
+func (s *Service) NewTeamsRetentionComplianceRule(ctx context.Context, p NewTeamsRetentionComplianceRuleParams) (*adminapi.Result, error) {
+	return s.C.Invoke(ctx, "New-TeamsRetentionComplianceRule", p.params())
+}
+
+// NewTenantWideRetentionOperationParams are the parameters of New-TenantWideRetentionOperation.
+type NewTenantWideRetentionOperationParams struct {
+	AdaptiveScopeLocation        any    `ps:"AdaptiveScopeLocation"`
+	Applications                 any    `ps:"Applications"`
+	Comment                      string `ps:"Comment"`
+	ContentMatchQuery            string `ps:"ContentMatchQuery"`
+	DestinationLabel             string `ps:"DestinationLabel"`
+	Enabled                      bool   `ps:"Enabled"`
+	ExchangeLocation             any    `ps:"ExchangeLocation"`
+	ExchangeLocationException    any    `ps:"ExchangeLocationException"`
+	Force                        bool   `ps:"Force"`
+	ModernGroupLocation          any    `ps:"ModernGroupLocation"`
+	ModernGroupLocationException any    `ps:"ModernGroupLocationException"`
+	Name                         string `ps:"Name"`
+	OneDriveLocation             any    `ps:"OneDriveLocation"`
+	OneDriveLocationException    any    `ps:"OneDriveLocationException"`
+	Operation                    string `ps:"Operation"`
+	SharePointLocation           any    `ps:"SharePointLocation"`
+	SharePointLocationException  any    `ps:"SharePointLocationException"`
+	SourceLabel                  any    `ps:"SourceLabel"`
+}
+
+func (p NewTenantWideRetentionOperationParams) params() map[string]any {
+	m := map[string]any{}
+	if p.AdaptiveScopeLocation != nil {
+		m["AdaptiveScopeLocation"] = p.AdaptiveScopeLocation
+	}
+	if p.Applications != nil {
+		m["Applications"] = p.Applications
+	}
+	if p.Comment != "" {
+		m["Comment"] = p.Comment
+	}
+	if p.ContentMatchQuery != "" {
+		m["ContentMatchQuery"] = p.ContentMatchQuery
+	}
+	if p.DestinationLabel != "" {
+		m["DestinationLabel"] = p.DestinationLabel
+	}
+	if p.Enabled {
+		m["Enabled"] = true
+	}
+	if p.ExchangeLocation != nil {
+		m["ExchangeLocation"] = p.ExchangeLocation
+	}
+	if p.ExchangeLocationException != nil {
+		m["ExchangeLocationException"] = p.ExchangeLocationException
+	}
+	if p.Force {
+		m["Force"] = true
+	}
+	if p.ModernGroupLocation != nil {
+		m["ModernGroupLocation"] = p.ModernGroupLocation
+	}
+	if p.ModernGroupLocationException != nil {
+		m["ModernGroupLocationException"] = p.ModernGroupLocationException
+	}
+	if p.Name != "" {
+		m["Name"] = p.Name
+	}
+	if p.OneDriveLocation != nil {
+		m["OneDriveLocation"] = p.OneDriveLocation
+	}
+	if p.OneDriveLocationException != nil {
+		m["OneDriveLocationException"] = p.OneDriveLocationException
+	}
+	if p.Operation != "" {
+		m["Operation"] = p.Operation
+	}
+	if p.SharePointLocation != nil {
+		m["SharePointLocation"] = p.SharePointLocation
+	}
+	if p.SharePointLocationException != nil {
+		m["SharePointLocationException"] = p.SharePointLocationException
+	}
+	if p.SourceLabel != nil {
+		m["SourceLabel"] = p.SourceLabel
+	}
+	return m
+}
+
+// NewTenantWideRetentionOperation runs the New-TenantWideRetentionOperation cmdlet.
+func (s *Service) NewTenantWideRetentionOperation(ctx context.Context, p NewTenantWideRetentionOperationParams) (*adminapi.Result, error) {
+	return s.C.Invoke(ctx, "New-TenantWideRetentionOperation", p.params())
+}
+
+// NewThreatResponsePolicyParams are the parameters of New-ThreatResponsePolicy.
+type NewThreatResponsePolicyParams struct {
+	Comment          string `ps:"Comment"`
+	ExchangeLocation any    `ps:"ExchangeLocation"`
+	Mode             any    `ps:"Mode"`
+	Name             string `ps:"Name"`
+}
+
+func (p NewThreatResponsePolicyParams) params() map[string]any {
+	m := map[string]any{}
+	if p.Comment != "" {
+		m["Comment"] = p.Comment
+	}
+	if p.ExchangeLocation != nil {
+		m["ExchangeLocation"] = p.ExchangeLocation
+	}
+	if p.Mode != nil {
+		m["Mode"] = p.Mode
+	}
+	if p.Name != "" {
+		m["Name"] = p.Name
+	}
+	return m
+}
+
+// NewThreatResponsePolicy runs the New-ThreatResponsePolicy cmdlet.
+func (s *Service) NewThreatResponsePolicy(ctx context.Context, p NewThreatResponsePolicyParams) (*adminapi.Result, error) {
+	return s.C.Invoke(ctx, "New-ThreatResponsePolicy", p.params())
+}
+
+// NewThreatResponseRuleParams are the parameters of New-ThreatResponseRule.
+type NewThreatResponseRuleParams struct {
+	DisableActiveSync                     bool   `ps:"DisableActiveSync"`
+	DisableAutoForwardDefaultRemoteDomain bool   `ps:"DisableAutoForwardDefaultRemoteDomain"`
+	DisableBasicAuth                      bool   `ps:"DisableBasicAuth"`
+	DisableEWS                            bool   `ps:"DisableEWS"`
+	DisableForwardingSMTPAddress          bool   `ps:"DisableForwardingSMTPAddress"`
+	DisableIMAP                           bool   `ps:"DisableIMAP"`
+	DisableMAPI                           bool   `ps:"DisableMAPI"`
+	DisableMAPIOverHTTP                   bool   `ps:"DisableMAPIOverHTTP"`
+	DisableOWA                            bool   `ps:"DisableOWA"`
+	DisablePOP                            bool   `ps:"DisablePOP"`
+	DisableTransportRuleForwarding        bool   `ps:"DisableTransportRuleForwarding"`
+	ExceptIfHighRiskUser                  bool   `ps:"ExceptIfHighRiskUser"`
+	ExceptIfMemberOfDL                    any    `ps:"ExceptIfMemberOfDL"`
+	HighRiskUser                          bool   `ps:"HighRiskUser"`
+	MemberOfDL                            any    `ps:"MemberOfDL"`
+	Name                                  string `ps:"Name"`
+	Policy                                any    `ps:"Policy"`
+}
+
+func (p NewThreatResponseRuleParams) params() map[string]any {
+	m := map[string]any{}
+	if p.DisableActiveSync {
+		m["DisableActiveSync"] = true
+	}
+	if p.DisableAutoForwardDefaultRemoteDomain {
+		m["DisableAutoForwardDefaultRemoteDomain"] = true
+	}
+	if p.DisableBasicAuth {
+		m["DisableBasicAuth"] = true
+	}
+	if p.DisableEWS {
+		m["DisableEWS"] = true
+	}
+	if p.DisableForwardingSMTPAddress {
+		m["DisableForwardingSMTPAddress"] = true
+	}
+	if p.DisableIMAP {
+		m["DisableIMAP"] = true
+	}
+	if p.DisableMAPI {
+		m["DisableMAPI"] = true
+	}
+	if p.DisableMAPIOverHTTP {
+		m["DisableMAPIOverHTTP"] = true
+	}
+	if p.DisableOWA {
+		m["DisableOWA"] = true
+	}
+	if p.DisablePOP {
+		m["DisablePOP"] = true
+	}
+	if p.DisableTransportRuleForwarding {
+		m["DisableTransportRuleForwarding"] = true
+	}
+	if p.ExceptIfHighRiskUser {
+		m["ExceptIfHighRiskUser"] = true
+	}
+	if p.ExceptIfMemberOfDL != nil {
+		m["ExceptIfMemberOfDL"] = p.ExceptIfMemberOfDL
+	}
+	if p.HighRiskUser {
+		m["HighRiskUser"] = true
+	}
+	if p.MemberOfDL != nil {
+		m["MemberOfDL"] = p.MemberOfDL
+	}
+	if p.Name != "" {
+		m["Name"] = p.Name
+	}
+	if p.Policy != nil {
+		m["Policy"] = p.Policy
+	}
+	return m
+}
+
+// NewThreatResponseRule runs the New-ThreatResponseRule cmdlet.
+func (s *Service) NewThreatResponseRule(ctx context.Context, p NewThreatResponseRuleParams) (*adminapi.Result, error) {
+	return s.C.Invoke(ctx, "New-ThreatResponseRule", p.params())
 }
 
 // NewUnifiedAuditLogRetentionPolicyParams are the parameters of New-UnifiedAuditLogRetentionPolicy.
@@ -9121,6 +10544,9 @@ func (s *Service) PreviewQuarantineMessageV1(ctx context.Context, p PreviewQuara
 type ReleaseQuarantineMessageParams struct {
 	ActionType          any      `ps:"ActionType"`
 	AllowSender         bool     `ps:"AllowSender"`
+	DecryptionHint      string   `ps:"DecryptionHint"`
+	Delete              bool     `ps:"Delete"`
+	EntityType          any      `ps:"EntityType"`
 	Force               bool     `ps:"Force"`
 	Identities          []string `ps:"Identities"`
 	Identity            any      `ps:"Identity"`
@@ -9136,6 +10562,15 @@ func (p ReleaseQuarantineMessageParams) params() map[string]any {
 	}
 	if p.AllowSender {
 		m["AllowSender"] = true
+	}
+	if p.DecryptionHint != "" {
+		m["DecryptionHint"] = p.DecryptionHint
+	}
+	if p.Delete {
+		m["Delete"] = true
+	}
+	if p.EntityType != nil {
+		m["EntityType"] = p.EntityType
 	}
 	if p.Force {
 		m["Force"] = true
@@ -9161,6 +10596,28 @@ func (p ReleaseQuarantineMessageParams) params() map[string]any {
 // ReleaseQuarantineMessage runs the Release-QuarantineMessage cmdlet.
 func (s *Service) ReleaseQuarantineMessage(ctx context.Context, p ReleaseQuarantineMessageParams) (*adminapi.Result, error) {
 	return s.C.Invoke(ctx, "Release-QuarantineMessage", p.params())
+}
+
+// RemoveActivityAlertParams are the parameters of Remove-ActivityAlert.
+type RemoveActivityAlertParams struct {
+	ForceDeletion bool `ps:"ForceDeletion"`
+	Identity      any  `ps:"Identity"`
+}
+
+func (p RemoveActivityAlertParams) params() map[string]any {
+	m := map[string]any{}
+	if p.ForceDeletion {
+		m["ForceDeletion"] = true
+	}
+	if p.Identity != nil {
+		m["Identity"] = p.Identity
+	}
+	return m
+}
+
+// RemoveActivityAlert runs the Remove-ActivityAlert cmdlet.
+func (s *Service) RemoveActivityAlert(ctx context.Context, p RemoveActivityAlertParams) (*adminapi.Result, error) {
+	return s.C.Invoke(ctx, "Remove-ActivityAlert", p.params())
 }
 
 // RemoveAdaptiveScopeParams are the parameters of Remove-AdaptiveScope.
@@ -9227,6 +10684,50 @@ func (p RemoveAppRetentionComplianceRuleParams) params() map[string]any {
 // RemoveAppRetentionComplianceRule runs the Remove-AppRetentionComplianceRule cmdlet.
 func (s *Service) RemoveAppRetentionComplianceRule(ctx context.Context, p RemoveAppRetentionComplianceRuleParams) (*adminapi.Result, error) {
 	return s.C.Invoke(ctx, "Remove-AppRetentionComplianceRule", p.params())
+}
+
+// RemoveAuditConfigurationPolicyParams are the parameters of Remove-AuditConfigurationPolicy.
+type RemoveAuditConfigurationPolicyParams struct {
+	DomainController any `ps:"DomainController"`
+	Identity         any `ps:"Identity"`
+}
+
+func (p RemoveAuditConfigurationPolicyParams) params() map[string]any {
+	m := map[string]any{}
+	if p.DomainController != nil {
+		m["DomainController"] = p.DomainController
+	}
+	if p.Identity != nil {
+		m["Identity"] = p.Identity
+	}
+	return m
+}
+
+// RemoveAuditConfigurationPolicy runs the Remove-AuditConfigurationPolicy cmdlet.
+func (s *Service) RemoveAuditConfigurationPolicy(ctx context.Context, p RemoveAuditConfigurationPolicyParams) (*adminapi.Result, error) {
+	return s.C.Invoke(ctx, "Remove-AuditConfigurationPolicy", p.params())
+}
+
+// RemoveAuditConfigurationRuleParams are the parameters of Remove-AuditConfigurationRule.
+type RemoveAuditConfigurationRuleParams struct {
+	DomainController any `ps:"DomainController"`
+	Identity         any `ps:"Identity"`
+}
+
+func (p RemoveAuditConfigurationRuleParams) params() map[string]any {
+	m := map[string]any{}
+	if p.DomainController != nil {
+		m["DomainController"] = p.DomainController
+	}
+	if p.Identity != nil {
+		m["Identity"] = p.Identity
+	}
+	return m
+}
+
+// RemoveAuditConfigurationRule runs the Remove-AuditConfigurationRule cmdlet.
+func (s *Service) RemoveAuditConfigurationRule(ctx context.Context, p RemoveAuditConfigurationRuleParams) (*adminapi.Result, error) {
+	return s.C.Invoke(ctx, "Remove-AuditConfigurationRule", p.params())
 }
 
 // RemoveAutoSensitivityLabelPolicyParams are the parameters of Remove-AutoSensitivityLabelPolicy.
@@ -9309,6 +10810,46 @@ func (s *Service) RemoveCaseHoldRule(ctx context.Context, p RemoveCaseHoldRulePa
 	return s.C.Invoke(ctx, "Remove-CaseHoldRule", p.params())
 }
 
+// RemoveClassificationGradingPolicyParams are the parameters of Remove-ClassificationGradingPolicy.
+type RemoveClassificationGradingPolicyParams struct {
+	Identity any `ps:"Identity"`
+}
+
+func (p RemoveClassificationGradingPolicyParams) params() map[string]any {
+	m := map[string]any{}
+	if p.Identity != nil {
+		m["Identity"] = p.Identity
+	}
+	return m
+}
+
+// RemoveClassificationGradingPolicy runs the Remove-ClassificationGradingPolicy cmdlet.
+func (s *Service) RemoveClassificationGradingPolicy(ctx context.Context, p RemoveClassificationGradingPolicyParams) (*adminapi.Result, error) {
+	return s.C.Invoke(ctx, "Remove-ClassificationGradingPolicy", p.params())
+}
+
+// RemoveComplianceBoundaryParams are the parameters of Remove-ComplianceBoundary.
+type RemoveComplianceBoundaryParams struct {
+	ForceDeletion bool `ps:"ForceDeletion"`
+	Identity      any  `ps:"Identity"`
+}
+
+func (p RemoveComplianceBoundaryParams) params() map[string]any {
+	m := map[string]any{}
+	if p.ForceDeletion {
+		m["ForceDeletion"] = true
+	}
+	if p.Identity != nil {
+		m["Identity"] = p.Identity
+	}
+	return m
+}
+
+// RemoveComplianceBoundary runs the Remove-ComplianceBoundary cmdlet.
+func (s *Service) RemoveComplianceBoundary(ctx context.Context, p RemoveComplianceBoundaryParams) (*adminapi.Result, error) {
+	return s.C.Invoke(ctx, "Remove-ComplianceBoundary", p.params())
+}
+
 // RemoveComplianceCaseParams are the parameters of Remove-ComplianceCase.
 // DefaultParameterSetName: Identity
 type RemoveComplianceCaseParams struct {
@@ -9353,6 +10894,71 @@ func (p RemoveComplianceCaseMemberParams) params() map[string]any {
 // RemoveComplianceCaseMember runs the Remove-ComplianceCaseMember cmdlet.
 func (s *Service) RemoveComplianceCaseMember(ctx context.Context, p RemoveComplianceCaseMemberParams) (*adminapi.Result, error) {
 	return s.C.Invoke(ctx, "Remove-ComplianceCaseMember", p.params())
+}
+
+// RemoveComplianceCustodianParams are the parameters of Remove-ComplianceCustodian.
+// DefaultParameterSetName: Identity
+type RemoveComplianceCustodianParams struct {
+	Identity any `ps:"Identity"`
+}
+
+func (p RemoveComplianceCustodianParams) params() map[string]any {
+	m := map[string]any{}
+	if p.Identity != nil {
+		m["Identity"] = p.Identity
+	}
+	return m
+}
+
+// RemoveComplianceCustodian runs the Remove-ComplianceCustodian cmdlet.
+func (s *Service) RemoveComplianceCustodian(ctx context.Context, p RemoveComplianceCustodianParams) (*adminapi.Result, error) {
+	return s.C.Invoke(ctx, "Remove-ComplianceCustodian", p.params())
+}
+
+// RemoveComplianceEmailSettingParams are the parameters of Remove-ComplianceEmailSetting.
+// DefaultParameterSetName: Identity
+type RemoveComplianceEmailSettingParams struct {
+	DomainController any `ps:"DomainController"`
+	Identity         any `ps:"Identity"`
+}
+
+func (p RemoveComplianceEmailSettingParams) params() map[string]any {
+	m := map[string]any{}
+	if p.DomainController != nil {
+		m["DomainController"] = p.DomainController
+	}
+	if p.Identity != nil {
+		m["Identity"] = p.Identity
+	}
+	return m
+}
+
+// RemoveComplianceEmailSetting runs the Remove-ComplianceEmailSetting cmdlet.
+func (s *Service) RemoveComplianceEmailSetting(ctx context.Context, p RemoveComplianceEmailSettingParams) (*adminapi.Result, error) {
+	return s.C.Invoke(ctx, "Remove-ComplianceEmailSetting", p.params())
+}
+
+// RemoveComplianceNoticeParams are the parameters of Remove-ComplianceNotice.
+// DefaultParameterSetName: Identity
+type RemoveComplianceNoticeParams struct {
+	DomainController any `ps:"DomainController"`
+	Identity         any `ps:"Identity"`
+}
+
+func (p RemoveComplianceNoticeParams) params() map[string]any {
+	m := map[string]any{}
+	if p.DomainController != nil {
+		m["DomainController"] = p.DomainController
+	}
+	if p.Identity != nil {
+		m["Identity"] = p.Identity
+	}
+	return m
+}
+
+// RemoveComplianceNotice runs the Remove-ComplianceNotice cmdlet.
+func (s *Service) RemoveComplianceNotice(ctx context.Context, p RemoveComplianceNoticeParams) (*adminapi.Result, error) {
+	return s.C.Invoke(ctx, "Remove-ComplianceNotice", p.params())
 }
 
 // RemoveComplianceRetentionEventParams are the parameters of Remove-ComplianceRetentionEvent.
@@ -9439,30 +11045,10 @@ func (s *Service) RemoveComplianceSearchAction(ctx context.Context, p RemoveComp
 	return s.C.Invoke(ctx, "Remove-ComplianceSearchAction", p.params())
 }
 
-// RemoveComplianceSecurityFilterParams are the parameters of Remove-ComplianceSecurityFilter.
-// DefaultParameterSetName: Identity
-type RemoveComplianceSecurityFilterParams struct {
-	FilterName string `ps:"FilterName"`
-}
-
-func (p RemoveComplianceSecurityFilterParams) params() map[string]any {
-	m := map[string]any{}
-	if p.FilterName != "" {
-		m["FilterName"] = p.FilterName
-	}
-	return m
-}
-
-// RemoveComplianceSecurityFilter runs the Remove-ComplianceSecurityFilter cmdlet.
-func (s *Service) RemoveComplianceSecurityFilter(ctx context.Context, p RemoveComplianceSecurityFilterParams) (*adminapi.Result, error) {
-	return s.C.Invoke(ctx, "Remove-ComplianceSecurityFilter", p.params())
-}
-
 // RemoveComplianceTagParams are the parameters of Remove-ComplianceTag.
 type RemoveComplianceTagParams struct {
-	ForceDeletion   bool `ps:"ForceDeletion"`
-	Identity        any  `ps:"Identity"`
-	PriorityCleanup bool `ps:"PriorityCleanup"`
+	ForceDeletion bool `ps:"ForceDeletion"`
+	Identity      any  `ps:"Identity"`
 }
 
 func (p RemoveComplianceTagParams) params() map[string]any {
@@ -9472,9 +11058,6 @@ func (p RemoveComplianceTagParams) params() map[string]any {
 	}
 	if p.Identity != nil {
 		m["Identity"] = p.Identity
-	}
-	if p.PriorityCleanup {
-		m["PriorityCleanup"] = true
 	}
 	return m
 }
@@ -9486,11 +11069,15 @@ func (s *Service) RemoveComplianceTag(ctx context.Context, p RemoveComplianceTag
 
 // RemoveCustomDlpEmailTemplateParams are the parameters of Remove-CustomDlpEmailTemplate.
 type RemoveCustomDlpEmailTemplateParams struct {
-	Identity any `ps:"Identity"`
+	ForceDeletion bool `ps:"ForceDeletion"`
+	Identity      any  `ps:"Identity"`
 }
 
 func (p RemoveCustomDlpEmailTemplateParams) params() map[string]any {
 	m := map[string]any{}
+	if p.ForceDeletion {
+		m["ForceDeletion"] = true
+	}
 	if p.Identity != nil {
 		m["Identity"] = p.Identity
 	}
@@ -9608,6 +11195,28 @@ func (p RemoveDeviceTenantRuleParams) params() map[string]any {
 // RemoveDeviceTenantRule runs the Remove-DeviceTenantRule cmdlet.
 func (s *Service) RemoveDeviceTenantRule(ctx context.Context, p RemoveDeviceTenantRuleParams) (*adminapi.Result, error) {
 	return s.C.Invoke(ctx, "Remove-DeviceTenantRule", p.params())
+}
+
+// RemoveDlpAlertTuningRuleParams are the parameters of Remove-DlpAlertTuningRule.
+type RemoveDlpAlertTuningRuleParams struct {
+	ForceDeletion bool `ps:"ForceDeletion"`
+	Identity      any  `ps:"Identity"`
+}
+
+func (p RemoveDlpAlertTuningRuleParams) params() map[string]any {
+	m := map[string]any{}
+	if p.ForceDeletion {
+		m["ForceDeletion"] = true
+	}
+	if p.Identity != nil {
+		m["Identity"] = p.Identity
+	}
+	return m
+}
+
+// RemoveDlpAlertTuningRule runs the Remove-DlpAlertTuningRule cmdlet.
+func (s *Service) RemoveDlpAlertTuningRule(ctx context.Context, p RemoveDlpAlertTuningRuleParams) (*adminapi.Result, error) {
+	return s.C.Invoke(ctx, "Remove-DlpAlertTuningRule", p.params())
 }
 
 // RemoveDlpCompliancePolicyParams are the parameters of Remove-DlpCompliancePolicy.
@@ -9890,6 +11499,24 @@ func (s *Service) RemoveFilePlanPropertySubCategory(ctx context.Context, p Remov
 	return s.C.Invoke(ctx, "Remove-FilePlanPropertySubCategory", p.params())
 }
 
+// RemoveGlobalListParams are the parameters of Remove-GlobalList.
+type RemoveGlobalListParams struct {
+	Identity any `ps:"Identity"`
+}
+
+func (p RemoveGlobalListParams) params() map[string]any {
+	m := map[string]any{}
+	if p.Identity != nil {
+		m["Identity"] = p.Identity
+	}
+	return m
+}
+
+// RemoveGlobalList runs the Remove-GlobalList cmdlet.
+func (s *Service) RemoveGlobalList(ctx context.Context, p RemoveGlobalListParams) (*adminapi.Result, error) {
+	return s.C.Invoke(ctx, "Remove-GlobalList", p.params())
+}
+
 // RemoveHoldCompliancePolicyParams are the parameters of Remove-HoldCompliancePolicy.
 type RemoveHoldCompliancePolicyParams struct {
 	ForceDeletion bool `ps:"ForceDeletion"`
@@ -10002,11 +11629,15 @@ func (s *Service) RemoveInsiderRiskPolicy(ctx context.Context, p RemoveInsiderRi
 
 // RemoveJitConfigurationParams are the parameters of Remove-JitConfiguration.
 type RemoveJitConfigurationParams struct {
-	Identity any `ps:"Identity"`
+	ForceDeletion bool `ps:"ForceDeletion"`
+	Identity      any  `ps:"Identity"`
 }
 
 func (p RemoveJitConfigurationParams) params() map[string]any {
 	m := map[string]any{}
+	if p.ForceDeletion {
+		m["ForceDeletion"] = true
+	}
 	if p.Identity != nil {
 		m["Identity"] = p.Identity
 	}
@@ -10036,6 +11667,24 @@ func (s *Service) RemoveLabel(ctx context.Context, p RemoveLabelParams) (*admina
 	return s.C.Invoke(ctx, "Remove-Label", p.params())
 }
 
+// RemoveLabelExplorerConfigParams are the parameters of Remove-LabelExplorerConfig.
+type RemoveLabelExplorerConfigParams struct {
+	Identity any `ps:"Identity"`
+}
+
+func (p RemoveLabelExplorerConfigParams) params() map[string]any {
+	m := map[string]any{}
+	if p.Identity != nil {
+		m["Identity"] = p.Identity
+	}
+	return m
+}
+
+// RemoveLabelExplorerConfig runs the Remove-LabelExplorerConfig cmdlet.
+func (s *Service) RemoveLabelExplorerConfig(ctx context.Context, p RemoveLabelExplorerConfigParams) (*adminapi.Result, error) {
+	return s.C.Invoke(ctx, "Remove-LabelExplorerConfig", p.params())
+}
+
 // RemoveLabelPolicyParams are the parameters of Remove-LabelPolicy.
 type RemoveLabelPolicyParams struct {
 	Identity any `ps:"Identity"`
@@ -10054,13 +11703,47 @@ func (s *Service) RemoveLabelPolicy(ctx context.Context, p RemoveLabelPolicyPara
 	return s.C.Invoke(ctx, "Remove-LabelPolicy", p.params())
 }
 
+// RemoveMachineAssistedTagResourceParams are the parameters of Remove-MachineAssistedTagResource.
+type RemoveMachineAssistedTagResourceParams struct {
+	Identity any `ps:"Identity"`
+	ModuleId any `ps:"ModuleId"`
+	Resource any `ps:"Resource"`
+	TaskId   any `ps:"TaskId"`
+}
+
+func (p RemoveMachineAssistedTagResourceParams) params() map[string]any {
+	m := map[string]any{}
+	if p.Identity != nil {
+		m["Identity"] = p.Identity
+	}
+	if p.ModuleId != nil {
+		m["ModuleId"] = p.ModuleId
+	}
+	if p.Resource != nil {
+		m["Resource"] = p.Resource
+	}
+	if p.TaskId != nil {
+		m["TaskId"] = p.TaskId
+	}
+	return m
+}
+
+// RemoveMachineAssistedTagResource runs the Remove-MachineAssistedTagResource cmdlet.
+func (s *Service) RemoveMachineAssistedTagResource(ctx context.Context, p RemoveMachineAssistedTagResourceParams) (*adminapi.Result, error) {
+	return s.C.Invoke(ctx, "Remove-MachineAssistedTagResource", p.params())
+}
+
 // RemoveOcrConfigurationParams are the parameters of Remove-OcrConfiguration.
 type RemoveOcrConfigurationParams struct {
-	Identity any `ps:"Identity"`
+	ForceDeletion bool `ps:"ForceDeletion"`
+	Identity      any  `ps:"Identity"`
 }
 
 func (p RemoveOcrConfigurationParams) params() map[string]any {
 	m := map[string]any{}
+	if p.ForceDeletion {
+		m["ForceDeletion"] = true
+	}
 	if p.Identity != nil {
 		m["Identity"] = p.Identity
 	}
@@ -10262,11 +11945,32 @@ func (s *Service) RemoveProtectionComplianceRule(ctx context.Context, p RemovePr
 	return s.C.Invoke(ctx, "Remove-ProtectionComplianceRule", p.params())
 }
 
+// RemoveRecordLabelParams are the parameters of Remove-RecordLabel.
+type RemoveRecordLabelParams struct {
+	ItemUrl   string `ps:"ItemUrl"`
+	LabelName string `ps:"LabelName"`
+}
+
+func (p RemoveRecordLabelParams) params() map[string]any {
+	m := map[string]any{}
+	if p.ItemUrl != "" {
+		m["ItemUrl"] = p.ItemUrl
+	}
+	if p.LabelName != "" {
+		m["LabelName"] = p.LabelName
+	}
+	return m
+}
+
+// RemoveRecordLabel runs the Remove-RecordLabel cmdlet.
+func (s *Service) RemoveRecordLabel(ctx context.Context, p RemoveRecordLabelParams) (*adminapi.Result, error) {
+	return s.C.Invoke(ctx, "Remove-RecordLabel", p.params())
+}
+
 // RemoveRetentionCompliancePolicyParams are the parameters of Remove-RetentionCompliancePolicy.
 type RemoveRetentionCompliancePolicyParams struct {
-	ForceDeletion   bool `ps:"ForceDeletion"`
-	Identity        any  `ps:"Identity"`
-	PriorityCleanup bool `ps:"PriorityCleanup"`
+	ForceDeletion bool `ps:"ForceDeletion"`
+	Identity      any  `ps:"Identity"`
 }
 
 func (p RemoveRetentionCompliancePolicyParams) params() map[string]any {
@@ -10276,9 +11980,6 @@ func (p RemoveRetentionCompliancePolicyParams) params() map[string]any {
 	}
 	if p.Identity != nil {
 		m["Identity"] = p.Identity
-	}
-	if p.PriorityCleanup {
-		m["PriorityCleanup"] = true
 	}
 	return m
 }
@@ -10290,9 +11991,8 @@ func (s *Service) RemoveRetentionCompliancePolicy(ctx context.Context, p RemoveR
 
 // RemoveRetentionComplianceRuleParams are the parameters of Remove-RetentionComplianceRule.
 type RemoveRetentionComplianceRuleParams struct {
-	ForceDeletion   bool `ps:"ForceDeletion"`
-	Identity        any  `ps:"Identity"`
-	PriorityCleanup bool `ps:"PriorityCleanup"`
+	ForceDeletion bool `ps:"ForceDeletion"`
+	Identity      any  `ps:"Identity"`
 }
 
 func (p RemoveRetentionComplianceRuleParams) params() map[string]any {
@@ -10303,9 +12003,6 @@ func (p RemoveRetentionComplianceRuleParams) params() map[string]any {
 	if p.Identity != nil {
 		m["Identity"] = p.Identity
 	}
-	if p.PriorityCleanup {
-		m["PriorityCleanup"] = true
-	}
 	return m
 }
 
@@ -10314,42 +12011,12 @@ func (s *Service) RemoveRetentionComplianceRule(ctx context.Context, p RemoveRet
 	return s.C.Invoke(ctx, "Remove-RetentionComplianceRule", p.params())
 }
 
-// RemoveRoleGroupParams are the parameters of Remove-RoleGroup.
-type RemoveRoleGroupParams struct {
-	Force    bool `ps:"Force"`
-	Identity any  `ps:"Identity"`
-}
-
-func (p RemoveRoleGroupParams) params() map[string]any {
-	m := map[string]any{}
-	if p.Force {
-		m["Force"] = true
-	}
-	if p.Identity != nil {
-		m["Identity"] = p.Identity
-	}
-	return m
-}
-
-// RemoveRoleGroup runs the Remove-RoleGroup cmdlet.
-func (s *Service) RemoveRoleGroup(ctx context.Context, p RemoveRoleGroupParams) (*adminapi.Result, error) {
-	return s.C.Invoke(ctx, "Remove-RoleGroup", p.params())
-}
-
 // RemoveRoleGroupMemberParams are the parameters of Remove-RoleGroupMember.
 type RemoveRoleGroupMemberParams struct {
-	Identity any `ps:"Identity"`
-	Member   any `ps:"Member"`
 }
 
 func (p RemoveRoleGroupMemberParams) params() map[string]any {
 	m := map[string]any{}
-	if p.Identity != nil {
-		m["Identity"] = p.Identity
-	}
-	if p.Member != nil {
-		m["Member"] = p.Member
-	}
 	return m
 }
 
@@ -10394,6 +12061,24 @@ func (s *Service) RemoveSensitiveInformationScanRule(ctx context.Context, p Remo
 	return s.C.Invoke(ctx, "Remove-SensitiveInformationScanRule", p.params())
 }
 
+// RemoveServiceDomainGroupParams are the parameters of Remove-ServiceDomainGroup.
+type RemoveServiceDomainGroupParams struct {
+	Identity any `ps:"Identity"`
+}
+
+func (p RemoveServiceDomainGroupParams) params() map[string]any {
+	m := map[string]any{}
+	if p.Identity != nil {
+		m["Identity"] = p.Identity
+	}
+	return m
+}
+
+// RemoveServiceDomainGroup runs the Remove-ServiceDomainGroup cmdlet.
+func (s *Service) RemoveServiceDomainGroup(ctx context.Context, p RemoveServiceDomainGroupParams) (*adminapi.Result, error) {
+	return s.C.Invoke(ctx, "Remove-ServiceDomainGroup", p.params())
+}
+
 // RemoveServicePrincipalParams are the parameters of Remove-ServicePrincipal.
 type RemoveServicePrincipalParams struct {
 	Identity any `ps:"Identity"`
@@ -10434,61 +12119,92 @@ func (s *Service) RemoveSupervisoryReviewPolicyV2(ctx context.Context, p RemoveS
 	return s.C.Invoke(ctx, "Remove-SupervisoryReviewPolicyV2", p.params())
 }
 
-// RemoveTenantAllowBlockListItemsParams are the parameters of Remove-TenantAllowBlockListItems.
-type RemoveTenantAllowBlockListItemsParams struct {
-	Entries     []string `ps:"Entries"`
-	Ids         []string `ps:"Ids"`
-	ListSubType any      `ps:"ListSubType"`
-	ListType    any      `ps:"ListType"`
-	OutputJson  bool     `ps:"OutputJson"`
+// RemoveTeamsRetentionCompliancePolicyParams are the parameters of Remove-TeamsRetentionCompliancePolicy.
+type RemoveTeamsRetentionCompliancePolicyParams struct {
+	ForceDeletion bool `ps:"ForceDeletion"`
+	Identity      any  `ps:"Identity"`
 }
 
-func (p RemoveTenantAllowBlockListItemsParams) params() map[string]any {
+func (p RemoveTeamsRetentionCompliancePolicyParams) params() map[string]any {
 	m := map[string]any{}
-	if len(p.Entries) > 0 {
-		m["Entries"] = p.Entries
+	if p.ForceDeletion {
+		m["ForceDeletion"] = true
 	}
-	if len(p.Ids) > 0 {
-		m["Ids"] = p.Ids
-	}
-	if p.ListSubType != nil {
-		m["ListSubType"] = p.ListSubType
-	}
-	if p.ListType != nil {
-		m["ListType"] = p.ListType
-	}
-	if p.OutputJson {
-		m["OutputJson"] = true
-	}
-	return m
-}
-
-// RemoveTenantAllowBlockListItems runs the Remove-TenantAllowBlockListItems cmdlet.
-func (s *Service) RemoveTenantAllowBlockListItems(ctx context.Context, p RemoveTenantAllowBlockListItemsParams) (*adminapi.Result, error) {
-	return s.C.Invoke(ctx, "Remove-TenantAllowBlockListItems", p.params())
-}
-
-// RemoveTenantAllowBlockListSpoofItemsParams are the parameters of Remove-TenantAllowBlockListSpoofItems.
-// DefaultParameterSetName: Identity
-type RemoveTenantAllowBlockListSpoofItemsParams struct {
-	Identity any      `ps:"Identity"`
-	Ids      []string `ps:"Ids"`
-}
-
-func (p RemoveTenantAllowBlockListSpoofItemsParams) params() map[string]any {
-	m := map[string]any{}
 	if p.Identity != nil {
 		m["Identity"] = p.Identity
 	}
-	if len(p.Ids) > 0 {
-		m["Ids"] = p.Ids
+	return m
+}
+
+// RemoveTeamsRetentionCompliancePolicy runs the Remove-TeamsRetentionCompliancePolicy cmdlet.
+func (s *Service) RemoveTeamsRetentionCompliancePolicy(ctx context.Context, p RemoveTeamsRetentionCompliancePolicyParams) (*adminapi.Result, error) {
+	return s.C.Invoke(ctx, "Remove-TeamsRetentionCompliancePolicy", p.params())
+}
+
+// RemoveTeamsRetentionComplianceRuleParams are the parameters of Remove-TeamsRetentionComplianceRule.
+type RemoveTeamsRetentionComplianceRuleParams struct {
+	ForceDeletion bool `ps:"ForceDeletion"`
+	Identity      any  `ps:"Identity"`
+}
+
+func (p RemoveTeamsRetentionComplianceRuleParams) params() map[string]any {
+	m := map[string]any{}
+	if p.ForceDeletion {
+		m["ForceDeletion"] = true
+	}
+	if p.Identity != nil {
+		m["Identity"] = p.Identity
 	}
 	return m
 }
 
-// RemoveTenantAllowBlockListSpoofItems runs the Remove-TenantAllowBlockListSpoofItems cmdlet.
-func (s *Service) RemoveTenantAllowBlockListSpoofItems(ctx context.Context, p RemoveTenantAllowBlockListSpoofItemsParams) (*adminapi.Result, error) {
-	return s.C.Invoke(ctx, "Remove-TenantAllowBlockListSpoofItems", p.params())
+// RemoveTeamsRetentionComplianceRule runs the Remove-TeamsRetentionComplianceRule cmdlet.
+func (s *Service) RemoveTeamsRetentionComplianceRule(ctx context.Context, p RemoveTeamsRetentionComplianceRuleParams) (*adminapi.Result, error) {
+	return s.C.Invoke(ctx, "Remove-TeamsRetentionComplianceRule", p.params())
+}
+
+// RemoveThreatResponsePolicyParams are the parameters of Remove-ThreatResponsePolicy.
+type RemoveThreatResponsePolicyParams struct {
+	ForceDeletion bool `ps:"ForceDeletion"`
+	Identity      any  `ps:"Identity"`
+}
+
+func (p RemoveThreatResponsePolicyParams) params() map[string]any {
+	m := map[string]any{}
+	if p.ForceDeletion {
+		m["ForceDeletion"] = true
+	}
+	if p.Identity != nil {
+		m["Identity"] = p.Identity
+	}
+	return m
+}
+
+// RemoveThreatResponsePolicy runs the Remove-ThreatResponsePolicy cmdlet.
+func (s *Service) RemoveThreatResponsePolicy(ctx context.Context, p RemoveThreatResponsePolicyParams) (*adminapi.Result, error) {
+	return s.C.Invoke(ctx, "Remove-ThreatResponsePolicy", p.params())
+}
+
+// RemoveThreatResponseRuleParams are the parameters of Remove-ThreatResponseRule.
+type RemoveThreatResponseRuleParams struct {
+	ForceDeletion bool `ps:"ForceDeletion"`
+	Identity      any  `ps:"Identity"`
+}
+
+func (p RemoveThreatResponseRuleParams) params() map[string]any {
+	m := map[string]any{}
+	if p.ForceDeletion {
+		m["ForceDeletion"] = true
+	}
+	if p.Identity != nil {
+		m["Identity"] = p.Identity
+	}
+	return m
+}
+
+// RemoveThreatResponseRule runs the Remove-ThreatResponseRule cmdlet.
+func (s *Service) RemoveThreatResponseRule(ctx context.Context, p RemoveThreatResponseRuleParams) (*adminapi.Result, error) {
+	return s.C.Invoke(ctx, "Remove-ThreatResponseRule", p.params())
 }
 
 // RemoveUnifiedAuditLogRetentionPolicyParams are the parameters of Remove-UnifiedAuditLogRetentionPolicy.
@@ -10517,32 +12233,146 @@ func (s *Service) RemoveUnifiedAuditLogRetentionPolicy(ctx context.Context, p Re
 	return s.C.Invoke(ctx, "Remove-UnifiedAuditLogRetentionPolicy", p.params())
 }
 
-// RemoveEDiscoveryCaseAdminParams are the parameters of Remove-eDiscoveryCaseAdmin.
-// DefaultParameterSetName: Identity
-type RemoveEDiscoveryCaseAdminParams struct {
-	User string `ps:"User"`
+// RestoreItemsDeletedByRetentionSystemParams are the parameters of Restore-ItemsDeletedByRetentionSystem.
+type RestoreItemsDeletedByRetentionSystemParams struct {
+	PolicyIdOrRuleIdOrTagTd any    `ps:"PolicyIdOrRuleIdOrTagTd"`
+	RestoreFrom             any    `ps:"RestoreFrom"`
+	RestoreTo               any    `ps:"RestoreTo"`
+	SiteIds                 string `ps:"SiteIds"`
 }
 
-func (p RemoveEDiscoveryCaseAdminParams) params() map[string]any {
+func (p RestoreItemsDeletedByRetentionSystemParams) params() map[string]any {
 	m := map[string]any{}
-	if p.User != "" {
-		m["User"] = p.User
+	if p.PolicyIdOrRuleIdOrTagTd != nil {
+		m["PolicyIdOrRuleIdOrTagTd"] = p.PolicyIdOrRuleIdOrTagTd
+	}
+	if p.RestoreFrom != nil {
+		m["RestoreFrom"] = p.RestoreFrom
+	}
+	if p.RestoreTo != nil {
+		m["RestoreTo"] = p.RestoreTo
+	}
+	if p.SiteIds != "" {
+		m["SiteIds"] = p.SiteIds
 	}
 	return m
 }
 
-// RemoveEDiscoveryCaseAdmin runs the Remove-eDiscoveryCaseAdmin cmdlet.
-func (s *Service) RemoveEDiscoveryCaseAdmin(ctx context.Context, p RemoveEDiscoveryCaseAdminParams) (*adminapi.Result, error) {
-	return s.C.Invoke(ctx, "Remove-eDiscoveryCaseAdmin", p.params())
+// RestoreItemsDeletedByRetentionSystem runs the Restore-ItemsDeletedByRetentionSystem cmdlet.
+func (s *Service) RestoreItemsDeletedByRetentionSystem(ctx context.Context, p RestoreItemsDeletedByRetentionSystemParams) (*adminapi.Result, error) {
+	return s.C.Invoke(ctx, "Restore-ItemsDeletedByRetentionSystem", p.params())
+}
+
+// RestoreTemporaryDeletedQuarantineMessageParams are the parameters of Restore-TemporaryDeletedQuarantineMessage.
+type RestoreTemporaryDeletedQuarantineMessageParams struct {
+	Identities       []string `ps:"Identities"`
+	Identity         any      `ps:"Identity"`
+	RecipientAddress []string `ps:"RecipientAddress"`
+}
+
+func (p RestoreTemporaryDeletedQuarantineMessageParams) params() map[string]any {
+	m := map[string]any{}
+	if len(p.Identities) > 0 {
+		m["Identities"] = p.Identities
+	}
+	if p.Identity != nil {
+		m["Identity"] = p.Identity
+	}
+	if len(p.RecipientAddress) > 0 {
+		m["RecipientAddress"] = p.RecipientAddress
+	}
+	return m
+}
+
+// RestoreTemporaryDeletedQuarantineMessage runs the Restore-TemporaryDeletedQuarantineMessage cmdlet.
+func (s *Service) RestoreTemporaryDeletedQuarantineMessage(ctx context.Context, p RestoreTemporaryDeletedQuarantineMessageParams) (*adminapi.Result, error) {
+	return s.C.Invoke(ctx, "Restore-TemporaryDeletedQuarantineMessage", p.params())
+}
+
+// SetActivityAlertParams are the parameters of Set-ActivityAlert.
+// DefaultParameterSetName: Identity
+type SetActivityAlertParams struct {
+	Category     any    `ps:"Category"`
+	Condition    string `ps:"Condition"`
+	Description  string `ps:"Description"`
+	Disabled     bool   `ps:"Disabled"`
+	EmailCulture any    `ps:"EmailCulture"`
+	Identity     any    `ps:"Identity"`
+	Multiplier   any    `ps:"Multiplier"`
+	NotifyUser   any    `ps:"NotifyUser"`
+	Operation    any    `ps:"Operation"`
+	RecordType   any    `ps:"RecordType"`
+	ScopeLevel   any    `ps:"ScopeLevel"`
+	Severity     any    `ps:"Severity"`
+	Threshold    int    `ps:"Threshold"`
+	TimeWindow   int    `ps:"TimeWindow"`
+	UserId       any    `ps:"UserId"`
+}
+
+func (p SetActivityAlertParams) params() map[string]any {
+	m := map[string]any{}
+	if p.Category != nil {
+		m["Category"] = p.Category
+	}
+	if p.Condition != "" {
+		m["Condition"] = p.Condition
+	}
+	if p.Description != "" {
+		m["Description"] = p.Description
+	}
+	if p.Disabled {
+		m["Disabled"] = true
+	}
+	if p.EmailCulture != nil {
+		m["EmailCulture"] = p.EmailCulture
+	}
+	if p.Identity != nil {
+		m["Identity"] = p.Identity
+	}
+	if p.Multiplier != nil {
+		m["Multiplier"] = p.Multiplier
+	}
+	if p.NotifyUser != nil {
+		m["NotifyUser"] = p.NotifyUser
+	}
+	if p.Operation != nil {
+		m["Operation"] = p.Operation
+	}
+	if p.RecordType != nil {
+		m["RecordType"] = p.RecordType
+	}
+	if p.ScopeLevel != nil {
+		m["ScopeLevel"] = p.ScopeLevel
+	}
+	if p.Severity != nil {
+		m["Severity"] = p.Severity
+	}
+	if p.Threshold != 0 {
+		m["Threshold"] = p.Threshold
+	}
+	if p.TimeWindow != 0 {
+		m["TimeWindow"] = p.TimeWindow
+	}
+	if p.UserId != nil {
+		m["UserId"] = p.UserId
+	}
+	return m
+}
+
+// SetActivityAlert runs the Set-ActivityAlert cmdlet.
+func (s *Service) SetActivityAlert(ctx context.Context, p SetActivityAlertParams) (*adminapi.Result, error) {
+	return s.C.Invoke(ctx, "Set-ActivityAlert", p.params())
 }
 
 // SetAdaptiveScopeParams are the parameters of Set-AdaptiveScope.
 type SetAdaptiveScopeParams struct {
-	AdministrativeUnit any    `ps:"AdministrativeUnit"`
-	Comment            string `ps:"Comment"`
-	FilterConditions   any    `ps:"FilterConditions"`
-	Identity           any    `ps:"Identity"`
-	RawQuery           string `ps:"RawQuery"`
+	AdministrativeUnit           any      `ps:"AdministrativeUnit"`
+	Comment                      string   `ps:"Comment"`
+	EnabledStates                []string `ps:"EnabledStates"`
+	FilterConditions             any      `ps:"FilterConditions"`
+	Identity                     any      `ps:"Identity"`
+	LinkedRecipientEnabledStates []string `ps:"LinkedRecipientEnabledStates"`
+	RawQuery                     string   `ps:"RawQuery"`
 }
 
 func (p SetAdaptiveScopeParams) params() map[string]any {
@@ -10553,11 +12383,17 @@ func (p SetAdaptiveScopeParams) params() map[string]any {
 	if p.Comment != "" {
 		m["Comment"] = p.Comment
 	}
+	if len(p.EnabledStates) > 0 {
+		m["EnabledStates"] = p.EnabledStates
+	}
 	if p.FilterConditions != nil {
 		m["FilterConditions"] = p.FilterConditions
 	}
 	if p.Identity != nil {
 		m["Identity"] = p.Identity
+	}
+	if len(p.LinkedRecipientEnabledStates) > 0 {
+		m["LinkedRecipientEnabledStates"] = p.LinkedRecipientEnabledStates
 	}
 	if p.RawQuery != "" {
 		m["RawQuery"] = p.RawQuery
@@ -10572,17 +12408,29 @@ func (s *Service) SetAdaptiveScope(ctx context.Context, p SetAdaptiveScopeParams
 
 // SetAdministrativeUnitExtensionParams are the parameters of Set-AdministrativeUnitExtension.
 type SetAdministrativeUnitExtensionParams struct {
-	FilterConditions any `ps:"FilterConditions"`
-	Identity         any `ps:"Identity"`
+	EnabledStates                []string `ps:"EnabledStates"`
+	FilterConditions             any      `ps:"FilterConditions"`
+	Identity                     any      `ps:"Identity"`
+	LinkedRecipientEnabledStates []string `ps:"LinkedRecipientEnabledStates"`
+	RawQuery                     string   `ps:"RawQuery"`
 }
 
 func (p SetAdministrativeUnitExtensionParams) params() map[string]any {
 	m := map[string]any{}
+	if len(p.EnabledStates) > 0 {
+		m["EnabledStates"] = p.EnabledStates
+	}
 	if p.FilterConditions != nil {
 		m["FilterConditions"] = p.FilterConditions
 	}
 	if p.Identity != nil {
 		m["Identity"] = p.Identity
+	}
+	if len(p.LinkedRecipientEnabledStates) > 0 {
+		m["LinkedRecipientEnabledStates"] = p.LinkedRecipientEnabledStates
+	}
+	if p.RawQuery != "" {
+		m["RawQuery"] = p.RawQuery
 	}
 	return m
 }
@@ -10686,6 +12534,7 @@ func (s *Service) SetAppRetentionCompliancePolicy(ctx context.Context, p SetAppR
 // SetAppRetentionComplianceRuleParams are the parameters of Set-AppRetentionComplianceRule.
 // DefaultParameterSetName: Identity
 type SetAppRetentionComplianceRuleParams struct {
+	ApplyComplianceTag                  string   `ps:"ApplyComplianceTag"`
 	Comment                             string   `ps:"Comment"`
 	ContentContainsSensitiveInformation []string `ps:"ContentContainsSensitiveInformation"`
 	ContentDateFrom                     any      `ps:"ContentDateFrom"`
@@ -10701,6 +12550,9 @@ type SetAppRetentionComplianceRuleParams struct {
 
 func (p SetAppRetentionComplianceRuleParams) params() map[string]any {
 	m := map[string]any{}
+	if p.ApplyComplianceTag != "" {
+		m["ApplyComplianceTag"] = p.ApplyComplianceTag
+	}
 	if p.Comment != "" {
 		m["Comment"] = p.Comment
 	}
@@ -10746,8 +12598,6 @@ func (s *Service) SetAppRetentionComplianceRule(ctx context.Context, p SetAppRet
 // DefaultParameterSetName: Identity
 type SetAuditConfigParams struct {
 	DomainController any `ps:"DomainController"`
-	Identity         any `ps:"Identity"`
-	Organization     any `ps:"Organization"`
 	Workload         any `ps:"Workload"`
 }
 
@@ -10755,12 +12605,6 @@ func (p SetAuditConfigParams) params() map[string]any {
 	m := map[string]any{}
 	if p.DomainController != nil {
 		m["DomainController"] = p.DomainController
-	}
-	if p.Identity != nil {
-		m["Identity"] = p.Identity
-	}
-	if p.Organization != nil {
-		m["Organization"] = p.Organization
 	}
 	if p.Workload != nil {
 		m["Workload"] = p.Workload
@@ -10773,12 +12617,41 @@ func (s *Service) SetAuditConfig(ctx context.Context, p SetAuditConfigParams) (*
 	return s.C.Invoke(ctx, "Set-AuditConfig", p.params())
 }
 
+// SetAuditConfigurationRuleParams are the parameters of Set-AuditConfigurationRule.
+// DefaultParameterSetName: Identity
+type SetAuditConfigurationRuleParams struct {
+	AuditOperation   any `ps:"AuditOperation"`
+	DomainController any `ps:"DomainController"`
+	Identity         any `ps:"Identity"`
+}
+
+func (p SetAuditConfigurationRuleParams) params() map[string]any {
+	m := map[string]any{}
+	if p.AuditOperation != nil {
+		m["AuditOperation"] = p.AuditOperation
+	}
+	if p.DomainController != nil {
+		m["DomainController"] = p.DomainController
+	}
+	if p.Identity != nil {
+		m["Identity"] = p.Identity
+	}
+	return m
+}
+
+// SetAuditConfigurationRule runs the Set-AuditConfigurationRule cmdlet.
+func (s *Service) SetAuditConfigurationRule(ctx context.Context, p SetAuditConfigurationRuleParams) (*adminapi.Result, error) {
+	return s.C.Invoke(ctx, "Set-AuditConfigurationRule", p.params())
+}
+
 // SetAutoSensitivityLabelPolicyParams are the parameters of Set-AutoSensitivityLabelPolicy.
 // DefaultParameterSetName: Identity
 type SetAutoSensitivityLabelPolicyParams struct {
 	AddExchangeLocation                     any      `ps:"AddExchangeLocation"`
 	AddOneDriveLocation                     any      `ps:"AddOneDriveLocation"`
 	AddOneDriveLocationException            any      `ps:"AddOneDriveLocationException"`
+	AddPowerBILocation                      any      `ps:"AddPowerBILocation"`
+	AddPowerBILocationException             any      `ps:"AddPowerBILocationException"`
 	AddSharePointLocation                   any      `ps:"AddSharePointLocation"`
 	AddSharePointLocationException          any      `ps:"AddSharePointLocationException"`
 	ApplySensitivityLabel                   string   `ps:"ApplySensitivityLabel"`
@@ -10798,6 +12671,7 @@ type SetAutoSensitivityLabelPolicyParams struct {
 	ExternalMailRightsManagementOwner       any      `ps:"ExternalMailRightsManagementOwner"`
 	Force                                   bool     `ps:"Force"`
 	Identity                                any      `ps:"Identity"`
+	IncludeSimulationPolicyGrading          bool     `ps:"IncludeSimulationPolicyGrading"`
 	Locations                               string   `ps:"Locations"`
 	Mode                                    any      `ps:"Mode"`
 	OneDriveAdaptiveScopes                  any      `ps:"OneDriveAdaptiveScopes"`
@@ -10811,6 +12685,8 @@ type SetAutoSensitivityLabelPolicyParams struct {
 	RemoveExchangeLocation                  any      `ps:"RemoveExchangeLocation"`
 	RemoveOneDriveLocation                  any      `ps:"RemoveOneDriveLocation"`
 	RemoveOneDriveLocationException         any      `ps:"RemoveOneDriveLocationException"`
+	RemovePowerBILocation                   any      `ps:"RemovePowerBILocation"`
+	RemovePowerBILocationException          any      `ps:"RemovePowerBILocationException"`
 	RemoveSharePointLocation                any      `ps:"RemoveSharePointLocation"`
 	RemoveSharePointLocationException       any      `ps:"RemoveSharePointLocationException"`
 	RetryDistribution                       bool     `ps:"RetryDistribution"`
@@ -10830,6 +12706,12 @@ func (p SetAutoSensitivityLabelPolicyParams) params() map[string]any {
 	}
 	if p.AddOneDriveLocationException != nil {
 		m["AddOneDriveLocationException"] = p.AddOneDriveLocationException
+	}
+	if p.AddPowerBILocation != nil {
+		m["AddPowerBILocation"] = p.AddPowerBILocation
+	}
+	if p.AddPowerBILocationException != nil {
+		m["AddPowerBILocationException"] = p.AddPowerBILocationException
 	}
 	if p.AddSharePointLocation != nil {
 		m["AddSharePointLocation"] = p.AddSharePointLocation
@@ -10888,6 +12770,9 @@ func (p SetAutoSensitivityLabelPolicyParams) params() map[string]any {
 	if p.Identity != nil {
 		m["Identity"] = p.Identity
 	}
+	if p.IncludeSimulationPolicyGrading {
+		m["IncludeSimulationPolicyGrading"] = true
+	}
 	if p.Locations != "" {
 		m["Locations"] = p.Locations
 	}
@@ -10926,6 +12811,12 @@ func (p SetAutoSensitivityLabelPolicyParams) params() map[string]any {
 	}
 	if p.RemoveOneDriveLocationException != nil {
 		m["RemoveOneDriveLocationException"] = p.RemoveOneDriveLocationException
+	}
+	if p.RemovePowerBILocation != nil {
+		m["RemovePowerBILocation"] = p.RemovePowerBILocation
+	}
+	if p.RemovePowerBILocationException != nil {
+		m["RemovePowerBILocationException"] = p.RemovePowerBILocationException
 	}
 	if p.RemoveSharePointLocation != nil {
 		m["RemoveSharePointLocation"] = p.RemoveSharePointLocation
@@ -11228,6 +13119,7 @@ type SetCaseHoldPolicyParams struct {
 	RemovePublicFolderLocation any    `ps:"RemovePublicFolderLocation"`
 	RemoveSharePointLocation   any    `ps:"RemoveSharePointLocation"`
 	RetryDistribution          bool   `ps:"RetryDistribution"`
+	UpdateStatistics           bool   `ps:"UpdateStatistics"`
 }
 
 func (p SetCaseHoldPolicyParams) params() map[string]any {
@@ -11265,6 +13157,9 @@ func (p SetCaseHoldPolicyParams) params() map[string]any {
 	if p.RetryDistribution {
 		m["RetryDistribution"] = true
 	}
+	if p.UpdateStatistics {
+		m["UpdateStatistics"] = true
+	}
 	return m
 }
 
@@ -11277,6 +13172,8 @@ func (s *Service) SetCaseHoldPolicy(ctx context.Context, p SetCaseHoldPolicyPara
 // DefaultParameterSetName: Identity
 type SetCaseHoldRuleParams struct {
 	Comment           string `ps:"Comment"`
+	ContentDateFrom   any    `ps:"ContentDateFrom"`
+	ContentDateTo     any    `ps:"ContentDateTo"`
 	ContentMatchQuery string `ps:"ContentMatchQuery"`
 	Disabled          bool   `ps:"Disabled"`
 	Identity          any    `ps:"Identity"`
@@ -11286,6 +13183,12 @@ func (p SetCaseHoldRuleParams) params() map[string]any {
 	m := map[string]any{}
 	if p.Comment != "" {
 		m["Comment"] = p.Comment
+	}
+	if p.ContentDateFrom != nil {
+		m["ContentDateFrom"] = p.ContentDateFrom
+	}
+	if p.ContentDateTo != nil {
+		m["ContentDateTo"] = p.ContentDateTo
 	}
 	if p.ContentMatchQuery != "" {
 		m["ContentMatchQuery"] = p.ContentMatchQuery
@@ -11304,21 +13207,76 @@ func (s *Service) SetCaseHoldRule(ctx context.Context, p SetCaseHoldRuleParams) 
 	return s.C.Invoke(ctx, "Set-CaseHoldRule", p.params())
 }
 
+// SetClassificationGradingPolicyParams are the parameters of Set-ClassificationGradingPolicy.
+// DefaultParameterSetName: Identity
+type SetClassificationGradingPolicyParams struct {
+	EndDateTime                 any      `ps:"EndDateTime"`
+	Identity                    any      `ps:"Identity"`
+	SensitiveInformationTypeIds []string `ps:"SensitiveInformationTypeIds"`
+}
+
+func (p SetClassificationGradingPolicyParams) params() map[string]any {
+	m := map[string]any{}
+	if p.EndDateTime != nil {
+		m["EndDateTime"] = p.EndDateTime
+	}
+	if p.Identity != nil {
+		m["Identity"] = p.Identity
+	}
+	if len(p.SensitiveInformationTypeIds) > 0 {
+		m["SensitiveInformationTypeIds"] = p.SensitiveInformationTypeIds
+	}
+	return m
+}
+
+// SetClassificationGradingPolicy runs the Set-ClassificationGradingPolicy cmdlet.
+func (s *Service) SetClassificationGradingPolicy(ctx context.Context, p SetClassificationGradingPolicyParams) (*adminapi.Result, error) {
+	return s.C.Invoke(ctx, "Set-ClassificationGradingPolicy", p.params())
+}
+
+// SetComplianceBoundaryParams are the parameters of Set-ComplianceBoundary.
+type SetComplianceBoundaryParams struct {
+	Comment  string `ps:"Comment"`
+	Identity any    `ps:"Identity"`
+}
+
+func (p SetComplianceBoundaryParams) params() map[string]any {
+	m := map[string]any{}
+	if p.Comment != "" {
+		m["Comment"] = p.Comment
+	}
+	if p.Identity != nil {
+		m["Identity"] = p.Identity
+	}
+	return m
+}
+
+// SetComplianceBoundary runs the Set-ComplianceBoundary cmdlet.
+func (s *Service) SetComplianceBoundary(ctx context.Context, p SetComplianceBoundaryParams) (*adminapi.Result, error) {
+	return s.C.Invoke(ctx, "Set-ComplianceBoundary", p.params())
+}
+
 // SetComplianceCaseParams are the parameters of Set-ComplianceCase.
 // DefaultParameterSetName: Identity
 type SetComplianceCaseParams struct {
-	CaseType         any    `ps:"CaseType"`
-	Close            bool   `ps:"Close"`
-	Description      string `ps:"Description"`
-	DomainController any    `ps:"DomainController"`
-	ExternalId       string `ps:"ExternalId"`
-	Identity         any    `ps:"Identity"`
-	Name             string `ps:"Name"`
-	Reopen           bool   `ps:"Reopen"`
+	AddOrUpdateSources bool     `ps:"AddOrUpdateSources"`
+	CaseType           any      `ps:"CaseType"`
+	Close              bool     `ps:"Close"`
+	Description        string   `ps:"Description"`
+	DomainController   any      `ps:"DomainController"`
+	ExternalId         string   `ps:"ExternalId"`
+	Identity           any      `ps:"Identity"`
+	Name               string   `ps:"Name"`
+	RemoveSources      bool     `ps:"RemoveSources"`
+	Reopen             bool     `ps:"Reopen"`
+	Sources            []string `ps:"Sources"`
 }
 
 func (p SetComplianceCaseParams) params() map[string]any {
 	m := map[string]any{}
+	if p.AddOrUpdateSources {
+		m["AddOrUpdateSources"] = true
+	}
 	if p.CaseType != nil {
 		m["CaseType"] = p.CaseType
 	}
@@ -11340,8 +13298,14 @@ func (p SetComplianceCaseParams) params() map[string]any {
 	if p.Name != "" {
 		m["Name"] = p.Name
 	}
+	if p.RemoveSources {
+		m["RemoveSources"] = true
+	}
 	if p.Reopen {
 		m["Reopen"] = true
+	}
+	if len(p.Sources) > 0 {
+		m["Sources"] = p.Sources
 	}
 	return m
 }
@@ -11349,6 +13313,142 @@ func (p SetComplianceCaseParams) params() map[string]any {
 // SetComplianceCase runs the Set-ComplianceCase cmdlet.
 func (s *Service) SetComplianceCase(ctx context.Context, p SetComplianceCaseParams) (*adminapi.Result, error) {
 	return s.C.Invoke(ctx, "Set-ComplianceCase", p.params())
+}
+
+// SetComplianceCustodianParams are the parameters of Set-ComplianceCustodian.
+// DefaultParameterSetName: Identity
+type SetComplianceCustodianParams struct {
+	AddExchangeLocation        []string `ps:"AddExchangeLocation"`
+	AddPublicFolderLocation    []string `ps:"AddPublicFolderLocation"`
+	AddSharePointLocation      []string `ps:"AddSharePointLocation"`
+	ContactEmail               string   `ps:"ContactEmail"`
+	ExchangeLocation           []string `ps:"ExchangeLocation"`
+	Identity                   any      `ps:"Identity"`
+	PublicFolderLocation       []string `ps:"PublicFolderLocation"`
+	RemoveExchangeLocation     []string `ps:"RemoveExchangeLocation"`
+	RemovePublicFolderLocation []string `ps:"RemovePublicFolderLocation"`
+	RemoveSharePointLocation   []string `ps:"RemoveSharePointLocation"`
+	SharePointLocation         []string `ps:"SharePointLocation"`
+}
+
+func (p SetComplianceCustodianParams) params() map[string]any {
+	m := map[string]any{}
+	if len(p.AddExchangeLocation) > 0 {
+		m["AddExchangeLocation"] = p.AddExchangeLocation
+	}
+	if len(p.AddPublicFolderLocation) > 0 {
+		m["AddPublicFolderLocation"] = p.AddPublicFolderLocation
+	}
+	if len(p.AddSharePointLocation) > 0 {
+		m["AddSharePointLocation"] = p.AddSharePointLocation
+	}
+	if p.ContactEmail != "" {
+		m["ContactEmail"] = p.ContactEmail
+	}
+	if len(p.ExchangeLocation) > 0 {
+		m["ExchangeLocation"] = p.ExchangeLocation
+	}
+	if p.Identity != nil {
+		m["Identity"] = p.Identity
+	}
+	if len(p.PublicFolderLocation) > 0 {
+		m["PublicFolderLocation"] = p.PublicFolderLocation
+	}
+	if len(p.RemoveExchangeLocation) > 0 {
+		m["RemoveExchangeLocation"] = p.RemoveExchangeLocation
+	}
+	if len(p.RemovePublicFolderLocation) > 0 {
+		m["RemovePublicFolderLocation"] = p.RemovePublicFolderLocation
+	}
+	if len(p.RemoveSharePointLocation) > 0 {
+		m["RemoveSharePointLocation"] = p.RemoveSharePointLocation
+	}
+	if len(p.SharePointLocation) > 0 {
+		m["SharePointLocation"] = p.SharePointLocation
+	}
+	return m
+}
+
+// SetComplianceCustodian runs the Set-ComplianceCustodian cmdlet.
+func (s *Service) SetComplianceCustodian(ctx context.Context, p SetComplianceCustodianParams) (*adminapi.Result, error) {
+	return s.C.Invoke(ctx, "Set-ComplianceCustodian", p.params())
+}
+
+// SetComplianceNoticeParams are the parameters of Set-ComplianceNotice.
+// DefaultParameterSetName: Identity
+type SetComplianceNoticeParams struct {
+	Acknowledged           bool     `ps:"Acknowledged"`
+	AcknowledgedCustodians []string `ps:"AcknowledgedCustodians"`
+	AddedCustodians        []string `ps:"AddedCustodians"`
+	ContentBody            string   `ps:"ContentBody"`
+	Force                  bool     `ps:"Force"`
+	From                   string   `ps:"From"`
+	Identity               any      `ps:"Identity"`
+	IsHighPriority         bool     `ps:"IsHighPriority"`
+	Name                   string   `ps:"Name"`
+	Subject                string   `ps:"Subject"`
+	Type                   string   `ps:"Type"`
+}
+
+func (p SetComplianceNoticeParams) params() map[string]any {
+	m := map[string]any{}
+	if p.Acknowledged {
+		m["Acknowledged"] = true
+	}
+	if len(p.AcknowledgedCustodians) > 0 {
+		m["AcknowledgedCustodians"] = p.AcknowledgedCustodians
+	}
+	if len(p.AddedCustodians) > 0 {
+		m["AddedCustodians"] = p.AddedCustodians
+	}
+	if p.ContentBody != "" {
+		m["ContentBody"] = p.ContentBody
+	}
+	if p.Force {
+		m["Force"] = true
+	}
+	if p.From != "" {
+		m["From"] = p.From
+	}
+	if p.Identity != nil {
+		m["Identity"] = p.Identity
+	}
+	if p.IsHighPriority {
+		m["IsHighPriority"] = true
+	}
+	if p.Name != "" {
+		m["Name"] = p.Name
+	}
+	if p.Subject != "" {
+		m["Subject"] = p.Subject
+	}
+	if p.Type != "" {
+		m["Type"] = p.Type
+	}
+	return m
+}
+
+// SetComplianceNotice runs the Set-ComplianceNotice cmdlet.
+func (s *Service) SetComplianceNotice(ctx context.Context, p SetComplianceNoticeParams) (*adminapi.Result, error) {
+	return s.C.Invoke(ctx, "Set-ComplianceNotice", p.params())
+}
+
+// SetCompliancePreservationSettingParams are the parameters of Set-CompliancePreservationSetting.
+type SetCompliancePreservationSettingParams struct {
+	CaseHoldCloudAttachmentEnabled bool `ps:"CaseHoldCloudAttachmentEnabled"`
+}
+
+func (p SetCompliancePreservationSettingParams) params() map[string]any {
+	m := map[string]any{}
+	if p.CaseHoldCloudAttachmentEnabled {
+		m["CaseHoldCloudAttachmentEnabled"] = true
+	}
+	return m
+}
+
+// SetCompliancePreservationSetting runs the Set-CompliancePreservationSetting cmdlet.
+func (s *Service) SetCompliancePreservationSetting(ctx context.Context, p SetCompliancePreservationSettingParams) (*adminapi.Result, error) {
+	return s.C.Invoke(ctx, "Set-CompliancePreservationSetting", p.params())
 }
 
 // SetComplianceRetentionEventParams are the parameters of Set-ComplianceRetentionEvent.
@@ -11430,6 +13530,10 @@ func (s *Service) SetComplianceRetentionEventType(ctx context.Context, p SetComp
 type SetComplianceSearchParams struct {
 	AddExchangeLocation                   []string `ps:"AddExchangeLocation"`
 	AddExchangeLocationExclusion          []string `ps:"AddExchangeLocationExclusion"`
+	AddOneDriveLocation                   []string `ps:"AddOneDriveLocation"`
+	AddOneDriveLocationExclusion          []string `ps:"AddOneDriveLocationExclusion"`
+	AddPublicFolderLocation               []string `ps:"AddPublicFolderLocation"`
+	AddPublicFolderLocationExclusion      []string `ps:"AddPublicFolderLocationExclusion"`
 	AddSharePointLocation                 []string `ps:"AddSharePointLocation"`
 	AddSharePointLocationExclusion        []string `ps:"AddSharePointLocationExclusion"`
 	AllowNotFoundExchangeLocationsEnabled bool     `ps:"AllowNotFoundExchangeLocationsEnabled"`
@@ -11444,13 +13548,20 @@ type SetComplianceSearchParams struct {
 	IncludeUserAppContent                 bool     `ps:"IncludeUserAppContent"`
 	Language                              any      `ps:"Language"`
 	Name                                  string   `ps:"Name"`
+	OneDriveLocation                      []string `ps:"OneDriveLocation"`
+	OneDriveLocationExclusion             []string `ps:"OneDriveLocationExclusion"`
 	PublicFolderLocation                  []string `ps:"PublicFolderLocation"`
+	PublicFolderLocationExclusion         []string `ps:"PublicFolderLocationExclusion"`
 	RefinerNames                          []string `ps:"RefinerNames"`
 	RemoveExchangeLocation                []string `ps:"RemoveExchangeLocation"`
 	RemoveExchangeLocationExclusion       []string `ps:"RemoveExchangeLocationExclusion"`
+	RemoveOneDriveLocation                []string `ps:"RemoveOneDriveLocation"`
+	RemoveOneDriveLocationExclusion       []string `ps:"RemoveOneDriveLocationExclusion"`
 	RemovePublicFolderLocation            []string `ps:"RemovePublicFolderLocation"`
+	RemovePublicFolderLocationExclusion   []string `ps:"RemovePublicFolderLocationExclusion"`
 	RemoveSharePointLocation              []string `ps:"RemoveSharePointLocation"`
 	RemoveSharePointLocationExclusion     []string `ps:"RemoveSharePointLocationExclusion"`
+	SearchNames                           []string `ps:"SearchNames"`
 	SharePointLocation                    []string `ps:"SharePointLocation"`
 	SharePointLocationExclusion           []string `ps:"SharePointLocationExclusion"`
 }
@@ -11462,6 +13573,18 @@ func (p SetComplianceSearchParams) params() map[string]any {
 	}
 	if len(p.AddExchangeLocationExclusion) > 0 {
 		m["AddExchangeLocationExclusion"] = p.AddExchangeLocationExclusion
+	}
+	if len(p.AddOneDriveLocation) > 0 {
+		m["AddOneDriveLocation"] = p.AddOneDriveLocation
+	}
+	if len(p.AddOneDriveLocationExclusion) > 0 {
+		m["AddOneDriveLocationExclusion"] = p.AddOneDriveLocationExclusion
+	}
+	if len(p.AddPublicFolderLocation) > 0 {
+		m["AddPublicFolderLocation"] = p.AddPublicFolderLocation
+	}
+	if len(p.AddPublicFolderLocationExclusion) > 0 {
+		m["AddPublicFolderLocationExclusion"] = p.AddPublicFolderLocationExclusion
 	}
 	if len(p.AddSharePointLocation) > 0 {
 		m["AddSharePointLocation"] = p.AddSharePointLocation
@@ -11505,8 +13628,17 @@ func (p SetComplianceSearchParams) params() map[string]any {
 	if p.Name != "" {
 		m["Name"] = p.Name
 	}
+	if len(p.OneDriveLocation) > 0 {
+		m["OneDriveLocation"] = p.OneDriveLocation
+	}
+	if len(p.OneDriveLocationExclusion) > 0 {
+		m["OneDriveLocationExclusion"] = p.OneDriveLocationExclusion
+	}
 	if len(p.PublicFolderLocation) > 0 {
 		m["PublicFolderLocation"] = p.PublicFolderLocation
+	}
+	if len(p.PublicFolderLocationExclusion) > 0 {
+		m["PublicFolderLocationExclusion"] = p.PublicFolderLocationExclusion
 	}
 	if len(p.RefinerNames) > 0 {
 		m["RefinerNames"] = p.RefinerNames
@@ -11517,14 +13649,26 @@ func (p SetComplianceSearchParams) params() map[string]any {
 	if len(p.RemoveExchangeLocationExclusion) > 0 {
 		m["RemoveExchangeLocationExclusion"] = p.RemoveExchangeLocationExclusion
 	}
+	if len(p.RemoveOneDriveLocation) > 0 {
+		m["RemoveOneDriveLocation"] = p.RemoveOneDriveLocation
+	}
+	if len(p.RemoveOneDriveLocationExclusion) > 0 {
+		m["RemoveOneDriveLocationExclusion"] = p.RemoveOneDriveLocationExclusion
+	}
 	if len(p.RemovePublicFolderLocation) > 0 {
 		m["RemovePublicFolderLocation"] = p.RemovePublicFolderLocation
+	}
+	if len(p.RemovePublicFolderLocationExclusion) > 0 {
+		m["RemovePublicFolderLocationExclusion"] = p.RemovePublicFolderLocationExclusion
 	}
 	if len(p.RemoveSharePointLocation) > 0 {
 		m["RemoveSharePointLocation"] = p.RemoveSharePointLocation
 	}
 	if len(p.RemoveSharePointLocationExclusion) > 0 {
 		m["RemoveSharePointLocationExclusion"] = p.RemoveSharePointLocationExclusion
+	}
+	if len(p.SearchNames) > 0 {
+		m["SearchNames"] = p.SearchNames
 	}
 	if len(p.SharePointLocation) > 0 {
 		m["SharePointLocation"] = p.SharePointLocation
@@ -11563,48 +13707,12 @@ func (s *Service) SetComplianceSearchAction(ctx context.Context, p SetCompliance
 	return s.C.Invoke(ctx, "Set-ComplianceSearchAction", p.params())
 }
 
-// SetComplianceSecurityFilterParams are the parameters of Set-ComplianceSecurityFilter.
-// DefaultParameterSetName: Identity
-type SetComplianceSecurityFilterParams struct {
-	Action      any    `ps:"Action"`
-	Description string `ps:"Description"`
-	FilterName  string `ps:"FilterName"`
-	Filters     any    `ps:"Filters"`
-	Region      string `ps:"Region"`
-	Users       any    `ps:"Users"`
-}
-
-func (p SetComplianceSecurityFilterParams) params() map[string]any {
-	m := map[string]any{}
-	if p.Action != nil {
-		m["Action"] = p.Action
-	}
-	if p.Description != "" {
-		m["Description"] = p.Description
-	}
-	if p.FilterName != "" {
-		m["FilterName"] = p.FilterName
-	}
-	if p.Filters != nil {
-		m["Filters"] = p.Filters
-	}
-	if p.Region != "" {
-		m["Region"] = p.Region
-	}
-	if p.Users != nil {
-		m["Users"] = p.Users
-	}
-	return m
-}
-
-// SetComplianceSecurityFilter runs the Set-ComplianceSecurityFilter cmdlet.
-func (s *Service) SetComplianceSecurityFilter(ctx context.Context, p SetComplianceSecurityFilterParams) (*adminapi.Result, error) {
-	return s.C.Invoke(ctx, "Set-ComplianceSecurityFilter", p.params())
-}
-
 // SetComplianceTagParams are the parameters of Set-ComplianceTag.
 // DefaultParameterSetName: Identity
 type SetComplianceTagParams struct {
+	ArchiveEnabled            bool     `ps:"ArchiveEnabled"`
+	ArchiveTriggerBasedOn     string   `ps:"ArchiveTriggerBasedOn"`
+	ArchiveTriggerInDays      any      `ps:"ArchiveTriggerInDays"`
 	AutoApprovalPeriod        any      `ps:"AutoApprovalPeriod"`
 	Comment                   string   `ps:"Comment"`
 	ComplianceTagForNextStage string   `ps:"ComplianceTagForNextStage"`
@@ -11615,13 +13723,22 @@ type SetComplianceTagParams struct {
 	Identity                  any      `ps:"Identity"`
 	MultiStageReviewProperty  string   `ps:"MultiStageReviewProperty"`
 	Notes                     string   `ps:"Notes"`
-	PriorityCleanup           bool     `ps:"PriorityCleanup"`
 	RetentionDuration         any      `ps:"RetentionDuration"`
 	ReviewerEmail             []string `ps:"ReviewerEmail"`
+	WebHookUrl                string   `ps:"WebHookUrl"`
 }
 
 func (p SetComplianceTagParams) params() map[string]any {
 	m := map[string]any{}
+	if p.ArchiveEnabled {
+		m["ArchiveEnabled"] = true
+	}
+	if p.ArchiveTriggerBasedOn != "" {
+		m["ArchiveTriggerBasedOn"] = p.ArchiveTriggerBasedOn
+	}
+	if p.ArchiveTriggerInDays != nil {
+		m["ArchiveTriggerInDays"] = p.ArchiveTriggerInDays
+	}
 	if p.AutoApprovalPeriod != nil {
 		m["AutoApprovalPeriod"] = p.AutoApprovalPeriod
 	}
@@ -11652,14 +13769,14 @@ func (p SetComplianceTagParams) params() map[string]any {
 	if p.Notes != "" {
 		m["Notes"] = p.Notes
 	}
-	if p.PriorityCleanup {
-		m["PriorityCleanup"] = true
-	}
 	if p.RetentionDuration != nil {
 		m["RetentionDuration"] = p.RetentionDuration
 	}
 	if len(p.ReviewerEmail) > 0 {
 		m["ReviewerEmail"] = p.ReviewerEmail
+	}
+	if p.WebHookUrl != "" {
+		m["WebHookUrl"] = p.WebHookUrl
 	}
 	return m
 }
@@ -12298,6 +14415,41 @@ func (s *Service) SetDeviceTenantRule(ctx context.Context, p SetDeviceTenantRule
 	return s.C.Invoke(ctx, "Set-DeviceTenantRule", p.params())
 }
 
+// SetDlpAlertTuningRuleParams are the parameters of Set-DlpAlertTuningRule.
+// DefaultParameterSetName: Identity
+type SetDlpAlertTuningRuleParams struct {
+	Actions        string `ps:"Actions"`
+	ApplicableTags string `ps:"ApplicableTags"`
+	Conditions     string `ps:"Conditions"`
+	Description    string `ps:"Description"`
+	Identity       any    `ps:"Identity"`
+}
+
+func (p SetDlpAlertTuningRuleParams) params() map[string]any {
+	m := map[string]any{}
+	if p.Actions != "" {
+		m["Actions"] = p.Actions
+	}
+	if p.ApplicableTags != "" {
+		m["ApplicableTags"] = p.ApplicableTags
+	}
+	if p.Conditions != "" {
+		m["Conditions"] = p.Conditions
+	}
+	if p.Description != "" {
+		m["Description"] = p.Description
+	}
+	if p.Identity != nil {
+		m["Identity"] = p.Identity
+	}
+	return m
+}
+
+// SetDlpAlertTuningRule runs the Set-DlpAlertTuningRule cmdlet.
+func (s *Service) SetDlpAlertTuningRule(ctx context.Context, p SetDlpAlertTuningRuleParams) (*adminapi.Result, error) {
+	return s.C.Invoke(ctx, "Set-DlpAlertTuningRule", p.params())
+}
+
 // SetDlpCompliancePolicyParams are the parameters of Set-DlpCompliancePolicy.
 // DefaultParameterSetName: Identity
 type SetDlpCompliancePolicyParams struct {
@@ -12316,6 +14468,7 @@ type SetDlpCompliancePolicyParams struct {
 	AddTeamsLocationException                   any      `ps:"AddTeamsLocationException"`
 	AddThirdPartyAppDlpLocation                 any      `ps:"AddThirdPartyAppDlpLocation"`
 	AddThirdPartyAppDlpLocationException        any      `ps:"AddThirdPartyAppDlpLocationException"`
+	AutoEnableAfter                             any      `ps:"AutoEnableAfter"`
 	Comment                                     string   `ps:"Comment"`
 	DisplayName                                 string   `ps:"DisplayName"`
 	EndpointDlpAdaptiveScopes                   any      `ps:"EndpointDlpAdaptiveScopes"`
@@ -12326,6 +14479,8 @@ type SetDlpCompliancePolicyParams struct {
 	ExceptIfOneDriveSharedByMemberOf            []string `ps:"ExceptIfOneDriveSharedByMemberOf"`
 	ExchangeAdaptiveScopes                      any      `ps:"ExchangeAdaptiveScopes"`
 	ExchangeAdaptiveScopesException             any      `ps:"ExchangeAdaptiveScopesException"`
+	ExchangeSender                              []string `ps:"ExchangeSender"`
+	ExchangeSenderException                     []string `ps:"ExchangeSenderException"`
 	ExchangeSenderMemberOf                      []string `ps:"ExchangeSenderMemberOf"`
 	ExchangeSenderMemberOfException             []string `ps:"ExchangeSenderMemberOfException"`
 	Force                                       bool     `ps:"Force"`
@@ -12333,6 +14488,7 @@ type SetDlpCompliancePolicyParams struct {
 	IsFromSmartInsights                         any      `ps:"IsFromSmartInsights"`
 	Locations                                   string   `ps:"Locations"`
 	Mode                                        any      `ps:"Mode"`
+	NewName                                     string   `ps:"NewName"`
 	OneDriveAdaptiveScopes                      any      `ps:"OneDriveAdaptiveScopes"`
 	OneDriveAdaptiveScopesException             any      `ps:"OneDriveAdaptiveScopesException"`
 	OneDriveSharedBy                            []string `ps:"OneDriveSharedBy"`
@@ -12410,6 +14566,9 @@ func (p SetDlpCompliancePolicyParams) params() map[string]any {
 	if p.AddThirdPartyAppDlpLocationException != nil {
 		m["AddThirdPartyAppDlpLocationException"] = p.AddThirdPartyAppDlpLocationException
 	}
+	if p.AutoEnableAfter != nil {
+		m["AutoEnableAfter"] = p.AutoEnableAfter
+	}
 	if p.Comment != "" {
 		m["Comment"] = p.Comment
 	}
@@ -12440,6 +14599,12 @@ func (p SetDlpCompliancePolicyParams) params() map[string]any {
 	if p.ExchangeAdaptiveScopesException != nil {
 		m["ExchangeAdaptiveScopesException"] = p.ExchangeAdaptiveScopesException
 	}
+	if len(p.ExchangeSender) > 0 {
+		m["ExchangeSender"] = p.ExchangeSender
+	}
+	if len(p.ExchangeSenderException) > 0 {
+		m["ExchangeSenderException"] = p.ExchangeSenderException
+	}
 	if len(p.ExchangeSenderMemberOf) > 0 {
 		m["ExchangeSenderMemberOf"] = p.ExchangeSenderMemberOf
 	}
@@ -12460,6 +14625,9 @@ func (p SetDlpCompliancePolicyParams) params() map[string]any {
 	}
 	if p.Mode != nil {
 		m["Mode"] = p.Mode
+	}
+	if p.NewName != "" {
+		m["NewName"] = p.NewName
 	}
 	if p.OneDriveAdaptiveScopes != nil {
 		m["OneDriveAdaptiveScopes"] = p.OneDriveAdaptiveScopes
@@ -12556,7 +14724,10 @@ func (s *Service) SetDlpCompliancePolicy(ctx context.Context, p SetDlpCompliance
 // SetDlpComplianceRuleParams are the parameters of Set-DlpComplianceRule.
 // DefaultParameterSetName: Identity
 type SetDlpComplianceRuleParams struct {
+	AccessedBy                                   []string `ps:"AccessedBy"`
+	AccessedByMemberOf                           []string `ps:"AccessedByMemberOf"`
 	AccessScope                                  any      `ps:"AccessScope"`
+	AccessTimeControl                            any      `ps:"AccessTimeControl"`
 	ActivationDate                               any      `ps:"ActivationDate"`
 	AddRecipients                                any      `ps:"AddRecipients"`
 	AdvancedRule                                 string   `ps:"AdvancedRule"`
@@ -12565,6 +14736,7 @@ type SetDlpComplianceRuleParams struct {
 	AnyOfRecipientAddressMatchesPatterns         any      `ps:"AnyOfRecipientAddressMatchesPatterns"`
 	ApplyBrandingTemplate                        string   `ps:"ApplyBrandingTemplate"`
 	ApplyHtmlDisclaimer                          any      `ps:"ApplyHtmlDisclaimer"`
+	AttachmentCountOver                          any      `ps:"AttachmentCountOver"`
 	AttachmentIsNotLabeled                       bool     `ps:"AttachmentIsNotLabeled"`
 	BlockAccess                                  bool     `ps:"BlockAccess"`
 	BlockAccessScope                             any      `ps:"BlockAccessScope"`
@@ -12575,7 +14747,10 @@ type SetDlpComplianceRuleParams struct {
 	ContentFileTypeMatches                       any      `ps:"ContentFileTypeMatches"`
 	ContentIsNotLabeled                          bool     `ps:"ContentIsNotLabeled"`
 	ContentIsShared                              bool     `ps:"ContentIsShared"`
+	ContentMissingSensitivityLabel               any      `ps:"ContentMissingSensitivityLabel"`
 	ContentPropertyContainsWords                 any      `ps:"ContentPropertyContainsWords"`
+	ContextPropertiesContainWords                any      `ps:"ContextPropertiesContainWords"`
+	DeviceManagementType                         any      `ps:"DeviceManagementType"`
 	Disabled                                     bool     `ps:"Disabled"`
 	DisplayName                                  string   `ps:"DisplayName"`
 	DocumentContainsWords                        any      `ps:"DocumentContainsWords"`
@@ -12592,6 +14767,8 @@ type SetDlpComplianceRuleParams struct {
 	EndpointDlpRestrictions                      []string `ps:"EndpointDlpRestrictions"`
 	EnforcePortalAccess                          bool     `ps:"EnforcePortalAccess"`
 	EvaluateRulePerComponent                     bool     `ps:"EvaluateRulePerComponent"`
+	ExceptIfAccessedBy                           []string `ps:"ExceptIfAccessedBy"`
+	ExceptIfAccessedByMemberOf                   []string `ps:"ExceptIfAccessedByMemberOf"`
 	ExceptIfAccessScope                          any      `ps:"ExceptIfAccessScope"`
 	ExceptIfAnyOfRecipientAddressContainsWords   any      `ps:"ExceptIfAnyOfRecipientAddressContainsWords"`
 	ExceptIfAnyOfRecipientAddressMatchesPatterns any      `ps:"ExceptIfAnyOfRecipientAddressMatchesPatterns"`
@@ -12601,6 +14778,8 @@ type SetDlpComplianceRuleParams struct {
 	ExceptIfContentFileTypeMatches               any      `ps:"ExceptIfContentFileTypeMatches"`
 	ExceptIfContentIsShared                      bool     `ps:"ExceptIfContentIsShared"`
 	ExceptIfContentPropertyContainsWords         any      `ps:"ExceptIfContentPropertyContainsWords"`
+	ExceptIfContextPropertiesContainWords        any      `ps:"ExceptIfContextPropertiesContainWords"`
+	ExceptIfDeviceManagementType                 any      `ps:"ExceptIfDeviceManagementType"` // one of: Managed, Unmanaged
 	ExceptIfDocumentContainsWords                any      `ps:"ExceptIfDocumentContainsWords"`
 	ExceptIfDocumentCreatedBy                    any      `ps:"ExceptIfDocumentCreatedBy"`
 	ExceptIfDocumentCreatedByMemberOf            []string `ps:"ExceptIfDocumentCreatedByMemberOf"`
@@ -12616,8 +14795,10 @@ type SetDlpComplianceRuleParams struct {
 	ExceptIfFromMemberOf                         []string `ps:"ExceptIfFromMemberOf"`
 	ExceptIfFromScope                            any      `ps:"ExceptIfFromScope"`
 	ExceptIfHasSenderOverride                    bool     `ps:"ExceptIfHasSenderOverride"`
+	ExceptIfHeaderContainsTokens                 any      `ps:"ExceptIfHeaderContainsTokens"`
 	ExceptIfHeaderContainsWords                  any      `ps:"ExceptIfHeaderContainsWords"`
 	ExceptIfHeaderMatchesPatterns                any      `ps:"ExceptIfHeaderMatchesPatterns"`
+	ExceptIfMessageLabelChangeDetected           any      `ps:"ExceptIfMessageLabelChangeDetected"`
 	ExceptIfMessageSizeOver                      any      `ps:"ExceptIfMessageSizeOver"`
 	ExceptIfMessageTypeMatches                   any      `ps:"ExceptIfMessageTypeMatches"`
 	ExceptIfProcessingLimitExceeded              bool     `ps:"ExceptIfProcessingLimitExceeded"`
@@ -12630,10 +14811,12 @@ type SetDlpComplianceRuleParams struct {
 	ExceptIfSenderIPRanges                       any      `ps:"ExceptIfSenderIPRanges"`
 	ExceptIfSentTo                               any      `ps:"ExceptIfSentTo"`
 	ExceptIfSentToMemberOf                       []string `ps:"ExceptIfSentToMemberOf"`
+	ExceptIfSharedWithDomain                     any      `ps:"ExceptIfSharedWithDomain"`
 	ExceptIfSubjectContainsWords                 any      `ps:"ExceptIfSubjectContainsWords"`
 	ExceptIfSubjectMatchesPatterns               any      `ps:"ExceptIfSubjectMatchesPatterns"`
 	ExceptIfSubjectOrBodyContainsWords           any      `ps:"ExceptIfSubjectOrBodyContainsWords"`
 	ExceptIfSubjectOrBodyMatchesPatterns         any      `ps:"ExceptIfSubjectOrBodyMatchesPatterns"`
+	ExceptIfTeamsSharedWithParticipantCategory   any      `ps:"ExceptIfTeamsSharedWithParticipantCategory"`
 	ExceptIfUnscannableDocumentExtensionIs       any      `ps:"ExceptIfUnscannableDocumentExtensionIs"`
 	ExceptIfWithImportance                       any      `ps:"ExceptIfWithImportance"`
 	ExpiryDate                                   any      `ps:"ExpiryDate"`
@@ -12645,17 +14828,22 @@ type SetDlpComplianceRuleParams struct {
 	GenerateAlert                                any      `ps:"GenerateAlert"`
 	GenerateIncidentReport                       any      `ps:"GenerateIncidentReport"`
 	HasActivity                                  any      `ps:"HasActivity"`
+	HasLabelDowngradedFrom                       any      `ps:"HasLabelDowngradedFrom"`
 	HasSenderOverride                            bool     `ps:"HasSenderOverride"`
+	HeaderContainsTokens                         any      `ps:"HeaderContainsTokens"`
 	HeaderContainsWords                          any      `ps:"HeaderContainsWords"`
 	HeaderMatchesPatterns                        any      `ps:"HeaderMatchesPatterns"`
 	Identity                                     any      `ps:"Identity"`
 	IncidentReportContent                        []string `ps:"IncidentReportContent"`
+	MapRecipients                                any      `ps:"MapRecipients"`
 	MessageIsNotLabeled                          bool     `ps:"MessageIsNotLabeled"`
+	MessageLabelChangeDetected                   any      `ps:"MessageLabelChangeDetected"`
 	MessageSizeOver                              any      `ps:"MessageSizeOver"`
 	MessageTypeMatches                           any      `ps:"MessageTypeMatches"`
 	MipRestrictAccess                            []string `ps:"MipRestrictAccess"`
 	Moderate                                     any      `ps:"Moderate"`
 	ModifySubject                                any      `ps:"ModifySubject"`
+	MoveToQuarantineLocation                     bool     `ps:"MoveToQuarantineLocation"`
 	NonBifurcatingAccessScope                    any      `ps:"NonBifurcatingAccessScope"`
 	NotifyAllowOverride                          []string `ps:"NotifyAllowOverride"`
 	NotifyEmailCustomSenderDisplayName           string   `ps:"NotifyEmailCustomSenderDisplayName"`
@@ -12664,6 +14852,8 @@ type SetDlpComplianceRuleParams struct {
 	NotifyEmailExchangeIncludeAttachment         bool     `ps:"NotifyEmailExchangeIncludeAttachment"`
 	NotifyEmailOnedriveRemediationActions        any      `ps:"NotifyEmailOnedriveRemediationActions"`
 	NotifyEndpointUser                           any      `ps:"NotifyEndpointUser"`
+	NotifyJustificationCustomText                string   `ps:"NotifyJustificationCustomText"`
+	NotifyJustificationCustomTextTranslations    any      `ps:"NotifyJustificationCustomTextTranslations"`
 	NotifyOverrideRequirements                   any      `ps:"NotifyOverrideRequirements"`
 	NotifyPolicyTipCustomDialog                  string   `ps:"NotifyPolicyTipCustomDialog"`
 	NotifyPolicyTipCustomText                    string   `ps:"NotifyPolicyTipCustomText"`
@@ -12673,6 +14863,7 @@ type SetDlpComplianceRuleParams struct {
 	NotifyUser                                   any      `ps:"NotifyUser"`
 	NotifyUserType                               any      `ps:"NotifyUserType"`
 	OnPremisesScannerDlpRestrictions             []string `ps:"OnPremisesScannerDlpRestrictions"`
+	PowerBIDlpRestrictions                       []string `ps:"PowerBIDlpRestrictions"`
 	PrependSubject                               string   `ps:"PrependSubject"`
 	Priority                                     any      `ps:"Priority"`
 	ProcessingLimitExceeded                      bool     `ps:"ProcessingLimitExceeded"`
@@ -12680,6 +14871,7 @@ type SetDlpComplianceRuleParams struct {
 	RecipientADAttributeContainsWords            any      `ps:"RecipientADAttributeContainsWords"`
 	RecipientADAttributeMatchesPatterns          any      `ps:"RecipientADAttributeMatchesPatterns"`
 	RecipientDomainIs                            any      `ps:"RecipientDomainIs"`
+	RedactSensitiveInfo                          any      `ps:"RedactSensitiveInfo"`
 	RedirectMessageTo                            []string `ps:"RedirectMessageTo"`
 	RemoveHeader                                 any      `ps:"RemoveHeader"`
 	RemoveRMSTemplate                            bool     `ps:"RemoveRMSTemplate"`
@@ -12693,10 +14885,13 @@ type SetDlpComplianceRuleParams struct {
 	SenderAddressLocation                        any      `ps:"SenderAddressLocation"`
 	SenderDomainIs                               any      `ps:"SenderDomainIs"`
 	SenderIPRanges                               any      `ps:"SenderIPRanges"`
+	SenderType                                   any      `ps:"SenderType"`
 	SentTo                                       any      `ps:"SentTo"`
 	SentToMemberOf                               []string `ps:"SentToMemberOf"`
 	SetHeader                                    any      `ps:"SetHeader"`
+	SharedByIRMAgentRisk                         any      `ps:"SharedByIRMAgentRisk"`
 	SharedByIRMUserRisk                          any      `ps:"SharedByIRMUserRisk"`
+	SharedWithDomain                             any      `ps:"SharedWithDomain"`
 	SharepointBlockDomains                       any      `ps:"SharepointBlockDomains"`
 	SharepointBlockDomainsExcept                 any      `ps:"SharepointBlockDomainsExcept"`
 	SharepointBlockDomainsOrUsers                bool     `ps:"SharepointBlockDomainsOrUsers"`
@@ -12708,6 +14903,7 @@ type SetDlpComplianceRuleParams struct {
 	SubjectMatchesPatterns                       any      `ps:"SubjectMatchesPatterns"`
 	SubjectOrBodyContainsWords                   any      `ps:"SubjectOrBodyContainsWords"`
 	SubjectOrBodyMatchesPatterns                 any      `ps:"SubjectOrBodyMatchesPatterns"`
+	TeamsSharedWithParticipantCategory           any      `ps:"TeamsSharedWithParticipantCategory"`
 	ThirdPartyAppDlpRestrictions                 []string `ps:"ThirdPartyAppDlpRestrictions"`
 	TriggerPowerAutomateFlow                     string   `ps:"TriggerPowerAutomateFlow"`
 	UnscannableDocumentExtensionIs               any      `ps:"UnscannableDocumentExtensionIs"`
@@ -12716,8 +14912,17 @@ type SetDlpComplianceRuleParams struct {
 
 func (p SetDlpComplianceRuleParams) params() map[string]any {
 	m := map[string]any{}
+	if len(p.AccessedBy) > 0 {
+		m["AccessedBy"] = p.AccessedBy
+	}
+	if len(p.AccessedByMemberOf) > 0 {
+		m["AccessedByMemberOf"] = p.AccessedByMemberOf
+	}
 	if p.AccessScope != nil {
 		m["AccessScope"] = p.AccessScope
+	}
+	if p.AccessTimeControl != nil {
+		m["AccessTimeControl"] = p.AccessTimeControl
 	}
 	if p.ActivationDate != nil {
 		m["ActivationDate"] = p.ActivationDate
@@ -12742,6 +14947,9 @@ func (p SetDlpComplianceRuleParams) params() map[string]any {
 	}
 	if p.ApplyHtmlDisclaimer != nil {
 		m["ApplyHtmlDisclaimer"] = p.ApplyHtmlDisclaimer
+	}
+	if p.AttachmentCountOver != nil {
+		m["AttachmentCountOver"] = p.AttachmentCountOver
 	}
 	if p.AttachmentIsNotLabeled {
 		m["AttachmentIsNotLabeled"] = true
@@ -12773,8 +14981,17 @@ func (p SetDlpComplianceRuleParams) params() map[string]any {
 	if p.ContentIsShared {
 		m["ContentIsShared"] = true
 	}
+	if p.ContentMissingSensitivityLabel != nil {
+		m["ContentMissingSensitivityLabel"] = p.ContentMissingSensitivityLabel
+	}
 	if p.ContentPropertyContainsWords != nil {
 		m["ContentPropertyContainsWords"] = p.ContentPropertyContainsWords
+	}
+	if p.ContextPropertiesContainWords != nil {
+		m["ContextPropertiesContainWords"] = p.ContextPropertiesContainWords
+	}
+	if p.DeviceManagementType != nil {
+		m["DeviceManagementType"] = p.DeviceManagementType
 	}
 	if p.Disabled {
 		m["Disabled"] = true
@@ -12824,6 +15041,12 @@ func (p SetDlpComplianceRuleParams) params() map[string]any {
 	if p.EvaluateRulePerComponent {
 		m["EvaluateRulePerComponent"] = true
 	}
+	if len(p.ExceptIfAccessedBy) > 0 {
+		m["ExceptIfAccessedBy"] = p.ExceptIfAccessedBy
+	}
+	if len(p.ExceptIfAccessedByMemberOf) > 0 {
+		m["ExceptIfAccessedByMemberOf"] = p.ExceptIfAccessedByMemberOf
+	}
 	if p.ExceptIfAccessScope != nil {
 		m["ExceptIfAccessScope"] = p.ExceptIfAccessScope
 	}
@@ -12850,6 +15073,12 @@ func (p SetDlpComplianceRuleParams) params() map[string]any {
 	}
 	if p.ExceptIfContentPropertyContainsWords != nil {
 		m["ExceptIfContentPropertyContainsWords"] = p.ExceptIfContentPropertyContainsWords
+	}
+	if p.ExceptIfContextPropertiesContainWords != nil {
+		m["ExceptIfContextPropertiesContainWords"] = p.ExceptIfContextPropertiesContainWords
+	}
+	if p.ExceptIfDeviceManagementType != nil {
+		m["ExceptIfDeviceManagementType"] = p.ExceptIfDeviceManagementType
 	}
 	if p.ExceptIfDocumentContainsWords != nil {
 		m["ExceptIfDocumentContainsWords"] = p.ExceptIfDocumentContainsWords
@@ -12896,11 +15125,17 @@ func (p SetDlpComplianceRuleParams) params() map[string]any {
 	if p.ExceptIfHasSenderOverride {
 		m["ExceptIfHasSenderOverride"] = true
 	}
+	if p.ExceptIfHeaderContainsTokens != nil {
+		m["ExceptIfHeaderContainsTokens"] = p.ExceptIfHeaderContainsTokens
+	}
 	if p.ExceptIfHeaderContainsWords != nil {
 		m["ExceptIfHeaderContainsWords"] = p.ExceptIfHeaderContainsWords
 	}
 	if p.ExceptIfHeaderMatchesPatterns != nil {
 		m["ExceptIfHeaderMatchesPatterns"] = p.ExceptIfHeaderMatchesPatterns
+	}
+	if p.ExceptIfMessageLabelChangeDetected != nil {
+		m["ExceptIfMessageLabelChangeDetected"] = p.ExceptIfMessageLabelChangeDetected
 	}
 	if p.ExceptIfMessageSizeOver != nil {
 		m["ExceptIfMessageSizeOver"] = p.ExceptIfMessageSizeOver
@@ -12938,6 +15173,9 @@ func (p SetDlpComplianceRuleParams) params() map[string]any {
 	if len(p.ExceptIfSentToMemberOf) > 0 {
 		m["ExceptIfSentToMemberOf"] = p.ExceptIfSentToMemberOf
 	}
+	if p.ExceptIfSharedWithDomain != nil {
+		m["ExceptIfSharedWithDomain"] = p.ExceptIfSharedWithDomain
+	}
 	if p.ExceptIfSubjectContainsWords != nil {
 		m["ExceptIfSubjectContainsWords"] = p.ExceptIfSubjectContainsWords
 	}
@@ -12949,6 +15187,9 @@ func (p SetDlpComplianceRuleParams) params() map[string]any {
 	}
 	if p.ExceptIfSubjectOrBodyMatchesPatterns != nil {
 		m["ExceptIfSubjectOrBodyMatchesPatterns"] = p.ExceptIfSubjectOrBodyMatchesPatterns
+	}
+	if p.ExceptIfTeamsSharedWithParticipantCategory != nil {
+		m["ExceptIfTeamsSharedWithParticipantCategory"] = p.ExceptIfTeamsSharedWithParticipantCategory
 	}
 	if p.ExceptIfUnscannableDocumentExtensionIs != nil {
 		m["ExceptIfUnscannableDocumentExtensionIs"] = p.ExceptIfUnscannableDocumentExtensionIs
@@ -12983,8 +15224,14 @@ func (p SetDlpComplianceRuleParams) params() map[string]any {
 	if p.HasActivity != nil {
 		m["HasActivity"] = p.HasActivity
 	}
+	if p.HasLabelDowngradedFrom != nil {
+		m["HasLabelDowngradedFrom"] = p.HasLabelDowngradedFrom
+	}
 	if p.HasSenderOverride {
 		m["HasSenderOverride"] = true
+	}
+	if p.HeaderContainsTokens != nil {
+		m["HeaderContainsTokens"] = p.HeaderContainsTokens
 	}
 	if p.HeaderContainsWords != nil {
 		m["HeaderContainsWords"] = p.HeaderContainsWords
@@ -12998,8 +15245,14 @@ func (p SetDlpComplianceRuleParams) params() map[string]any {
 	if len(p.IncidentReportContent) > 0 {
 		m["IncidentReportContent"] = p.IncidentReportContent
 	}
+	if p.MapRecipients != nil {
+		m["MapRecipients"] = p.MapRecipients
+	}
 	if p.MessageIsNotLabeled {
 		m["MessageIsNotLabeled"] = true
+	}
+	if p.MessageLabelChangeDetected != nil {
+		m["MessageLabelChangeDetected"] = p.MessageLabelChangeDetected
 	}
 	if p.MessageSizeOver != nil {
 		m["MessageSizeOver"] = p.MessageSizeOver
@@ -13015,6 +15268,9 @@ func (p SetDlpComplianceRuleParams) params() map[string]any {
 	}
 	if p.ModifySubject != nil {
 		m["ModifySubject"] = p.ModifySubject
+	}
+	if p.MoveToQuarantineLocation {
+		m["MoveToQuarantineLocation"] = true
 	}
 	if p.NonBifurcatingAccessScope != nil {
 		m["NonBifurcatingAccessScope"] = p.NonBifurcatingAccessScope
@@ -13039,6 +15295,12 @@ func (p SetDlpComplianceRuleParams) params() map[string]any {
 	}
 	if p.NotifyEndpointUser != nil {
 		m["NotifyEndpointUser"] = p.NotifyEndpointUser
+	}
+	if p.NotifyJustificationCustomText != "" {
+		m["NotifyJustificationCustomText"] = p.NotifyJustificationCustomText
+	}
+	if p.NotifyJustificationCustomTextTranslations != nil {
+		m["NotifyJustificationCustomTextTranslations"] = p.NotifyJustificationCustomTextTranslations
 	}
 	if p.NotifyOverrideRequirements != nil {
 		m["NotifyOverrideRequirements"] = p.NotifyOverrideRequirements
@@ -13067,6 +15329,9 @@ func (p SetDlpComplianceRuleParams) params() map[string]any {
 	if len(p.OnPremisesScannerDlpRestrictions) > 0 {
 		m["OnPremisesScannerDlpRestrictions"] = p.OnPremisesScannerDlpRestrictions
 	}
+	if len(p.PowerBIDlpRestrictions) > 0 {
+		m["PowerBIDlpRestrictions"] = p.PowerBIDlpRestrictions
+	}
 	if p.PrependSubject != "" {
 		m["PrependSubject"] = p.PrependSubject
 	}
@@ -13087,6 +15352,9 @@ func (p SetDlpComplianceRuleParams) params() map[string]any {
 	}
 	if p.RecipientDomainIs != nil {
 		m["RecipientDomainIs"] = p.RecipientDomainIs
+	}
+	if p.RedactSensitiveInfo != nil {
+		m["RedactSensitiveInfo"] = p.RedactSensitiveInfo
 	}
 	if len(p.RedirectMessageTo) > 0 {
 		m["RedirectMessageTo"] = p.RedirectMessageTo
@@ -13127,6 +15395,9 @@ func (p SetDlpComplianceRuleParams) params() map[string]any {
 	if p.SenderIPRanges != nil {
 		m["SenderIPRanges"] = p.SenderIPRanges
 	}
+	if p.SenderType != nil {
+		m["SenderType"] = p.SenderType
+	}
 	if p.SentTo != nil {
 		m["SentTo"] = p.SentTo
 	}
@@ -13136,8 +15407,14 @@ func (p SetDlpComplianceRuleParams) params() map[string]any {
 	if p.SetHeader != nil {
 		m["SetHeader"] = p.SetHeader
 	}
+	if p.SharedByIRMAgentRisk != nil {
+		m["SharedByIRMAgentRisk"] = p.SharedByIRMAgentRisk
+	}
 	if p.SharedByIRMUserRisk != nil {
 		m["SharedByIRMUserRisk"] = p.SharedByIRMUserRisk
+	}
+	if p.SharedWithDomain != nil {
+		m["SharedWithDomain"] = p.SharedWithDomain
 	}
 	if p.SharepointBlockDomains != nil {
 		m["SharepointBlockDomains"] = p.SharepointBlockDomains
@@ -13171,6 +15448,9 @@ func (p SetDlpComplianceRuleParams) params() map[string]any {
 	}
 	if p.SubjectOrBodyMatchesPatterns != nil {
 		m["SubjectOrBodyMatchesPatterns"] = p.SubjectOrBodyMatchesPatterns
+	}
+	if p.TeamsSharedWithParticipantCategory != nil {
+		m["TeamsSharedWithParticipantCategory"] = p.TeamsSharedWithParticipantCategory
 	}
 	if len(p.ThirdPartyAppDlpRestrictions) > 0 {
 		m["ThirdPartyAppDlpRestrictions"] = p.ThirdPartyAppDlpRestrictions
@@ -13369,11 +15649,12 @@ func (s *Service) SetDspmPolicy(ctx context.Context, p SetDspmPolicyParams) (*ad
 // SetFeatureConfigurationParams are the parameters of Set-FeatureConfiguration.
 // DefaultParameterSetName: Identity
 type SetFeatureConfigurationParams struct {
-	Comment        string `ps:"Comment"`
-	Identity       any    `ps:"Identity"`
-	Locations      string `ps:"Locations"`
-	Mode           any    `ps:"Mode"`
-	ScenarioConfig string `ps:"ScenarioConfig"`
+	Comment          string `ps:"Comment"`
+	Identity         any    `ps:"Identity"`
+	Locations        string `ps:"Locations"`
+	Mode             any    `ps:"Mode"`
+	PolicyRBACScopes any    `ps:"PolicyRBACScopes"`
+	ScenarioConfig   string `ps:"ScenarioConfig"`
 }
 
 func (p SetFeatureConfigurationParams) params() map[string]any {
@@ -13389,6 +15670,9 @@ func (p SetFeatureConfigurationParams) params() map[string]any {
 	}
 	if p.Mode != nil {
 		m["Mode"] = p.Mode
+	}
+	if p.PolicyRBACScopes != nil {
+		m["PolicyRBACScopes"] = p.PolicyRBACScopes
 	}
 	if p.ScenarioConfig != "" {
 		m["ScenarioConfig"] = p.ScenarioConfig
@@ -13545,6 +15829,40 @@ func (p SetFilePlanPropertySubCategoryParams) params() map[string]any {
 // SetFilePlanPropertySubCategory runs the Set-FilePlanPropertySubCategory cmdlet.
 func (s *Service) SetFilePlanPropertySubCategory(ctx context.Context, p SetFilePlanPropertySubCategoryParams) (*adminapi.Result, error) {
 	return s.C.Invoke(ctx, "Set-FilePlanPropertySubCategory", p.params())
+}
+
+// SetGlobalListParams are the parameters of Set-GlobalList.
+type SetGlobalListParams struct {
+	AddItems        any    `ps:"AddItems"`
+	Comment         string `ps:"Comment"`
+	GlobalListValue any    `ps:"GlobalListValue"`
+	Identity        any    `ps:"Identity"`
+	RemoveItems     any    `ps:"RemoveItems"`
+}
+
+func (p SetGlobalListParams) params() map[string]any {
+	m := map[string]any{}
+	if p.AddItems != nil {
+		m["AddItems"] = p.AddItems
+	}
+	if p.Comment != "" {
+		m["Comment"] = p.Comment
+	}
+	if p.GlobalListValue != nil {
+		m["GlobalListValue"] = p.GlobalListValue
+	}
+	if p.Identity != nil {
+		m["Identity"] = p.Identity
+	}
+	if p.RemoveItems != nil {
+		m["RemoveItems"] = p.RemoveItems
+	}
+	return m
+}
+
+// SetGlobalList runs the Set-GlobalList cmdlet.
+func (s *Service) SetGlobalList(ctx context.Context, p SetGlobalListParams) (*adminapi.Result, error) {
+	return s.C.Invoke(ctx, "Set-GlobalList", p.params())
 }
 
 // SetHoldCompliancePolicyParams are the parameters of Set-HoldCompliancePolicy.
@@ -14059,6 +16377,7 @@ func (s *Service) SetJitConfiguration(ctx context.Context, p SetJitConfiguration
 // SetLabelParams are the parameters of Set-Label.
 // DefaultParameterSetName: Identity
 type SetLabelParams struct {
+	AbacEnabled                                           any    `ps:"AbacEnabled"`
 	AdvancedSettings                                      any    `ps:"AdvancedSettings"`
 	ApplyContentMarkingFooterAlignment                    any    `ps:"ApplyContentMarkingFooterAlignment"`
 	ApplyContentMarkingFooterEnabled                      any    `ps:"ApplyContentMarkingFooterEnabled"`
@@ -14075,6 +16394,8 @@ type SetLabelParams struct {
 	ApplyContentMarkingHeaderMargin                       any    `ps:"ApplyContentMarkingHeaderMargin"`
 	ApplyContentMarkingHeaderText                         string `ps:"ApplyContentMarkingHeaderText"`
 	ApplyDynamicWatermarkingEnabled                       any    `ps:"ApplyDynamicWatermarkingEnabled"`
+	ApplyMessageMetaData                                  any    `ps:"ApplyMessageMetaData"`
+	ApplyMessageMetaDataEnabled                           any    `ps:"ApplyMessageMetaDataEnabled"`
 	ApplyWaterMarkingEnabled                              any    `ps:"ApplyWaterMarkingEnabled"`
 	ApplyWaterMarkingFontColor                            string `ps:"ApplyWaterMarkingFontColor"`
 	ApplyWaterMarkingFontName                             string `ps:"ApplyWaterMarkingFontName"`
@@ -14083,12 +16404,19 @@ type SetLabelParams struct {
 	ApplyWaterMarkingText                                 string `ps:"ApplyWaterMarkingText"`
 	ColumnAssetCondition                                  string `ps:"ColumnAssetCondition"`
 	Comment                                               string `ps:"Comment"`
+	ConditionalAccessAuthContext                          string `ps:"ConditionalAccessAuthContext"`
 	Conditions                                            any    `ps:"Conditions"`
 	ContentType                                           any    `ps:"ContentType"`
 	DefaultContentLabel                                   string `ps:"DefaultContentLabel"`
+	DenyAccessEnabled                                     any    `ps:"DenyAccessEnabled"`
+	DenyAccessExcludedPrincipals                          string `ps:"DenyAccessExcludedPrincipals"`
+	DenyAccessIncludedPrincipals                          string `ps:"DenyAccessIncludedPrincipals"`
+	DenyAccessRights                                      string `ps:"DenyAccessRights"`
+	DenyAccessWorkload                                    string `ps:"DenyAccessWorkload"`
 	DisplayName                                           string `ps:"DisplayName"`
 	DynamicWatermarkDisplay                               string `ps:"DynamicWatermarkDisplay"`
 	EncryptionContentExpiredOnDateInDaysOrNever           string `ps:"EncryptionContentExpiredOnDateInDaysOrNever"`
+	EncryptionDisableAutomaticOwnerRights                 any    `ps:"EncryptionDisableAutomaticOwnerRights"`
 	EncryptionDoNotForward                                any    `ps:"EncryptionDoNotForward"`
 	EncryptionDoubleKeyEncryptionUrl                      string `ps:"EncryptionDoubleKeyEncryptionUrl"`
 	EncryptionEnabled                                     any    `ps:"EncryptionEnabled"`
@@ -14099,6 +16427,8 @@ type SetLabelParams struct {
 	EncryptionRightsDefinitions                           any    `ps:"EncryptionRightsDefinitions"`
 	EncryptionRightsUrl                                   string `ps:"EncryptionRightsUrl"`
 	Identity                                              any    `ps:"Identity"`
+	InformationProtectionAttributeRequired                any    `ps:"InformationProtectionAttributeRequired"`
+	InheritToChildItems                                   any    `ps:"InheritToChildItems"`
 	LabelActions                                          any    `ps:"LabelActions"`
 	LocaleSettings                                        any    `ps:"LocaleSettings"`
 	MigrationId                                           string `ps:"MigrationId"`
@@ -14107,6 +16437,7 @@ type SetLabelParams struct {
 	PreviousLabel                                         any    `ps:"PreviousLabel"`
 	Priority                                              any    `ps:"Priority"`
 	RemoveParentLink                                      bool   `ps:"RemoveParentLink"`
+	RuleBlob                                              string `ps:"RuleBlob"`
 	SchematizedDataCondition                              string `ps:"SchematizedDataCondition"`
 	Setting                                               any    `ps:"Setting"`
 	Settings                                              any    `ps:"Settings"`
@@ -14143,6 +16474,9 @@ type SetLabelParams struct {
 
 func (p SetLabelParams) params() map[string]any {
 	m := map[string]any{}
+	if p.AbacEnabled != nil {
+		m["AbacEnabled"] = p.AbacEnabled
+	}
 	if p.AdvancedSettings != nil {
 		m["AdvancedSettings"] = p.AdvancedSettings
 	}
@@ -14191,6 +16525,12 @@ func (p SetLabelParams) params() map[string]any {
 	if p.ApplyDynamicWatermarkingEnabled != nil {
 		m["ApplyDynamicWatermarkingEnabled"] = p.ApplyDynamicWatermarkingEnabled
 	}
+	if p.ApplyMessageMetaData != nil {
+		m["ApplyMessageMetaData"] = p.ApplyMessageMetaData
+	}
+	if p.ApplyMessageMetaDataEnabled != nil {
+		m["ApplyMessageMetaDataEnabled"] = p.ApplyMessageMetaDataEnabled
+	}
 	if p.ApplyWaterMarkingEnabled != nil {
 		m["ApplyWaterMarkingEnabled"] = p.ApplyWaterMarkingEnabled
 	}
@@ -14215,6 +16555,9 @@ func (p SetLabelParams) params() map[string]any {
 	if p.Comment != "" {
 		m["Comment"] = p.Comment
 	}
+	if p.ConditionalAccessAuthContext != "" {
+		m["ConditionalAccessAuthContext"] = p.ConditionalAccessAuthContext
+	}
 	if p.Conditions != nil {
 		m["Conditions"] = p.Conditions
 	}
@@ -14224,6 +16567,21 @@ func (p SetLabelParams) params() map[string]any {
 	if p.DefaultContentLabel != "" {
 		m["DefaultContentLabel"] = p.DefaultContentLabel
 	}
+	if p.DenyAccessEnabled != nil {
+		m["DenyAccessEnabled"] = p.DenyAccessEnabled
+	}
+	if p.DenyAccessExcludedPrincipals != "" {
+		m["DenyAccessExcludedPrincipals"] = p.DenyAccessExcludedPrincipals
+	}
+	if p.DenyAccessIncludedPrincipals != "" {
+		m["DenyAccessIncludedPrincipals"] = p.DenyAccessIncludedPrincipals
+	}
+	if p.DenyAccessRights != "" {
+		m["DenyAccessRights"] = p.DenyAccessRights
+	}
+	if p.DenyAccessWorkload != "" {
+		m["DenyAccessWorkload"] = p.DenyAccessWorkload
+	}
 	if p.DisplayName != "" {
 		m["DisplayName"] = p.DisplayName
 	}
@@ -14232,6 +16590,9 @@ func (p SetLabelParams) params() map[string]any {
 	}
 	if p.EncryptionContentExpiredOnDateInDaysOrNever != "" {
 		m["EncryptionContentExpiredOnDateInDaysOrNever"] = p.EncryptionContentExpiredOnDateInDaysOrNever
+	}
+	if p.EncryptionDisableAutomaticOwnerRights != nil {
+		m["EncryptionDisableAutomaticOwnerRights"] = p.EncryptionDisableAutomaticOwnerRights
 	}
 	if p.EncryptionDoNotForward != nil {
 		m["EncryptionDoNotForward"] = p.EncryptionDoNotForward
@@ -14263,6 +16624,12 @@ func (p SetLabelParams) params() map[string]any {
 	if p.Identity != nil {
 		m["Identity"] = p.Identity
 	}
+	if p.InformationProtectionAttributeRequired != nil {
+		m["InformationProtectionAttributeRequired"] = p.InformationProtectionAttributeRequired
+	}
+	if p.InheritToChildItems != nil {
+		m["InheritToChildItems"] = p.InheritToChildItems
+	}
 	if p.LabelActions != nil {
 		m["LabelActions"] = p.LabelActions
 	}
@@ -14286,6 +16653,9 @@ func (p SetLabelParams) params() map[string]any {
 	}
 	if p.RemoveParentLink {
 		m["RemoveParentLink"] = true
+	}
+	if p.RuleBlob != "" {
+		m["RuleBlob"] = p.RuleBlob
 	}
 	if p.SchematizedDataCondition != "" {
 		m["SchematizedDataCondition"] = p.SchematizedDataCondition
@@ -14391,6 +16761,60 @@ func (s *Service) SetLabel(ctx context.Context, p SetLabelParams) (*adminapi.Res
 	return s.C.Invoke(ctx, "Set-Label", p.params())
 }
 
+// SetLabelExplorerConfigParams are the parameters of Set-LabelExplorerConfig.
+type SetLabelExplorerConfigParams struct {
+	Actions      any    `ps:"Actions"`
+	AddLabels    any    `ps:"AddLabels"`
+	AddUsers     any    `ps:"AddUsers"`
+	DisplayName  string `ps:"DisplayName"`
+	Filter       string `ps:"Filter"`
+	Identity     any    `ps:"Identity"`
+	Labels       any    `ps:"Labels"`
+	RemoveLabels any    `ps:"RemoveLabels"`
+	RemoveUsers  any    `ps:"RemoveUsers"`
+	Users        any    `ps:"Users"`
+}
+
+func (p SetLabelExplorerConfigParams) params() map[string]any {
+	m := map[string]any{}
+	if p.Actions != nil {
+		m["Actions"] = p.Actions
+	}
+	if p.AddLabels != nil {
+		m["AddLabels"] = p.AddLabels
+	}
+	if p.AddUsers != nil {
+		m["AddUsers"] = p.AddUsers
+	}
+	if p.DisplayName != "" {
+		m["DisplayName"] = p.DisplayName
+	}
+	if p.Filter != "" {
+		m["Filter"] = p.Filter
+	}
+	if p.Identity != nil {
+		m["Identity"] = p.Identity
+	}
+	if p.Labels != nil {
+		m["Labels"] = p.Labels
+	}
+	if p.RemoveLabels != nil {
+		m["RemoveLabels"] = p.RemoveLabels
+	}
+	if p.RemoveUsers != nil {
+		m["RemoveUsers"] = p.RemoveUsers
+	}
+	if p.Users != nil {
+		m["Users"] = p.Users
+	}
+	return m
+}
+
+// SetLabelExplorerConfig runs the Set-LabelExplorerConfig cmdlet.
+func (s *Service) SetLabelExplorerConfig(ctx context.Context, p SetLabelExplorerConfigParams) (*adminapi.Result, error) {
+	return s.C.Invoke(ctx, "Set-LabelExplorerConfig", p.params())
+}
+
 // SetLabelPolicyParams are the parameters of Set-LabelPolicy.
 // DefaultParameterSetName: Identity
 type SetLabelPolicyParams struct {
@@ -14412,6 +16836,7 @@ type SetLabelPolicyParams struct {
 	ExchangeAdaptiveScopesException    any    `ps:"ExchangeAdaptiveScopesException"`
 	Force                              bool   `ps:"Force"`
 	Identity                           any    `ps:"Identity"`
+	Locations                          string `ps:"Locations"`
 	MigrationId                        string `ps:"MigrationId"`
 	NextLabelPolicy                    any    `ps:"NextLabelPolicy"`
 	PolicyRBACScopes                   any    `ps:"PolicyRBACScopes"`
@@ -14489,6 +16914,9 @@ func (p SetLabelPolicyParams) params() map[string]any {
 	if p.Identity != nil {
 		m["Identity"] = p.Identity
 	}
+	if p.Locations != "" {
+		m["Locations"] = p.Locations
+	}
 	if p.MigrationId != "" {
 		m["MigrationId"] = p.MigrationId
 	}
@@ -14554,6 +16982,91 @@ func (s *Service) SetLabelPolicy(ctx context.Context, p SetLabelPolicyParams) (*
 	return s.C.Invoke(ctx, "Set-LabelPolicy", p.params())
 }
 
+// SetMachineAssistedTagResourceParams are the parameters of Set-MachineAssistedTagResource.
+type SetMachineAssistedTagResourceParams struct {
+	DiscardModel    string `ps:"DiscardModel"`
+	Feedbacks       string `ps:"Feedbacks"`
+	Identity        any    `ps:"Identity"`
+	ModelId         any    `ps:"ModelId"`
+	ModelName       string `ps:"ModelName"`
+	Resource        any    `ps:"Resource"`
+	ReviewCompleted string `ps:"ReviewCompleted"`
+	TaskId          any    `ps:"TaskId"`
+	TrainingId      any    `ps:"TrainingId"`
+}
+
+func (p SetMachineAssistedTagResourceParams) params() map[string]any {
+	m := map[string]any{}
+	if p.DiscardModel != "" {
+		m["DiscardModel"] = p.DiscardModel
+	}
+	if p.Feedbacks != "" {
+		m["Feedbacks"] = p.Feedbacks
+	}
+	if p.Identity != nil {
+		m["Identity"] = p.Identity
+	}
+	if p.ModelId != nil {
+		m["ModelId"] = p.ModelId
+	}
+	if p.ModelName != "" {
+		m["ModelName"] = p.ModelName
+	}
+	if p.Resource != nil {
+		m["Resource"] = p.Resource
+	}
+	if p.ReviewCompleted != "" {
+		m["ReviewCompleted"] = p.ReviewCompleted
+	}
+	if p.TaskId != nil {
+		m["TaskId"] = p.TaskId
+	}
+	if p.TrainingId != nil {
+		m["TrainingId"] = p.TrainingId
+	}
+	return m
+}
+
+// SetMachineAssistedTagResource runs the Set-MachineAssistedTagResource cmdlet.
+func (s *Service) SetMachineAssistedTagResource(ctx context.Context, p SetMachineAssistedTagResourceParams) (*adminapi.Result, error) {
+	return s.C.Invoke(ctx, "Set-MachineAssistedTagResource", p.params())
+}
+
+// SetMultiTenantOrganizationConfigParams are the parameters of Set-MultiTenantOrganizationConfig.
+// DefaultParameterSetName: Identity
+type SetMultiTenantOrganizationConfigParams struct {
+	AddAuthorizedMemberTenants           []string `ps:"AddAuthorizedMemberTenants"`
+	AuthorizedOwnerTenantForMemberTenant any      `ps:"AuthorizedOwnerTenantForMemberTenant"`
+	Identity                             any      `ps:"Identity"`
+	IsMultiTenantOrganizationEnabled     any      `ps:"IsMultiTenantOrganizationEnabled"`
+	RemoveAuthorizedMemberTenants        []string `ps:"RemoveAuthorizedMemberTenants"`
+}
+
+func (p SetMultiTenantOrganizationConfigParams) params() map[string]any {
+	m := map[string]any{}
+	if len(p.AddAuthorizedMemberTenants) > 0 {
+		m["AddAuthorizedMemberTenants"] = p.AddAuthorizedMemberTenants
+	}
+	if p.AuthorizedOwnerTenantForMemberTenant != nil {
+		m["AuthorizedOwnerTenantForMemberTenant"] = p.AuthorizedOwnerTenantForMemberTenant
+	}
+	if p.Identity != nil {
+		m["Identity"] = p.Identity
+	}
+	if p.IsMultiTenantOrganizationEnabled != nil {
+		m["IsMultiTenantOrganizationEnabled"] = p.IsMultiTenantOrganizationEnabled
+	}
+	if len(p.RemoveAuthorizedMemberTenants) > 0 {
+		m["RemoveAuthorizedMemberTenants"] = p.RemoveAuthorizedMemberTenants
+	}
+	return m
+}
+
+// SetMultiTenantOrganizationConfig runs the Set-MultiTenantOrganizationConfig cmdlet.
+func (s *Service) SetMultiTenantOrganizationConfig(ctx context.Context, p SetMultiTenantOrganizationConfigParams) (*adminapi.Result, error) {
+	return s.C.Invoke(ctx, "Set-MultiTenantOrganizationConfig", p.params())
+}
+
 // SetOcrConfigurationParams are the parameters of Set-OcrConfiguration.
 // DefaultParameterSetName: Identity
 type SetOcrConfigurationParams struct {
@@ -14568,6 +17081,7 @@ type SetOcrConfigurationParams struct {
 	AddTeamsLocation                     any      `ps:"AddTeamsLocation"`
 	AddTeamsLocationException            any      `ps:"AddTeamsLocationException"`
 	Comment                              string   `ps:"Comment"`
+	EnforcementPlanes                    any      `ps:"EnforcementPlanes"`
 	ExceptIfOneDriveSharedBy             []string `ps:"ExceptIfOneDriveSharedBy"`
 	ExceptIfOneDriveSharedByMemberOf     []string `ps:"ExceptIfOneDriveSharedByMemberOf"`
 	ExchangeScopeOcrAnyRecipientExternal bool     `ps:"ExchangeScopeOcrAnyRecipientExternal"`
@@ -14576,6 +17090,7 @@ type SetOcrConfigurationParams struct {
 	ExchangeSenderMemberOf               []string `ps:"ExchangeSenderMemberOf"`
 	ExchangeSenderMemberOfException      []string `ps:"ExchangeSenderMemberOfException"`
 	Identity                             any      `ps:"Identity"`
+	Locations                            string   `ps:"Locations"`
 	Mode                                 any      `ps:"Mode"`
 	OcrMode                              any      `ps:"OcrMode"`
 	OneDriveSharedBy                     []string `ps:"OneDriveSharedBy"`
@@ -14627,6 +17142,9 @@ func (p SetOcrConfigurationParams) params() map[string]any {
 	if p.Comment != "" {
 		m["Comment"] = p.Comment
 	}
+	if p.EnforcementPlanes != nil {
+		m["EnforcementPlanes"] = p.EnforcementPlanes
+	}
 	if len(p.ExceptIfOneDriveSharedBy) > 0 {
 		m["ExceptIfOneDriveSharedBy"] = p.ExceptIfOneDriveSharedBy
 	}
@@ -14650,6 +17168,9 @@ func (p SetOcrConfigurationParams) params() map[string]any {
 	}
 	if p.Identity != nil {
 		m["Identity"] = p.Identity
+	}
+	if p.Locations != "" {
+		m["Locations"] = p.Locations
 	}
 	if p.Mode != nil {
 		m["Mode"] = p.Mode
@@ -14728,8 +17249,11 @@ func (s *Service) SetOrganizationSegment(ctx context.Context, p SetOrganizationS
 // DefaultParameterSetName: Identity
 type SetPolicyConfigParams struct {
 	AggregationTimeWindowForDlpAlerts          any      `ps:"AggregationTimeWindowForDlpAlerts"`
+	CaseHoldPolicyLimit                        int      `ps:"CaseHoldPolicyLimit"`
 	ClassificationScheme                       any      `ps:"ClassificationScheme"`
 	ComplianceUrl                              string   `ps:"ComplianceUrl"`
+	DlpAlertFoldingConfiguration               any      `ps:"DlpAlertFoldingConfiguration"`
+	DlpAlertSlaConfig                          string   `ps:"DlpAlertSlaConfig"`
 	DlpAppGroups                               []string `ps:"DlpAppGroups"`
 	DlpAppGroupsPsws                           []string `ps:"DlpAppGroupsPsws"`
 	DlpErrorHandlingConfig                     string   `ps:"DlpErrorHandlingConfig"`
@@ -14738,16 +17262,23 @@ type SetPolicyConfigParams struct {
 	DlpPrinterGroups                           any      `ps:"DlpPrinterGroups"`
 	DlpRemovableMediaGroups                    any      `ps:"DlpRemovableMediaGroups"`
 	DocumentIsUnsupportedSeverity              any      `ps:"DocumentIsUnsupportedSeverity"`
+	EnableAbacFeature                          bool     `ps:"EnableAbacFeature"`
 	EnableAdvancedRuleBuilder                  bool     `ps:"EnableAdvancedRuleBuilder"`
 	EnableLabelCoauth                          bool     `ps:"EnableLabelCoauth"`
+	EnableSensitivityLabelingForPdf            bool     `ps:"EnableSensitivityLabelingForPdf"`
 	EnableSpoAipMigration                      bool     `ps:"EnableSpoAipMigration"`
 	EndpointDlpGlobalSettings                  []string `ps:"EndpointDlpGlobalSettings"`
 	EndpointDlpGlobalSettingsPsws              []string `ps:"EndpointDlpGlobalSettingsPsws"`
 	ExtendTeamsDlpPoliciesToSharePointOneDrive bool     `ps:"ExtendTeamsDlpPoliciesToSharePointOneDrive"`
+	Identity                                   any      `ps:"Identity"`
 	InformationBarrierMode                     any      `ps:"InformationBarrierMode"`
 	InformationBarrierPeopleSearchRestriction  any      `ps:"InformationBarrierPeopleSearchRestriction"`
+	IsDefaultMlDlpPoliciesOptedOut             bool     `ps:"IsDefaultMlDlpPoliciesOptedOut"`
 	IsDlpSimulationOptedIn                     bool     `ps:"IsDlpSimulationOptedIn"`
+	IsEventFoldingOnDlpAlertsOptedOut          bool     `ps:"IsEventFoldingOnDlpAlertsOptedOut"`
 	IsUserBaseDlpAlertAggregationEnabled       bool     `ps:"IsUserBaseDlpAlertAggregationEnabled"`
+	JitEnforcementSettings                     string   `ps:"JitEnforcementSettings"`
+	MessageHeadersToRetainInOutlook            []string `ps:"MessageHeadersToRetainInOutlook"`
 	MigrateLabelScheme                         bool     `ps:"MigrateLabelScheme"`
 	MigrateLabelSchemeDisplayNames             any      `ps:"MigrateLabelSchemeDisplayNames"`
 	OnPremisesWorkload                         any      `ps:"OnPremisesWorkload"`
@@ -14759,6 +17290,9 @@ type SetPolicyConfigParams struct {
 	SenderAddressLocation                      any      `ps:"SenderAddressLocation"`
 	SiteGroups                                 []string `ps:"SiteGroups"`
 	SiteGroupsPsws                             []string `ps:"SiteGroupsPsws"`
+	SpoQuarantineLocation                      string   `ps:"SpoQuarantineLocation"`
+	SpoQuarantineText                          string   `ps:"SpoQuarantineText"`
+	TextExtractionConfig                       string   `ps:"TextExtractionConfig"`
 }
 
 func (p SetPolicyConfigParams) params() map[string]any {
@@ -14766,11 +17300,20 @@ func (p SetPolicyConfigParams) params() map[string]any {
 	if p.AggregationTimeWindowForDlpAlerts != nil {
 		m["AggregationTimeWindowForDlpAlerts"] = p.AggregationTimeWindowForDlpAlerts
 	}
+	if p.CaseHoldPolicyLimit != 0 {
+		m["CaseHoldPolicyLimit"] = p.CaseHoldPolicyLimit
+	}
 	if p.ClassificationScheme != nil {
 		m["ClassificationScheme"] = p.ClassificationScheme
 	}
 	if p.ComplianceUrl != "" {
 		m["ComplianceUrl"] = p.ComplianceUrl
+	}
+	if p.DlpAlertFoldingConfiguration != nil {
+		m["DlpAlertFoldingConfiguration"] = p.DlpAlertFoldingConfiguration
+	}
+	if p.DlpAlertSlaConfig != "" {
+		m["DlpAlertSlaConfig"] = p.DlpAlertSlaConfig
 	}
 	if len(p.DlpAppGroups) > 0 {
 		m["DlpAppGroups"] = p.DlpAppGroups
@@ -14796,11 +17339,17 @@ func (p SetPolicyConfigParams) params() map[string]any {
 	if p.DocumentIsUnsupportedSeverity != nil {
 		m["DocumentIsUnsupportedSeverity"] = p.DocumentIsUnsupportedSeverity
 	}
+	if p.EnableAbacFeature {
+		m["EnableAbacFeature"] = true
+	}
 	if p.EnableAdvancedRuleBuilder {
 		m["EnableAdvancedRuleBuilder"] = true
 	}
 	if p.EnableLabelCoauth {
 		m["EnableLabelCoauth"] = true
+	}
+	if p.EnableSensitivityLabelingForPdf {
+		m["EnableSensitivityLabelingForPdf"] = true
 	}
 	if p.EnableSpoAipMigration {
 		m["EnableSpoAipMigration"] = true
@@ -14814,17 +17363,32 @@ func (p SetPolicyConfigParams) params() map[string]any {
 	if p.ExtendTeamsDlpPoliciesToSharePointOneDrive {
 		m["ExtendTeamsDlpPoliciesToSharePointOneDrive"] = true
 	}
+	if p.Identity != nil {
+		m["Identity"] = p.Identity
+	}
 	if p.InformationBarrierMode != nil {
 		m["InformationBarrierMode"] = p.InformationBarrierMode
 	}
 	if p.InformationBarrierPeopleSearchRestriction != nil {
 		m["InformationBarrierPeopleSearchRestriction"] = p.InformationBarrierPeopleSearchRestriction
 	}
+	if p.IsDefaultMlDlpPoliciesOptedOut {
+		m["IsDefaultMlDlpPoliciesOptedOut"] = true
+	}
 	if p.IsDlpSimulationOptedIn {
 		m["IsDlpSimulationOptedIn"] = true
 	}
+	if p.IsEventFoldingOnDlpAlertsOptedOut {
+		m["IsEventFoldingOnDlpAlertsOptedOut"] = true
+	}
 	if p.IsUserBaseDlpAlertAggregationEnabled {
 		m["IsUserBaseDlpAlertAggregationEnabled"] = true
+	}
+	if p.JitEnforcementSettings != "" {
+		m["JitEnforcementSettings"] = p.JitEnforcementSettings
+	}
+	if len(p.MessageHeadersToRetainInOutlook) > 0 {
+		m["MessageHeadersToRetainInOutlook"] = p.MessageHeadersToRetainInOutlook
 	}
 	if p.MigrateLabelScheme {
 		m["MigrateLabelScheme"] = true
@@ -14859,30 +17423,21 @@ func (p SetPolicyConfigParams) params() map[string]any {
 	if len(p.SiteGroupsPsws) > 0 {
 		m["SiteGroupsPsws"] = p.SiteGroupsPsws
 	}
+	if p.SpoQuarantineLocation != "" {
+		m["SpoQuarantineLocation"] = p.SpoQuarantineLocation
+	}
+	if p.SpoQuarantineText != "" {
+		m["SpoQuarantineText"] = p.SpoQuarantineText
+	}
+	if p.TextExtractionConfig != "" {
+		m["TextExtractionConfig"] = p.TextExtractionConfig
+	}
 	return m
 }
 
 // SetPolicyConfig runs the Set-PolicyConfig cmdlet.
 func (s *Service) SetPolicyConfig(ctx context.Context, p SetPolicyConfigParams) (*adminapi.Result, error) {
 	return s.C.Invoke(ctx, "Set-PolicyConfig", p.params())
-}
-
-// SetPriorityCleanupSettingParams are the parameters of Set-PriorityCleanupSetting.
-type SetPriorityCleanupSettingParams struct {
-	PriorityCleanupEnabled bool `ps:"PriorityCleanupEnabled"`
-}
-
-func (p SetPriorityCleanupSettingParams) params() map[string]any {
-	m := map[string]any{}
-	if p.PriorityCleanupEnabled {
-		m["PriorityCleanupEnabled"] = true
-	}
-	return m
-}
-
-// SetPriorityCleanupSetting runs the Set-PriorityCleanupSetting cmdlet.
-func (s *Service) SetPriorityCleanupSetting(ctx context.Context, p SetPriorityCleanupSettingParams) (*adminapi.Result, error) {
-	return s.C.Invoke(ctx, "Set-PriorityCleanupSetting", p.params())
 }
 
 // SetPrivacyManagementComplianceTagParams are the parameters of Set-PrivacyManagementComplianceTag.
@@ -15052,6 +17607,7 @@ type SetProtectionAlertParams struct {
 	Comment                                                     string `ps:"Comment"`
 	Description                                                 string `ps:"Description"`
 	Disabled                                                    bool   `ps:"Disabled"`
+	ExternalScenarioData                                        any    `ps:"ExternalScenarioData"`
 	Filter                                                      string `ps:"Filter"`
 	Identity                                                    any    `ps:"Identity"`
 	NotificationCulture                                         any    `ps:"NotificationCulture"`
@@ -15093,6 +17649,9 @@ func (p SetProtectionAlertParams) params() map[string]any {
 	}
 	if p.Disabled {
 		m["Disabled"] = true
+	}
+	if p.ExternalScenarioData != nil {
+		m["ExternalScenarioData"] = p.ExternalScenarioData
 	}
 	if p.Filter != "" {
 		m["Filter"] = p.Filter
@@ -15282,11 +17841,14 @@ type SetRetentionCompliancePolicyParams struct {
 	DeletedResources                    string `ps:"DeletedResources"`
 	Enabled                             bool   `ps:"Enabled"`
 	EnforceSimulationPolicy             bool   `ps:"EnforceSimulationPolicy"`
+	ExcludeSPE                          bool   `ps:"ExcludeSPE"`
 	Force                               bool   `ps:"Force"`
+	ForceBypassScopeCheck               bool   `ps:"ForceBypassScopeCheck"`
+	ForceStartSimulation                bool   `ps:"ForceStartSimulation"`
 	Identity                            any    `ps:"Identity"`
+	IncludeUserOwnedContainers          bool   `ps:"IncludeUserOwnedContainers"`
 	PolicyRBACScopes                    any    `ps:"PolicyRBACScopes"`
 	PolicyTemplateInfo                  any    `ps:"PolicyTemplateInfo"`
-	PriorityCleanup                     bool   `ps:"PriorityCleanup"`
 	RemoveAdaptiveScopeLocation         any    `ps:"RemoveAdaptiveScopeLocation"`
 	RemoveExchangeLocation              any    `ps:"RemoveExchangeLocation"`
 	RemoveExchangeLocationException     any    `ps:"RemoveExchangeLocationException"`
@@ -15373,20 +17935,29 @@ func (p SetRetentionCompliancePolicyParams) params() map[string]any {
 	if p.EnforceSimulationPolicy {
 		m["EnforceSimulationPolicy"] = true
 	}
+	if p.ExcludeSPE {
+		m["ExcludeSPE"] = true
+	}
 	if p.Force {
 		m["Force"] = true
 	}
+	if p.ForceBypassScopeCheck {
+		m["ForceBypassScopeCheck"] = true
+	}
+	if p.ForceStartSimulation {
+		m["ForceStartSimulation"] = true
+	}
 	if p.Identity != nil {
 		m["Identity"] = p.Identity
+	}
+	if p.IncludeUserOwnedContainers {
+		m["IncludeUserOwnedContainers"] = true
 	}
 	if p.PolicyRBACScopes != nil {
 		m["PolicyRBACScopes"] = p.PolicyRBACScopes
 	}
 	if p.PolicyTemplateInfo != nil {
 		m["PolicyTemplateInfo"] = p.PolicyTemplateInfo
-	}
-	if p.PriorityCleanup {
-		m["PriorityCleanup"] = true
 	}
 	if p.RemoveAdaptiveScopeLocation != nil {
 		m["RemoveAdaptiveScopeLocation"] = p.RemoveAdaptiveScopeLocation
@@ -15457,6 +18028,9 @@ func (s *Service) SetRetentionCompliancePolicy(ctx context.Context, p SetRetenti
 // DefaultParameterSetName: Identity
 type SetRetentionComplianceRuleParams struct {
 	ApplyComplianceTag                  string   `ps:"ApplyComplianceTag"`
+	ArchiveEnabled                      bool     `ps:"ArchiveEnabled"`
+	ArchiveTriggerBasedOn               string   `ps:"ArchiveTriggerBasedOn"`
+	ArchiveTriggerInDays                any      `ps:"ArchiveTriggerInDays"`
 	Comment                             string   `ps:"Comment"`
 	ContentContainsSensitiveInformation []string `ps:"ContentContainsSensitiveInformation"`
 	ContentDateFrom                     any      `ps:"ContentDateFrom"`
@@ -15466,7 +18040,6 @@ type SetRetentionComplianceRuleParams struct {
 	ExpirationDateOption                string   `ps:"ExpirationDateOption"`
 	Identity                            any      `ps:"Identity"`
 	IRMRiskyUserProfiles                any      `ps:"IRMRiskyUserProfiles"`
-	PriorityCleanup                     bool     `ps:"PriorityCleanup"`
 	RetentionComplianceAction           string   `ps:"RetentionComplianceAction"`
 	RetentionDuration                   any      `ps:"RetentionDuration"`
 	RetentionDurationDisplayHint        any      `ps:"RetentionDurationDisplayHint"`
@@ -15476,6 +18049,15 @@ func (p SetRetentionComplianceRuleParams) params() map[string]any {
 	m := map[string]any{}
 	if p.ApplyComplianceTag != "" {
 		m["ApplyComplianceTag"] = p.ApplyComplianceTag
+	}
+	if p.ArchiveEnabled {
+		m["ArchiveEnabled"] = true
+	}
+	if p.ArchiveTriggerBasedOn != "" {
+		m["ArchiveTriggerBasedOn"] = p.ArchiveTriggerBasedOn
+	}
+	if p.ArchiveTriggerInDays != nil {
+		m["ArchiveTriggerInDays"] = p.ArchiveTriggerInDays
 	}
 	if p.Comment != "" {
 		m["Comment"] = p.Comment
@@ -15504,9 +18086,6 @@ func (p SetRetentionComplianceRuleParams) params() map[string]any {
 	if p.IRMRiskyUserProfiles != nil {
 		m["IRMRiskyUserProfiles"] = p.IRMRiskyUserProfiles
 	}
-	if p.PriorityCleanup {
-		m["PriorityCleanup"] = true
-	}
 	if p.RetentionComplianceAction != "" {
 		m["RetentionComplianceAction"] = p.RetentionComplianceAction
 	}
@@ -15522,41 +18101,6 @@ func (p SetRetentionComplianceRuleParams) params() map[string]any {
 // SetRetentionComplianceRule runs the Set-RetentionComplianceRule cmdlet.
 func (s *Service) SetRetentionComplianceRule(ctx context.Context, p SetRetentionComplianceRuleParams) (*adminapi.Result, error) {
 	return s.C.Invoke(ctx, "Set-RetentionComplianceRule", p.params())
-}
-
-// SetRoleGroupParams are the parameters of Set-RoleGroup.
-// DefaultParameterSetName: Identity
-type SetRoleGroupParams struct {
-	Description string `ps:"Description"`
-	DisplayName string `ps:"DisplayName"`
-	Force       bool   `ps:"Force"`
-	Identity    any    `ps:"Identity"`
-	Name        string `ps:"Name"`
-}
-
-func (p SetRoleGroupParams) params() map[string]any {
-	m := map[string]any{}
-	if p.Description != "" {
-		m["Description"] = p.Description
-	}
-	if p.DisplayName != "" {
-		m["DisplayName"] = p.DisplayName
-	}
-	if p.Force {
-		m["Force"] = true
-	}
-	if p.Identity != nil {
-		m["Identity"] = p.Identity
-	}
-	if p.Name != "" {
-		m["Name"] = p.Name
-	}
-	return m
-}
-
-// SetRoleGroup runs the Set-RoleGroup cmdlet.
-func (s *Service) SetRoleGroup(ctx context.Context, p SetRoleGroupParams) (*adminapi.Result, error) {
-	return s.C.Invoke(ctx, "Set-RoleGroup", p.params())
 }
 
 // SetSensitiveInformationScanParams are the parameters of Set-SensitiveInformationScan.
@@ -15831,6 +18375,28 @@ func (s *Service) SetSensitiveInformationScanRule(ctx context.Context, p SetSens
 	return s.C.Invoke(ctx, "Set-SensitiveInformationScanRule", p.params())
 }
 
+// SetServiceDomainGroupParams are the parameters of Set-ServiceDomainGroup.
+type SetServiceDomainGroupParams struct {
+	Identity      any    `ps:"Identity"`
+	SiteAddresses string `ps:"SiteAddresses"`
+}
+
+func (p SetServiceDomainGroupParams) params() map[string]any {
+	m := map[string]any{}
+	if p.Identity != nil {
+		m["Identity"] = p.Identity
+	}
+	if p.SiteAddresses != "" {
+		m["SiteAddresses"] = p.SiteAddresses
+	}
+	return m
+}
+
+// SetServiceDomainGroup runs the Set-ServiceDomainGroup cmdlet.
+func (s *Service) SetServiceDomainGroup(ctx context.Context, p SetServiceDomainGroupParams) (*adminapi.Result, error) {
+	return s.C.Invoke(ctx, "Set-ServiceDomainGroup", p.params())
+}
+
 // SetServicePrincipalParams are the parameters of Set-ServicePrincipal.
 // DefaultParameterSetName: Identity
 type SetServicePrincipalParams struct {
@@ -16020,90 +18586,240 @@ func (s *Service) SetSupervisoryReviewRule(ctx context.Context, p SetSupervisory
 	return s.C.Invoke(ctx, "Set-SupervisoryReviewRule", p.params())
 }
 
-// SetTenantAllowBlockListItemsParams are the parameters of Set-TenantAllowBlockListItems.
-// DefaultParameterSetName: Ids
-type SetTenantAllowBlockListItemsParams struct {
-	Allow          bool     `ps:"Allow"`
-	Block          bool     `ps:"Block"`
-	Entries        []string `ps:"Entries"`
-	ExpirationDate any      `ps:"ExpirationDate"`
-	Ids            []string `ps:"Ids"`
-	ListSubType    any      `ps:"ListSubType"`
-	ListType       any      `ps:"ListType"`
-	NoExpiration   bool     `ps:"NoExpiration"`
-	Notes          string   `ps:"Notes"`
-	OutputJson     bool     `ps:"OutputJson"`
-	RemoveAfter    int      `ps:"RemoveAfter"`
-}
-
-func (p SetTenantAllowBlockListItemsParams) params() map[string]any {
-	m := map[string]any{}
-	if p.Allow {
-		m["Allow"] = true
-	}
-	if p.Block {
-		m["Block"] = true
-	}
-	if len(p.Entries) > 0 {
-		m["Entries"] = p.Entries
-	}
-	if p.ExpirationDate != nil {
-		m["ExpirationDate"] = p.ExpirationDate
-	}
-	if len(p.Ids) > 0 {
-		m["Ids"] = p.Ids
-	}
-	if p.ListSubType != nil {
-		m["ListSubType"] = p.ListSubType
-	}
-	if p.ListType != nil {
-		m["ListType"] = p.ListType
-	}
-	if p.NoExpiration {
-		m["NoExpiration"] = true
-	}
-	if p.Notes != "" {
-		m["Notes"] = p.Notes
-	}
-	if p.OutputJson {
-		m["OutputJson"] = true
-	}
-	if p.RemoveAfter != 0 {
-		m["RemoveAfter"] = p.RemoveAfter
-	}
-	return m
-}
-
-// SetTenantAllowBlockListItems runs the Set-TenantAllowBlockListItems cmdlet.
-func (s *Service) SetTenantAllowBlockListItems(ctx context.Context, p SetTenantAllowBlockListItemsParams) (*adminapi.Result, error) {
-	return s.C.Invoke(ctx, "Set-TenantAllowBlockListItems", p.params())
-}
-
-// SetTenantAllowBlockListSpoofItemsParams are the parameters of Set-TenantAllowBlockListSpoofItems.
+// SetTeamsRetentionCompliancePolicyParams are the parameters of Set-TeamsRetentionCompliancePolicy.
 // DefaultParameterSetName: Identity
-type SetTenantAllowBlockListSpoofItemsParams struct {
-	Action   string   `ps:"Action"`
-	Identity any      `ps:"Identity"`
-	Ids      []string `ps:"Ids"`
+type SetTeamsRetentionCompliancePolicyParams struct {
+	AddTeamsChannelLocation             any    `ps:"AddTeamsChannelLocation"`
+	AddTeamsChannelLocationException    any    `ps:"AddTeamsChannelLocationException"`
+	AddTeamsChatLocation                any    `ps:"AddTeamsChatLocation"`
+	AddTeamsChatLocationException       any    `ps:"AddTeamsChatLocationException"`
+	Comment                             string `ps:"Comment"`
+	Enabled                             bool   `ps:"Enabled"`
+	Force                               bool   `ps:"Force"`
+	Identity                            any    `ps:"Identity"`
+	RemoveTeamsChannelLocation          any    `ps:"RemoveTeamsChannelLocation"`
+	RemoveTeamsChannelLocationException any    `ps:"RemoveTeamsChannelLocationException"`
+	RemoveTeamsChatLocation             any    `ps:"RemoveTeamsChatLocation"`
+	RemoveTeamsChatLocationException    any    `ps:"RemoveTeamsChatLocationException"`
+	RestrictiveRetention                bool   `ps:"RestrictiveRetention"`
+	RetryDistribution                   bool   `ps:"RetryDistribution"`
 }
 
-func (p SetTenantAllowBlockListSpoofItemsParams) params() map[string]any {
+func (p SetTeamsRetentionCompliancePolicyParams) params() map[string]any {
 	m := map[string]any{}
-	if p.Action != "" {
-		m["Action"] = p.Action
+	if p.AddTeamsChannelLocation != nil {
+		m["AddTeamsChannelLocation"] = p.AddTeamsChannelLocation
+	}
+	if p.AddTeamsChannelLocationException != nil {
+		m["AddTeamsChannelLocationException"] = p.AddTeamsChannelLocationException
+	}
+	if p.AddTeamsChatLocation != nil {
+		m["AddTeamsChatLocation"] = p.AddTeamsChatLocation
+	}
+	if p.AddTeamsChatLocationException != nil {
+		m["AddTeamsChatLocationException"] = p.AddTeamsChatLocationException
+	}
+	if p.Comment != "" {
+		m["Comment"] = p.Comment
+	}
+	if p.Enabled {
+		m["Enabled"] = true
+	}
+	if p.Force {
+		m["Force"] = true
 	}
 	if p.Identity != nil {
 		m["Identity"] = p.Identity
 	}
-	if len(p.Ids) > 0 {
-		m["Ids"] = p.Ids
+	if p.RemoveTeamsChannelLocation != nil {
+		m["RemoveTeamsChannelLocation"] = p.RemoveTeamsChannelLocation
+	}
+	if p.RemoveTeamsChannelLocationException != nil {
+		m["RemoveTeamsChannelLocationException"] = p.RemoveTeamsChannelLocationException
+	}
+	if p.RemoveTeamsChatLocation != nil {
+		m["RemoveTeamsChatLocation"] = p.RemoveTeamsChatLocation
+	}
+	if p.RemoveTeamsChatLocationException != nil {
+		m["RemoveTeamsChatLocationException"] = p.RemoveTeamsChatLocationException
+	}
+	if p.RestrictiveRetention {
+		m["RestrictiveRetention"] = true
+	}
+	if p.RetryDistribution {
+		m["RetryDistribution"] = true
 	}
 	return m
 }
 
-// SetTenantAllowBlockListSpoofItems runs the Set-TenantAllowBlockListSpoofItems cmdlet.
-func (s *Service) SetTenantAllowBlockListSpoofItems(ctx context.Context, p SetTenantAllowBlockListSpoofItemsParams) (*adminapi.Result, error) {
-	return s.C.Invoke(ctx, "Set-TenantAllowBlockListSpoofItems", p.params())
+// SetTeamsRetentionCompliancePolicy runs the Set-TeamsRetentionCompliancePolicy cmdlet.
+func (s *Service) SetTeamsRetentionCompliancePolicy(ctx context.Context, p SetTeamsRetentionCompliancePolicyParams) (*adminapi.Result, error) {
+	return s.C.Invoke(ctx, "Set-TeamsRetentionCompliancePolicy", p.params())
+}
+
+// SetTeamsRetentionComplianceRuleParams are the parameters of Set-TeamsRetentionComplianceRule.
+// DefaultParameterSetName: Identity
+type SetTeamsRetentionComplianceRuleParams struct {
+	Comment                   string `ps:"Comment"`
+	Identity                  any    `ps:"Identity"`
+	RetentionComplianceAction string `ps:"RetentionComplianceAction"`
+	RetentionDuration         any    `ps:"RetentionDuration"`
+}
+
+func (p SetTeamsRetentionComplianceRuleParams) params() map[string]any {
+	m := map[string]any{}
+	if p.Comment != "" {
+		m["Comment"] = p.Comment
+	}
+	if p.Identity != nil {
+		m["Identity"] = p.Identity
+	}
+	if p.RetentionComplianceAction != "" {
+		m["RetentionComplianceAction"] = p.RetentionComplianceAction
+	}
+	if p.RetentionDuration != nil {
+		m["RetentionDuration"] = p.RetentionDuration
+	}
+	return m
+}
+
+// SetTeamsRetentionComplianceRule runs the Set-TeamsRetentionComplianceRule cmdlet.
+func (s *Service) SetTeamsRetentionComplianceRule(ctx context.Context, p SetTeamsRetentionComplianceRuleParams) (*adminapi.Result, error) {
+	return s.C.Invoke(ctx, "Set-TeamsRetentionComplianceRule", p.params())
+}
+
+// SetThreatResponsePolicyParams are the parameters of Set-ThreatResponsePolicy.
+// DefaultParameterSetName: Identity
+type SetThreatResponsePolicyParams struct {
+	Comment           string `ps:"Comment"`
+	Force             bool   `ps:"Force"`
+	Identity          any    `ps:"Identity"`
+	Mode              any    `ps:"Mode"`
+	NewName           string `ps:"NewName"`
+	RetryDistribution bool   `ps:"RetryDistribution"`
+}
+
+func (p SetThreatResponsePolicyParams) params() map[string]any {
+	m := map[string]any{}
+	if p.Comment != "" {
+		m["Comment"] = p.Comment
+	}
+	if p.Force {
+		m["Force"] = true
+	}
+	if p.Identity != nil {
+		m["Identity"] = p.Identity
+	}
+	if p.Mode != nil {
+		m["Mode"] = p.Mode
+	}
+	if p.NewName != "" {
+		m["NewName"] = p.NewName
+	}
+	if p.RetryDistribution {
+		m["RetryDistribution"] = true
+	}
+	return m
+}
+
+// SetThreatResponsePolicy runs the Set-ThreatResponsePolicy cmdlet.
+func (s *Service) SetThreatResponsePolicy(ctx context.Context, p SetThreatResponsePolicyParams) (*adminapi.Result, error) {
+	return s.C.Invoke(ctx, "Set-ThreatResponsePolicy", p.params())
+}
+
+// SetThreatResponseRuleParams are the parameters of Set-ThreatResponseRule.
+// DefaultParameterSetName: Identity
+type SetThreatResponseRuleParams struct {
+	ActivationDate                        any    `ps:"ActivationDate"`
+	Comment                               string `ps:"Comment"`
+	DisableActiveSync                     bool   `ps:"DisableActiveSync"`
+	DisableAutoForwardDefaultRemoteDomain bool   `ps:"DisableAutoForwardDefaultRemoteDomain"`
+	DisableBasicAuth                      bool   `ps:"DisableBasicAuth"`
+	Disabled                              bool   `ps:"Disabled"`
+	DisableEWS                            bool   `ps:"DisableEWS"`
+	DisableForwardingSMTPAddress          bool   `ps:"DisableForwardingSMTPAddress"`
+	DisableIMAP                           bool   `ps:"DisableIMAP"`
+	DisableMAPI                           bool   `ps:"DisableMAPI"`
+	DisableMAPIOverHTTP                   bool   `ps:"DisableMAPIOverHTTP"`
+	DisableOWA                            bool   `ps:"DisableOWA"`
+	DisablePOP                            bool   `ps:"DisablePOP"`
+	DisableTransportRuleForwarding        bool   `ps:"DisableTransportRuleForwarding"`
+	ExceptIfHighRiskUser                  bool   `ps:"ExceptIfHighRiskUser"`
+	ExceptIfMemberOfDL                    any    `ps:"ExceptIfMemberOfDL"`
+	ExpiryDate                            any    `ps:"ExpiryDate"`
+	HighRiskUser                          bool   `ps:"HighRiskUser"`
+	Identity                              any    `ps:"Identity"`
+	MemberOfDL                            any    `ps:"MemberOfDL"`
+}
+
+func (p SetThreatResponseRuleParams) params() map[string]any {
+	m := map[string]any{}
+	if p.ActivationDate != nil {
+		m["ActivationDate"] = p.ActivationDate
+	}
+	if p.Comment != "" {
+		m["Comment"] = p.Comment
+	}
+	if p.DisableActiveSync {
+		m["DisableActiveSync"] = true
+	}
+	if p.DisableAutoForwardDefaultRemoteDomain {
+		m["DisableAutoForwardDefaultRemoteDomain"] = true
+	}
+	if p.DisableBasicAuth {
+		m["DisableBasicAuth"] = true
+	}
+	if p.Disabled {
+		m["Disabled"] = true
+	}
+	if p.DisableEWS {
+		m["DisableEWS"] = true
+	}
+	if p.DisableForwardingSMTPAddress {
+		m["DisableForwardingSMTPAddress"] = true
+	}
+	if p.DisableIMAP {
+		m["DisableIMAP"] = true
+	}
+	if p.DisableMAPI {
+		m["DisableMAPI"] = true
+	}
+	if p.DisableMAPIOverHTTP {
+		m["DisableMAPIOverHTTP"] = true
+	}
+	if p.DisableOWA {
+		m["DisableOWA"] = true
+	}
+	if p.DisablePOP {
+		m["DisablePOP"] = true
+	}
+	if p.DisableTransportRuleForwarding {
+		m["DisableTransportRuleForwarding"] = true
+	}
+	if p.ExceptIfHighRiskUser {
+		m["ExceptIfHighRiskUser"] = true
+	}
+	if p.ExceptIfMemberOfDL != nil {
+		m["ExceptIfMemberOfDL"] = p.ExceptIfMemberOfDL
+	}
+	if p.ExpiryDate != nil {
+		m["ExpiryDate"] = p.ExpiryDate
+	}
+	if p.HighRiskUser {
+		m["HighRiskUser"] = true
+	}
+	if p.Identity != nil {
+		m["Identity"] = p.Identity
+	}
+	if p.MemberOfDL != nil {
+		m["MemberOfDL"] = p.MemberOfDL
+	}
+	return m
+}
+
+// SetThreatResponseRule runs the Set-ThreatResponseRule cmdlet.
+func (s *Service) SetThreatResponseRule(ctx context.Context, p SetThreatResponseRuleParams) (*adminapi.Result, error) {
+	return s.C.Invoke(ctx, "Set-ThreatResponseRule", p.params())
 }
 
 // SetUnifiedAuditLogRetentionPolicyParams are the parameters of Set-UnifiedAuditLogRetentionPolicy.
@@ -16155,6 +18871,7 @@ type StartComplianceSearchParams struct {
 	Force        bool `ps:"Force"`
 	Identity     any  `ps:"Identity"`
 	RetryOnError bool `ps:"RetryOnError"`
+	UseBigFunnel bool `ps:"UseBigFunnel"`
 }
 
 func (p StartComplianceSearchParams) params() map[string]any {
@@ -16168,6 +18885,9 @@ func (p StartComplianceSearchParams) params() map[string]any {
 	if p.RetryOnError {
 		m["RetryOnError"] = true
 	}
+	if p.UseBigFunnel {
+		m["UseBigFunnel"] = true
+	}
 	return m
 }
 
@@ -16176,11 +18896,32 @@ func (s *Service) StartComplianceSearch(ctx context.Context, p StartComplianceSe
 	return s.C.Invoke(ctx, "Start-ComplianceSearch", p.params())
 }
 
+// StartDlpSensitiveInformationScanParams are the parameters of Start-DlpSensitiveInformationScan.
+// DefaultParameterSetName: Identity
+type StartDlpSensitiveInformationScanParams struct {
+	SensitiveInformationScanTimeWindowExo any `ps:"SensitiveInformationScanTimeWindowExo"`
+}
+
+func (p StartDlpSensitiveInformationScanParams) params() map[string]any {
+	m := map[string]any{}
+	if p.SensitiveInformationScanTimeWindowExo != nil {
+		m["SensitiveInformationScanTimeWindowExo"] = p.SensitiveInformationScanTimeWindowExo
+	}
+	return m
+}
+
+// StartDlpSensitiveInformationScan runs the Start-DlpSensitiveInformationScan cmdlet.
+func (s *Service) StartDlpSensitiveInformationScan(ctx context.Context, p StartDlpSensitiveInformationScanParams) (*adminapi.Result, error) {
+	return s.C.Invoke(ctx, "Start-DlpSensitiveInformationScan", p.params())
+}
+
 // StartInformationBarrierPoliciesApplicationParams are the parameters of Start-InformationBarrierPoliciesApplication.
 // DefaultParameterSetName: Identity
 type StartInformationBarrierPoliciesApplicationParams struct {
 	CleanupGroupSegmentLink bool `ps:"CleanupGroupSegmentLink"`
 	Identity                any  `ps:"Identity"`
+	Rollback                bool `ps:"Rollback"`
+	Upgrade                 bool `ps:"Upgrade"`
 }
 
 func (p StartInformationBarrierPoliciesApplicationParams) params() map[string]any {
@@ -16190,6 +18931,12 @@ func (p StartInformationBarrierPoliciesApplicationParams) params() map[string]an
 	}
 	if p.Identity != nil {
 		m["Identity"] = p.Identity
+	}
+	if p.Rollback {
+		m["Rollback"] = true
+	}
+	if p.Upgrade {
+		m["Upgrade"] = true
 	}
 	return m
 }
@@ -16235,6 +18982,29 @@ func (p StopInformationBarrierPoliciesApplicationParams) params() map[string]any
 // StopInformationBarrierPoliciesApplication runs the Stop-InformationBarrierPoliciesApplication cmdlet.
 func (s *Service) StopInformationBarrierPoliciesApplication(ctx context.Context, p StopInformationBarrierPoliciesApplicationParams) (*adminapi.Result, error) {
 	return s.C.Invoke(ctx, "Stop-InformationBarrierPoliciesApplication", p.params())
+}
+
+// SyncLabelParams are the parameters of Sync-Label.
+// DefaultParameterSetName: Identity
+type SyncLabelParams struct {
+	Identity      any      `ps:"Identity"`
+	MemberTenants []string `ps:"MemberTenants"`
+}
+
+func (p SyncLabelParams) params() map[string]any {
+	m := map[string]any{}
+	if p.Identity != nil {
+		m["Identity"] = p.Identity
+	}
+	if len(p.MemberTenants) > 0 {
+		m["MemberTenants"] = p.MemberTenants
+	}
+	return m
+}
+
+// SyncLabel runs the Sync-Label cmdlet.
+func (s *Service) SyncLabel(ctx context.Context, p SyncLabelParams) (*adminapi.Result, error) {
+	return s.C.Invoke(ctx, "Sync-Label", p.params())
 }
 
 // TestDataClassificationParams are the parameters of Test-DataClassification.
@@ -16298,6 +19068,32 @@ func (s *Service) TestInformationBarrierPolicy(ctx context.Context, p TestInform
 	return s.C.Invoke(ctx, "Test-InformationBarrierPolicy", p.params())
 }
 
+// TestLabelConfigParams are the parameters of Test-LabelConfig.
+type TestLabelConfigParams struct {
+	DomainController  any `ps:"DomainController"`
+	Scenario          any `ps:"Scenario"`
+	UserPrincipalName any `ps:"UserPrincipalName"`
+}
+
+func (p TestLabelConfigParams) params() map[string]any {
+	m := map[string]any{}
+	if p.DomainController != nil {
+		m["DomainController"] = p.DomainController
+	}
+	if p.Scenario != nil {
+		m["Scenario"] = p.Scenario
+	}
+	if p.UserPrincipalName != nil {
+		m["UserPrincipalName"] = p.UserPrincipalName
+	}
+	return m
+}
+
+// TestLabelConfig runs the Test-LabelConfig cmdlet.
+func (s *Service) TestLabelConfig(ctx context.Context, p TestLabelConfigParams) (*adminapi.Result, error) {
+	return s.C.Invoke(ctx, "Test-LabelConfig", p.params())
+}
+
 // TestTextExtractionParams are the parameters of Test-TextExtraction.
 type TestTextExtractionParams struct {
 	DomainController any      `ps:"DomainController"`
@@ -16340,46 +19136,6 @@ func (p UpdateComplianceCaseMemberParams) params() map[string]any {
 // UpdateComplianceCaseMember runs the Update-ComplianceCaseMember cmdlet.
 func (s *Service) UpdateComplianceCaseMember(ctx context.Context, p UpdateComplianceCaseMemberParams) (*adminapi.Result, error) {
 	return s.C.Invoke(ctx, "Update-ComplianceCaseMember", p.params())
-}
-
-// UpdateRoleGroupMemberParams are the parameters of Update-RoleGroupMember.
-type UpdateRoleGroupMemberParams struct {
-	Identity any `ps:"Identity"`
-	Members  any `ps:"Members"`
-}
-
-func (p UpdateRoleGroupMemberParams) params() map[string]any {
-	m := map[string]any{}
-	if p.Identity != nil {
-		m["Identity"] = p.Identity
-	}
-	if p.Members != nil {
-		m["Members"] = p.Members
-	}
-	return m
-}
-
-// UpdateRoleGroupMember runs the Update-RoleGroupMember cmdlet.
-func (s *Service) UpdateRoleGroupMember(ctx context.Context, p UpdateRoleGroupMemberParams) (*adminapi.Result, error) {
-	return s.C.Invoke(ctx, "Update-RoleGroupMember", p.params())
-}
-
-// UpdateEDiscoveryCaseAdminParams are the parameters of Update-eDiscoveryCaseAdmin.
-type UpdateEDiscoveryCaseAdminParams struct {
-	Users []string `ps:"Users"`
-}
-
-func (p UpdateEDiscoveryCaseAdminParams) params() map[string]any {
-	m := map[string]any{}
-	if len(p.Users) > 0 {
-		m["Users"] = p.Users
-	}
-	return m
-}
-
-// UpdateEDiscoveryCaseAdmin runs the Update-eDiscoveryCaseAdmin cmdlet.
-func (s *Service) UpdateEDiscoveryCaseAdmin(ctx context.Context, p UpdateEDiscoveryCaseAdminParams) (*adminapi.Result, error) {
-	return s.C.Invoke(ctx, "Update-eDiscoveryCaseAdmin", p.params())
 }
 
 // ValidateRetentionRuleQueryParams are the parameters of Validate-RetentionRuleQuery.

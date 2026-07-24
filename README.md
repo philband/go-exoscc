@@ -30,10 +30,11 @@ import (
 tp, _ := msalauth.NewConfidentialCertPEM(tenantID, appID, pemBytes, "" /*pw*/, "")
 
 c, _ := adminapi.New(adminapi.Options{
-    Cloud:    adminapi.EXO,           // or adminapi.SCC for Purview
-    TenantID: tenantID,
-    Tokens:   tp,
-    Anchor:   "TID:" + tenantID,       // or "UPN:user@contoso.com" (delegated)
+    Cloud:        adminapi.EXO,              // or adminapi.SCC for Purview
+    TenantID:     tenantID,
+    Tokens:       tp,
+    Organization: "contoso.onmicrosoft.com", // app-only routing domain; required for SCC/Purview
+    // (delegated instead? set Anchor: "UPN:user@contoso.com")
 })
 
 svc := exo.New(c)
@@ -62,17 +63,20 @@ transport (regional redirect, affinity cookie, header parity, OData paging, and
 `Rate-Limit-*` surfacing).
 
 ¹ App-only auth needs the **Office 365 Exchange Online → `Exchange.ManageAsApp`**
-application permission plus an Entra directory role (or a custom role group). The
-service historically expects a **certificate**; a client-secret token may be
-rejected — validate against your tenant.
+application permission **plus RBAC on the app's service principal** — an Entra
+directory role, or (preferred) a service-principal role-group membership
+(`New-ServicePrincipal` + `Add-RoleGroupMember`; for Purview do this in a
+`Connect-IPPSSession`). Certificate **and** client secret both work. Without a
+role you'll get a 403 / "role isn't supported" — that's an assignment gap, not a
+token problem.
 
 ## Packages
 
 | Package | Contents |
 |---------|----------|
 | `adminapi` | client core: transport, `InvokeCommand`, paging, errors, `TokenProvider` |
-| `exo` | generated Exchange Online bindings (829 cmdlets) |
-| `purview` | generated Security & Compliance bindings (353 cmdlets) |
+| `exo` | generated Exchange Online bindings (825 cmdlets) |
+| `purview` | generated Security & Compliance bindings (418 cmdlets) |
 | `models` | types generated from `$metadata` (enums + structs) for `Result.Decode` |
 | `msalauth` | MSAL-backed token providers |
 
@@ -90,12 +94,13 @@ Admin API  --cmd/fetch-spec-->  ExchangeOnline.psm1  --generator/extract-catalog
 - `spec/catalog/*.json` and `spec/metadata/*.xml` are the derived, committed inputs.
 - The raw Microsoft `ExchangeOnline.psm1` is fetched **transiently** and never
   committed.
-- **EXO** refreshes fully app-only (auth + `$metadata` + `EXOModuleFile`). The
-  refreshed cmdlet set tracks the app's role group, so assign a broad one
-  (e.g. Organization Management) for the full surface. **Purview** app-only
-  currently can't resolve the tenant on the compliance backend, so its bindings
-  are maintained from the committed catalog via a delegated capture rather than
-  the CI refresh (the `refresh-spec` workflow defaults to `EXO`).
+- Both **EXO** and **Purview** refresh fully app-only. `fetch-spec` auto-discovers
+  the tenant routing domain (via EXO `Get-OrganizationConfig`) and uses the
+  `OAuthUser@<domain>` anchor so the compliance calls resolve to the tenant's
+  region (the client rewrites the region-redirect's `.admin.` backend to the
+  `.ps.compliance.` one). The refreshed cmdlet set tracks the app's role
+  membership, so assign broad ones (e.g. Organization Management + Compliance
+  Administrator) for the full surface.
 - Regenerate locally (app-only cert/secret):
 
   ```bash
