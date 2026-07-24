@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"net/http"
 	"strconv"
+	"strings"
 	"time"
 )
 
@@ -154,7 +155,16 @@ func parseAPIError(status int, raw []byte) error {
 	if json.Unmarshal(raw, &env) == nil && env.Error != nil {
 		return &APIError{Status: status, Code: env.Error.Code, Message: env.Error.Message, InnerRaw: env.Error.InnerError}
 	}
-	return &APIError{Status: status, Code: "Unknown", Message: string(raw)}
+	msg := strings.TrimSpace(string(raw))
+	if msg == "" {
+		msg = "(no response body)"
+	} else if len(msg) > 500 {
+		msg = msg[:500]
+	}
+	if status == 403 {
+		msg += " — the app likely lacks a directory role (assign one for app-only, e.g. Global Reader)"
+	}
+	return &APIError{Status: status, Code: "Unknown", Message: msg}
 }
 
 func parseRateLimit(h http.Header) RateLimit {

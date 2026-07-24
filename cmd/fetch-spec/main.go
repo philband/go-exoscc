@@ -1,19 +1,18 @@
 // Command fetch-spec pulls the live Admin API spec — the OData $metadata and the
 // EXOModuleFile cmdlet manifest (the raw Microsoft ExchangeOnline.psm1) — for the
-// selected clouds, using app-only auth. In CI it authenticates with a GitHub
-// Actions OIDC token via an Entra federated identity credential (no secret);
-// locally it can use a certificate or client secret.
+// selected clouds, app-only. Credentials come from ARM_* env vars (or flags); in
+// CI it uses a GitHub Actions OIDC token via an Entra federated identity
+// credential (ARM_USE_OIDC=true), locally a certificate or client secret.
 //
 // The Microsoft psm1 is written to -psm1-dir (transient, git-ignored — not
-// committed for copyright reasons); the $metadata (schema) is written to
-// -metadata-dir. A downstream step runs generator/extract-catalog.ps1 on the psm1
-// to (re)produce the committed catalog JSON, then the Go generators.
+// committed for copyright reasons); the $metadata (schema) to -metadata-dir. A
+// downstream step runs generator/extract-catalog.ps1 on the psm1 to (re)produce
+// the committed catalog JSON, then the Go generators.
 //
-// Note: app-only reliably reaches the Exchange Online endpoint. The Purview
-// (compliance) backend routing may still resolve app-only calls to the Exchange
-// admin backend (see the private research notes); validate -cloud Purview against
-// your tenant. If it returns the wrong cmdlet set, keep the committed Purview
-// catalog (refreshed via delegated capture).
+// App-only requires the Entra app to have Office 365 Exchange Online ->
+// Exchange.ManageAsApp AND a supported directory role on its service principal;
+// without the role the service returns "The role assigned to application ... isn't
+// supported in this scenario".
 package main
 
 import (
@@ -29,32 +28,30 @@ import (
 	"time"
 
 	"github.com/philband/go-exoscc/adminapi"
-	"github.com/philband/go-exoscc/msalauth"
+	"github.com/philband/go-exoscc/internal/authenv"
 )
 
 func main() {
 	var (
-		cloudSel     = flag.String("cloud", "EXO", "EXO | Purview | Both")
-		tenant       = flag.String("tenant", "", "tenant ID/domain (authority); token tid is used for the API path")
-		clientID     = flag.String("client-id", "", "Entra application (client) ID")
-		auth         = flag.String("auth", "federated", "federated | cert | secret")
-		certPEM      = flag.String("cert-pem", "", "path to PEM (cert+key) for -auth cert")
-		certPassword = flag.String("cert-password", "", "PEM key password (optional)")
-		secret       = flag.String("secret", "", "client secret for -auth secret (or env EXOSCC_CLIENT_SECRET)")
-		authHost     = flag.String("authority-host", "", "national-cloud login host override")
-		psm1Dir      = flag.String("psm1-dir", ".spec-cache", "where to write the (transient) Microsoft psm1")
-		metaDir      = flag.String("metadata-dir", "spec/metadata", "where to write $metadata")
+		cloudSel = flag.String("cloud", "EXO", "EXO | Purview | Both")
+		tenant   = flag.String("tenant", "", "tenant ID/domain (default: $ARM_TENANT_ID)")
+		clientID = flag.String("client-id", "", "Entra app (client) ID (default: $ARM_CLIENT_ID)")
+		auth     = flag.String("auth", "auto", "auto | federated | cert | secret")
+		certPEM  = flag.String("cert-pem", "", "PEM cert+key (default: $ARM_CLIENT_CERTIFICATE_PATH)")
+		certPass = flag.String("cert-password", "", "PEM key password (default: $ARM_CLIENT_CERTIFICATE_PASSWORD)")
+		secret   = flag.String("secret", "", "client secret (default: $ARM_CLIENT_SECRET)")
+		authHost = flag.String("authority-host", "", "national-cloud login host override")
+		psm1Dir  = flag.String("psm1-dir", ".spec-cache", "where to write the (transient) Microsoft psm1")
+		metaDir  = flag.String("metadata-dir", "spec/metadata", "where to write $metadata")
 	)
 	flag.Parse()
-	if *tenant == "" || *clientID == "" {
-		fail("fetch-spec: -tenant and -client-id are required")
-	}
-	if *secret == "" {
-		*secret = os.Getenv("EXOSCC_CLIENT_SECRET")
-	}
 
-	tp, err := buildProvider(*auth, *tenant, *clientID, *certPEM, *certPassword, *secret, *authHost)
+	tp, _, mode, err := authenv.Build(authenv.Config{
+		Tenant: *tenant, ClientID: *clientID, Auth: *auth,
+		CertPEM: *certPEM, CertPassword: *certPass, Secret: *secret, AuthorityHost: *authHost,
+	})
 	check(err)
+	fmt.Printf("auth=%s\n", mode)
 
 	clouds := map[string]adminapi.Cloud{}
 	switch strings.ToLower(*cloudSel) {
@@ -73,7 +70,7 @@ func main() {
 	defer cancel()
 
 	// Resolve the tenant GUID from a token (the Admin API path needs the tid claim).
-	anyResource := adminapi.EXO.Resource
+	var anyResource string
 	for _, c := range clouds {
 		anyResource = c.Resource
 		break
@@ -110,31 +107,7 @@ func main() {
 	}
 }
 
-func buildProvider(auth, tenant, clientID, certPEM, certPassword, secret, authHost string) (adminapi.TokenProvider, error) {
-	switch strings.ToLower(auth) {
-	case "federated":
-		return msalauth.NewConfidentialAssertion(tenant, clientID, msalauth.GitHubOIDCAssertion(""), authHost)
-	case "cert":
-		if certPEM == "" {
-			return nil, fmt.Errorf("-cert-pem required for -auth cert")
-		}
-		pem, err := os.ReadFile(certPEM)
-		if err != nil {
-			return nil, err
-		}
-		return msalauth.NewConfidentialCertPEM(tenant, clientID, pem, certPassword, authHost)
-	case "secret":
-		if secret == "" {
-			return nil, fmt.Errorf("-secret (or EXOSCC_CLIENT_SECRET) required for -auth secret")
-		}
-		return msalauth.NewConfidentialSecret(tenant, clientID, secret, authHost)
-	default:
-		return nil, fmt.Errorf("unknown -auth %q", auth)
-	}
-}
-
-// extractPsm1 pulls the ExchangeOnline.psm1 fileContent out of the EXOModuleFile
-// JSON envelope: {"value":[{"fileName":"ExchangeOnline.psm1","fileContent":"..."}]}.
+// extractPsm1 pulls ExchangeOnline.psm1 out of the EXOModuleFile JSON envelope.
 func extractPsm1(body []byte) (string, error) {
 	var env struct {
 		Value []struct {

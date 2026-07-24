@@ -102,9 +102,14 @@ Admin API  --cmd/fetch-spec-->  ExchangeOnline.psm1  --generator/extract-catalog
 - **vuln.yml** — `govulncheck` on PRs and weekly.
 - **refresh-spec.yml** — weekly (and on demand) pulls the live spec app-only via a
   **GitHub OIDC federated credential** (no secret), regenerates, and opens a PR on
-  change. Configure repo *Variables* `EXOSCC_TENANT_ID` and `EXOSCC_CLIENT_ID`, and
-  add a federated identity credential on the Entra app trusting this repo's OIDC
-  subject (audience `api://AzureADTokenExchange`).
+  change. Configure repo *Variables* `ARM_TENANT_ID` and `ARM_CLIENT_ID`, and add a
+  federated identity credential on the Entra app trusting this repo's OIDC subject
+  (audience `api://AzureADTokenExchange`).
+
+`cmd/fetch-spec` and `cmd/verify` read the standard Terraform **`ARM_*`** env vars
+(`ARM_TENANT_ID`, `ARM_CLIENT_ID`, `ARM_CLIENT_SECRET` /
+`ARM_CLIENT_CERTIFICATE_PATH` / `ARM_USE_OIDC`) so the same credentials drive local
+testing, CI, and the future Terraform provider.
 
 All actions are SHA-pinned; Dependabot keeps modules and actions current.
 

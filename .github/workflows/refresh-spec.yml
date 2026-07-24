@@ -7,11 +7,12 @@ name: Refresh SDK spec
 # derived catalog JSON, $metadata schema and generated Go are committed via PR.
 #
 # Repo configuration required (Settings -> Secrets and variables -> Actions -> Variables):
-#   EXOSCC_TENANT_ID  - tenant GUID or primary domain
-#   EXOSCC_CLIENT_ID  - Entra app (client) ID whose federated credential trusts
-#                       this repo's OIDC subject (audience api://AzureADTokenExchange),
-#                       with Office 365 Exchange Online -> Exchange.ManageAsApp + a
-#                       directory role (see README).
+#   ARM_TENANT_ID  - tenant GUID or primary domain
+#   ARM_CLIENT_ID  - Entra app (client) ID whose federated credential trusts this
+#                    repo's OIDC subject (audience api://AzureADTokenExchange), with
+#                    Office 365 Exchange Online -> Exchange.ManageAsApp AND a
+#                    directory role on its service principal (see README).
+# (Terraform-style ARM_* names so the same app/credentials drive the TF provider.)
 
 on:
   schedule:
@@ -41,14 +42,13 @@ jobs:
       # pwsh (for the PowerShell-AST catalog extractor) is preinstalled on ubuntu-latest.
       - name: Fetch live spec (app-only via GitHub OIDC federated credential)
         env:
-          TENANT: ${{ vars.EXOSCC_TENANT_ID }}
-          CLIENT_ID: ${{ vars.EXOSCC_CLIENT_ID }}
+          ARM_TENANT_ID: ${{ vars.ARM_TENANT_ID }}
+          ARM_CLIENT_ID: ${{ vars.ARM_CLIENT_ID }}
+          ARM_USE_OIDC: "true"
           CLOUD: ${{ github.event.inputs.cloud || 'EXO' }}
         run: |
-          test -n "$TENANT" -a -n "$CLIENT_ID" || { echo "::error::set EXOSCC_TENANT_ID / EXOSCC_CLIENT_ID repo variables"; exit 1; }
-          go run ./cmd/fetch-spec -auth federated -cloud "$CLOUD" \
-            -tenant "$TENANT" -client-id "$CLIENT_ID" \
-            -psm1-dir .spec-cache -metadata-dir spec/metadata
+          test -n "$ARM_TENANT_ID" -a -n "$ARM_CLIENT_ID" || { echo "::error::set ARM_TENANT_ID / ARM_CLIENT_ID repo variables"; exit 1; }
+          go run ./cmd/fetch-spec -cloud "$CLOUD" -psm1-dir .spec-cache -metadata-dir spec/metadata
 
       - name: Extract catalog(s) from the psm1 (PowerShell AST)
         shell: pwsh

@@ -183,9 +183,13 @@ func (c *Client) getFollow(ctx context.Context, urlStr string, headers map[strin
 func (c *Client) FetchAdmin(ctx context.Context, pathTemplate string, bootstrap bool) ([]byte, error) {
 	path := strings.ReplaceAll(pathTemplate, "{tid}", c.opt.TenantID)
 	u := "https://" + c.resolvedHost + path
-	var h map[string]string
+	h := map[string]string{}
 	if bootstrap {
 		h = c.bootstrapHeaders()
+	}
+	// $metadata is CSDL XML; everything else is JSON.
+	if strings.HasSuffix(path, "$metadata") {
+		h["Accept"] = "application/xml"
 	}
 	resp, err := c.getFollow(ctx, u, h)
 	if err != nil {
@@ -219,25 +223,31 @@ func isRedirect(code int) bool {
 
 // readBody returns the decompressed response body. Because we set Accept-Encoding
 // ourselves (for header fidelity), net/http does NOT auto-decompress, so we do it
-// here based on Content-Encoding. gzip and deflate are handled; brotli ("br") is
-// rarely returned by this API — if it is, install a brotli reader.
+// here based on Content-Encoding — but defensively: some responses (notably
+// errors) advertise gzip yet aren't, so we sniff the magic bytes and fall back to
+// the raw body rather than failing. brotli ("br") is passed through raw.
 func readBody(resp *http.Response) ([]byte, error) {
 	defer resp.Body.Close()
-	var r io.Reader = resp.Body
+	raw, err := io.ReadAll(resp.Body)
+	if err != nil {
+		return nil, err
+	}
 	switch strings.ToLower(resp.Header.Get("Content-Encoding")) {
 	case "gzip":
-		zr, err := gzip.NewReader(resp.Body)
-		if err != nil {
-			return nil, err
+		if len(raw) >= 2 && raw[0] == 0x1f && raw[1] == 0x8b {
+			if zr, e := gzip.NewReader(bytes.NewReader(raw)); e == nil {
+				defer zr.Close()
+				if out, e := io.ReadAll(zr); e == nil {
+					return out, nil
+				}
+			}
 		}
-		defer zr.Close()
-		r = zr
 	case "deflate":
-		fr := flate.NewReader(resp.Body)
+		fr := flate.NewReader(bytes.NewReader(raw))
 		defer fr.Close()
-		r = fr
-	case "br":
-		return nil, fmt.Errorf("adminapi: brotli response encoding not supported; add a br reader")
+		if out, e := io.ReadAll(fr); e == nil {
+			return out, nil
+		}
 	}
-	return io.ReadAll(r)
+	return raw, nil
 }
