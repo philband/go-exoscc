@@ -9526,6 +9526,7 @@ type NewRetentionCompliancePolicyParams struct {
 	TeamsChannelLocationException any    `ps:"TeamsChannelLocationException"`
 	TeamsChatLocation             any    `ps:"TeamsChatLocation"`
 	TeamsChatLocationException    any    `ps:"TeamsChatLocationException"`
+	VersionCleanup                bool   `ps:"VersionCleanup"`
 }
 
 func (p NewRetentionCompliancePolicyParams) params() map[string]any {
@@ -9613,6 +9614,9 @@ func (p NewRetentionCompliancePolicyParams) params() map[string]any {
 	}
 	if p.TeamsChatLocationException != nil {
 		m["TeamsChatLocationException"] = p.TeamsChatLocationException
+	}
+	if p.VersionCleanup {
+		m["VersionCleanup"] = true
 	}
 	return m
 }
@@ -17868,6 +17872,7 @@ type SetRetentionCompliancePolicyParams struct {
 	RestrictiveRetention                bool   `ps:"RestrictiveRetention"`
 	RetryDistribution                   bool   `ps:"RetryDistribution"`
 	StartSimulation                     bool   `ps:"StartSimulation"`
+	VersionCleanup                      string `ps:"VersionCleanup"`
 }
 
 func (p SetRetentionCompliancePolicyParams) params() map[string]any {
@@ -18015,6 +18020,9 @@ func (p SetRetentionCompliancePolicyParams) params() map[string]any {
 	}
 	if p.StartSimulation {
 		m["StartSimulation"] = true
+	}
+	if p.VersionCleanup != "" {
+		m["VersionCleanup"] = p.VersionCleanup
 	}
 	return m
 }

@@ -1559,12 +1559,16 @@ func (s *Service) EnableSweepRule(ctx context.Context, p EnableSweepRuleParams) 
 
 // EnableTransportRuleParams are the parameters of Enable-TransportRule.
 type EnableTransportRuleParams struct {
-	Identity any `ps:"Identity"`
-	Mode     any `ps:"Mode"`
+	Force    bool `ps:"Force"`
+	Identity any  `ps:"Identity"`
+	Mode     any  `ps:"Mode"`
 }
 
 func (p EnableTransportRuleParams) params() map[string]any {
 	m := map[string]any{}
+	if p.Force {
+		m["Force"] = true
+	}
 	if p.Identity != nil {
 		m["Identity"] = p.Identity
 	}
@@ -11814,11 +11818,11 @@ func (s *Service) InvokeBirthdayCalendarSync(ctx context.Context, p InvokeBirthd
 }
 
 // InvokeChangeMeetingOrganizerParams are the parameters of Invoke-ChangeMeetingOrganizer.
-// DefaultParameterSetName: ByEventId
+// DefaultParameterSetName: ByMeetingId
 type InvokeChangeMeetingOrganizerParams struct {
 	EventId                 string `ps:"EventId"`
 	Identity                any    `ps:"Identity"`
-	NewOrganizer            string `ps:"NewOrganizer"`
+	NewOrganizer            any    `ps:"NewOrganizer"`
 	Subject                 string `ps:"Subject"`
 	TransferSeriesStartDate any    `ps:"TransferSeriesStartDate"`
 }
@@ -11831,7 +11835,7 @@ func (p InvokeChangeMeetingOrganizerParams) params() map[string]any {
 	if p.Identity != nil {
 		m["Identity"] = p.Identity
 	}
-	if p.NewOrganizer != "" {
+	if p.NewOrganizer != nil {
 		m["NewOrganizer"] = p.NewOrganizer
 	}
 	if p.Subject != "" {
@@ -15750,6 +15754,7 @@ type NewMigrationBatchParams struct {
 	TargetDatabases            any      `ps:"TargetDatabases"`
 	TargetDeliveryDomain       any      `ps:"TargetDeliveryDomain"`
 	TargetEndpoint             any      `ps:"TargetEndpoint"`
+	TenantScan                 bool     `ps:"TenantScan"`
 	TimeZone                   any      `ps:"TimeZone"`
 	UserIds                    any      `ps:"UserIds"`
 	Users                      any      `ps:"Users"`
@@ -15937,6 +15942,9 @@ func (p NewMigrationBatchParams) params() map[string]any {
 	if p.TargetEndpoint != nil {
 		m["TargetEndpoint"] = p.TargetEndpoint
 	}
+	if p.TenantScan {
+		m["TenantScan"] = true
+	}
 	if p.TimeZone != nil {
 		m["TimeZone"] = p.TimeZone
 	}
@@ -15999,6 +16007,7 @@ type NewMigrationEndpointParams struct {
 	SkipVerification                   bool     `ps:"SkipVerification"`
 	SourceMailboxLegacyDN              string   `ps:"SourceMailboxLegacyDN"`
 	TestMailbox                        any      `ps:"TestMailbox"`
+	UseOAuth                           bool     `ps:"UseOAuth"`
 }
 
 func (p NewMigrationEndpointParams) params() map[string]any {
@@ -16101,6 +16110,9 @@ func (p NewMigrationEndpointParams) params() map[string]any {
 	}
 	if p.TestMailbox != nil {
 		m["TestMailbox"] = p.TestMailbox
+	}
+	if p.UseOAuth {
+		m["UseOAuth"] = true
 	}
 	return m
 }
@@ -18974,6 +18986,7 @@ type NewTransportRuleParams struct {
 	ExceptIfSubjectOrBodyMatchesPatterns         []string `ps:"ExceptIfSubjectOrBodyMatchesPatterns"`
 	ExceptIfWithImportance                       any      `ps:"ExceptIfWithImportance"`
 	ExpiryDate                                   any      `ps:"ExpiryDate"`
+	Force                                        bool     `ps:"Force"`
 	From                                         []string `ps:"From"`
 	FromAddressContainsWords                     []string `ps:"FromAddressContainsWords"`
 	FromAddressMatchesPatterns                   []string `ps:"FromAddressMatchesPatterns"`
@@ -19354,6 +19367,9 @@ func (p NewTransportRuleParams) params() map[string]any {
 	}
 	if p.ExpiryDate != nil {
 		m["ExpiryDate"] = p.ExpiryDate
+	}
+	if p.Force {
+		m["Force"] = true
 	}
 	if len(p.From) > 0 {
 		m["From"] = p.From
@@ -27589,6 +27605,7 @@ type SetMailboxParams struct {
 	BypassModerationFromSendersOrMembers      any      `ps:"BypassModerationFromSendersOrMembers"`
 	CalendarRepairDisabled                    bool     `ps:"CalendarRepairDisabled"`
 	CalendarVersionStoreDisabled              bool     `ps:"CalendarVersionStoreDisabled"`
+	ClearDisabledPrimary                      bool     `ps:"ClearDisabledPrimary"`
 	ClearThrottlingPolicyAssignment           bool     `ps:"ClearThrottlingPolicyAssignment"`
 	CustomAttribute1                          string   `ps:"CustomAttribute1"`
 	CustomAttribute10                         string   `ps:"CustomAttribute10"`
@@ -27663,6 +27680,7 @@ type SetMailboxParams struct {
 	ProvideConsent                            bool     `ps:"ProvideConsent"`
 	ProvisionedForOfficeGraph                 bool     `ps:"ProvisionedForOfficeGraph"`
 	PublicFolder                              bool     `ps:"PublicFolder"`
+	RapidRestrict                             bool     `ps:"RapidRestrict"`
 	RecalculateInactiveMailbox                bool     `ps:"RecalculateInactiveMailbox"`
 	RecipientLimits                           any      `ps:"RecipientLimits"`
 	RejectMessagesFrom                        any      `ps:"RejectMessagesFrom"`
@@ -27693,6 +27711,7 @@ type SetMailboxParams struct {
 	StartDateForRetentionHold                 any      `ps:"StartDateForRetentionHold"`
 	StsRefreshTokensValidFrom                 any      `ps:"StsRefreshTokensValidFrom"`
 	Type                                      any      `ps:"Type"`
+	UndoRapidRestrict                         bool     `ps:"UndoRapidRestrict"`
 	UniqueRecipientsCountLimitLevel           any      `ps:"UniqueRecipientsCountLimitLevel"`
 	UniqueUnrestrictedGroupsLimitEnabled      bool     `ps:"UniqueUnrestrictedGroupsLimitEnabled"`
 	UpdateEnforcedTimestamp                   bool     `ps:"UpdateEnforcedTimestamp"`
@@ -27755,6 +27774,9 @@ func (p SetMailboxParams) params() map[string]any {
 	}
 	if p.CalendarVersionStoreDisabled {
 		m["CalendarVersionStoreDisabled"] = true
+	}
+	if p.ClearDisabledPrimary {
+		m["ClearDisabledPrimary"] = true
 	}
 	if p.ClearThrottlingPolicyAssignment {
 		m["ClearThrottlingPolicyAssignment"] = true
@@ -27978,6 +28000,9 @@ func (p SetMailboxParams) params() map[string]any {
 	if p.PublicFolder {
 		m["PublicFolder"] = true
 	}
+	if p.RapidRestrict {
+		m["RapidRestrict"] = true
+	}
 	if p.RecalculateInactiveMailbox {
 		m["RecalculateInactiveMailbox"] = true
 	}
@@ -28067,6 +28092,9 @@ func (p SetMailboxParams) params() map[string]any {
 	}
 	if p.Type != nil {
 		m["Type"] = p.Type
+	}
+	if p.UndoRapidRestrict {
+		m["UndoRapidRestrict"] = true
 	}
 	if p.UniqueRecipientsCountLimitLevel != nil {
 		m["UniqueRecipientsCountLimitLevel"] = p.UniqueRecipientsCountLimitLevel
@@ -33855,6 +33883,7 @@ type SetTransportRuleParams struct {
 	ExceptIfSubjectOrBodyMatchesPatterns         []string `ps:"ExceptIfSubjectOrBodyMatchesPatterns"`
 	ExceptIfWithImportance                       any      `ps:"ExceptIfWithImportance"`
 	ExpiryDate                                   any      `ps:"ExpiryDate"`
+	Force                                        bool     `ps:"Force"`
 	From                                         []string `ps:"From"`
 	FromAddressContainsWords                     []string `ps:"FromAddressContainsWords"`
 	FromAddressMatchesPatterns                   []string `ps:"FromAddressMatchesPatterns"`
@@ -34232,6 +34261,9 @@ func (p SetTransportRuleParams) params() map[string]any {
 	}
 	if p.ExpiryDate != nil {
 		m["ExpiryDate"] = p.ExpiryDate
+	}
+	if p.Force {
+		m["Force"] = true
 	}
 	if len(p.From) > 0 {
 		m["From"] = p.From
@@ -35625,6 +35657,7 @@ func (s *Service) TestMAPIConnectivity(ctx context.Context, p TestMAPIConnectivi
 type TestMailboxAssistantParams struct {
 	AssistantName      string `ps:"AssistantName"`
 	DomainController   any    `ps:"DomainController"`
+	FilterGroupIndex   int    `ps:"FilterGroupIndex"`
 	IncludeWlmStatus   bool   `ps:"IncludeWlmStatus"`
 	Process            string `ps:"Process"` // one of: MSExchangeMailboxAssistants, MSExchangeMailboxAssistantsOrchestrator
 	SoftDeletedMailbox bool   `ps:"SoftDeletedMailbox"`
@@ -35637,6 +35670,9 @@ func (p TestMailboxAssistantParams) params() map[string]any {
 	}
 	if p.DomainController != nil {
 		m["DomainController"] = p.DomainController
+	}
+	if p.FilterGroupIndex != 0 {
+		m["FilterGroupIndex"] = p.FilterGroupIndex
 	}
 	if p.IncludeWlmStatus {
 		m["IncludeWlmStatus"] = true
