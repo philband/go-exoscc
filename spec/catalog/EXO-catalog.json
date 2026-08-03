@@ -2904,6 +2904,22 @@
       "defaultParameterSet": null,
       "parameters": [
         {
+          "name": "Force",
+          "type": "switch",
+          "isSwitch": true,
+          "parameterSets": [
+            {
+              "name": "__AllParameterSets",
+              "mandatory": false,
+              "position": null,
+              "valueFromPipeline": false,
+              "valueFromPipelineByPropertyName": false
+            }
+          ],
+          "validateSet": [],
+          "aliases": []
+        },
+        {
           "name": "Identity",
           "type": "System.Object",
           "isSwitch": false,
@@ -27271,7 +27287,7 @@
       "cmdlet": "Invoke-ChangeMeetingOrganizer",
       "verb": "Invoke",
       "noun": "ChangeMeetingOrganizer",
-      "defaultParameterSet": "ByEventId",
+      "defaultParameterSet": "ByMeetingId",
       "parameters": [
         {
           "name": "EventId",
@@ -27295,6 +27311,13 @@
           "isSwitch": false,
           "parameterSets": [
             {
+              "name": "ByMeetingId",
+              "mandatory": true,
+              "position": 0,
+              "valueFromPipeline": true,
+              "valueFromPipelineByPropertyName": true
+            },
+            {
               "name": "ByEventId",
               "mandatory": true,
               "position": 0,
@@ -27314,9 +27337,16 @@
         },
         {
           "name": "NewOrganizer",
-          "type": "string",
+          "type": "System.Object",
           "isSwitch": false,
           "parameterSets": [
+            {
+              "name": "ByMeetingId",
+              "mandatory": true,
+              "position": 2,
+              "valueFromPipeline": false,
+              "valueFromPipelineByPropertyName": false
+            },
             {
               "name": "ByEventId",
               "mandatory": true,
@@ -27356,6 +27386,13 @@
           "type": "System.Object",
           "isSwitch": false,
           "parameterSets": [
+            {
+              "name": "ByMeetingId",
+              "mandatory": false,
+              "position": null,
+              "valueFromPipeline": false,
+              "valueFromPipelineByPropertyName": false
+            },
             {
               "name": "ByEventId",
               "mandatory": false,
@@ -42476,6 +42513,22 @@
           "aliases": []
         },
         {
+          "name": "TenantScan",
+          "type": "switch",
+          "isSwitch": true,
+          "parameterSets": [
+            {
+              "name": "SlackPublicDataConnectorTenantScan",
+              "mandatory": true,
+              "position": null,
+              "valueFromPipeline": false,
+              "valueFromPipelineByPropertyName": false
+            }
+          ],
+          "validateSet": [],
+          "aliases": []
+        },
+        {
           "name": "TimeZone",
           "type": "System.Object",
           "isSwitch": false,
@@ -43414,6 +43467,22 @@
             {
               "name": "MrsProxyPublicFolderToUnifiedGroup",
               "mandatory": false,
+              "position": null,
+              "valueFromPipeline": false,
+              "valueFromPipelineByPropertyName": false
+            }
+          ],
+          "validateSet": [],
+          "aliases": []
+        },
+        {
+          "name": "UseOAuth",
+          "type": "switch",
+          "isSwitch": true,
+          "parameterSets": [
+            {
+              "name": "ExchangeRemoteMoveOAuth",
+              "mandatory": true,
               "position": null,
               "valueFromPipeline": false,
               "valueFromPipelineByPropertyName": false
@@ -54067,6 +54136,22 @@
           "name": "ExpiryDate",
           "type": "System.Object",
           "isSwitch": false,
+          "parameterSets": [
+            {
+              "name": "__AllParameterSets",
+              "mandatory": false,
+              "position": null,
+              "valueFromPipeline": false,
+              "valueFromPipelineByPropertyName": false
+            }
+          ],
+          "validateSet": [],
+          "aliases": []
+        },
+        {
+          "name": "Force",
+          "type": "switch",
+          "isSwitch": true,
           "parameterSets": [
             {
               "name": "__AllParameterSets",
@@ -75563,6 +75648,22 @@
           "aliases": []
         },
         {
+          "name": "ClearDisabledPrimary",
+          "type": "switch",
+          "isSwitch": true,
+          "parameterSets": [
+            {
+              "name": "__AllParameterSets",
+              "mandatory": false,
+              "position": null,
+              "valueFromPipeline": false,
+              "valueFromPipelineByPropertyName": false
+            }
+          ],
+          "validateSet": [],
+          "aliases": []
+        },
+        {
           "name": "ClearThrottlingPolicyAssignment",
           "type": "switch",
           "isSwitch": true,
@@ -76887,6 +76988,22 @@
           "aliases": []
         },
         {
+          "name": "RapidRestrict",
+          "type": "switch",
+          "isSwitch": true,
+          "parameterSets": [
+            {
+              "name": "__AllParameterSets",
+              "mandatory": false,
+              "position": null,
+              "valueFromPipeline": false,
+              "valueFromPipelineByPropertyName": false
+            }
+          ],
+          "validateSet": [],
+          "aliases": []
+        },
+        {
           "name": "RecalculateInactiveMailbox",
           "type": "switch",
           "isSwitch": true,
@@ -77354,6 +77471,22 @@
           "name": "Type",
           "type": "System.Object",
           "isSwitch": false,
+          "parameterSets": [
+            {
+              "name": "__AllParameterSets",
+              "mandatory": false,
+              "position": null,
+              "valueFromPipeline": false,
+              "valueFromPipelineByPropertyName": false
+            }
+          ],
+          "validateSet": [],
+          "aliases": []
+        },
+        {
+          "name": "UndoRapidRestrict",
+          "type": "switch",
+          "isSwitch": true,
           "parameterSets": [
             {
               "name": "__AllParameterSets",
@@ -101211,6 +101344,22 @@
           "aliases": []
         },
         {
+          "name": "Force",
+          "type": "switch",
+          "isSwitch": true,
+          "parameterSets": [
+            {
+              "name": "__AllParameterSets",
+              "mandatory": false,
+              "position": null,
+              "valueFromPipeline": false,
+              "valueFromPipelineByPropertyName": false
+            }
+          ],
+          "validateSet": [],
+          "aliases": []
+        },
+        {
           "name": "From",
           "type": "System.Object[]",
           "isSwitch": false,
@@ -105663,6 +105812,22 @@
         {
           "name": "DomainController",
           "type": "System.Object",
+          "isSwitch": false,
+          "parameterSets": [
+            {
+              "name": "__AllParameterSets",
+              "mandatory": false,
+              "position": null,
+              "valueFromPipeline": false,
+              "valueFromPipelineByPropertyName": false
+            }
+          ],
+          "validateSet": [],
+          "aliases": []
+        },
+        {
+          "name": "FilterGroupIndex",
+          "type": "int",
           "isSwitch": false,
           "parameterSets": [
             {
