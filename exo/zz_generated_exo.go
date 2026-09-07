@@ -2260,6 +2260,7 @@ type GetAdaptiveScopeMembersParams struct {
 	PageResultSize        any    `ps:"PageResultSize"`
 	StartDateTime         any    `ps:"StartDateTime"`
 	State                 any    `ps:"State"`
+	UseAltSource          bool   `ps:"UseAltSource"`
 }
 
 func (p GetAdaptiveScopeMembersParams) params() map[string]any {
@@ -2287,6 +2288,9 @@ func (p GetAdaptiveScopeMembersParams) params() map[string]any {
 	}
 	if p.State != nil {
 		m["State"] = p.State
+	}
+	if p.UseAltSource {
+		m["UseAltSource"] = true
 	}
 	return m
 }
@@ -2526,41 +2530,6 @@ func (p GetAuditConfigParams) params() map[string]any {
 // GetAuditConfig runs the Get-AuditConfig cmdlet.
 func (s *Service) GetAuditConfig(ctx context.Context, p GetAuditConfigParams) (*adminapi.Result, error) {
 	return s.C.Invoke(ctx, "Get-AuditConfig", p.params())
-}
-
-// GetAuditLogSearchParams are the parameters of Get-AuditLogSearch.
-// DefaultParameterSetName: Identity
-type GetAuditLogSearchParams struct {
-	CreatedAfter  any    `ps:"CreatedAfter"`
-	CreatedBefore any    `ps:"CreatedBefore"`
-	Identity      any    `ps:"Identity"`
-	ResultSize    int    `ps:"ResultSize"`
-	Type          string `ps:"Type"`
-}
-
-func (p GetAuditLogSearchParams) params() map[string]any {
-	m := map[string]any{}
-	if p.CreatedAfter != nil {
-		m["CreatedAfter"] = p.CreatedAfter
-	}
-	if p.CreatedBefore != nil {
-		m["CreatedBefore"] = p.CreatedBefore
-	}
-	if p.Identity != nil {
-		m["Identity"] = p.Identity
-	}
-	if p.ResultSize != 0 {
-		m["ResultSize"] = p.ResultSize
-	}
-	if p.Type != "" {
-		m["Type"] = p.Type
-	}
-	return m
-}
-
-// GetAuditLogSearch runs the Get-AuditLogSearch cmdlet.
-func (s *Service) GetAuditLogSearch(ctx context.Context, p GetAuditLogSearchParams) (*adminapi.Result, error) {
-	return s.C.Invoke(ctx, "Get-AuditLogSearch", p.params())
 }
 
 // GetAuthServerParams are the parameters of Get-AuthServer.
@@ -3543,6 +3512,20 @@ func (p GetCrossTenantAccessPolicyParams) params() map[string]any {
 // GetCrossTenantAccessPolicy runs the Get-CrossTenantAccessPolicy cmdlet.
 func (s *Service) GetCrossTenantAccessPolicy(ctx context.Context, p GetCrossTenantAccessPolicyParams) (*adminapi.Result, error) {
 	return s.C.Invoke(ctx, "Get-CrossTenantAccessPolicy", p.params())
+}
+
+// GetCrossTenantRecallConfigurationParams are the parameters of Get-CrossTenantRecallConfiguration.
+type GetCrossTenantRecallConfigurationParams struct {
+}
+
+func (p GetCrossTenantRecallConfigurationParams) params() map[string]any {
+	m := map[string]any{}
+	return m
+}
+
+// GetCrossTenantRecallConfiguration runs the Get-CrossTenantRecallConfiguration cmdlet.
+func (s *Service) GetCrossTenantRecallConfiguration(ctx context.Context, p GetCrossTenantRecallConfigurationParams) (*adminapi.Result, error) {
+	return s.C.Invoke(ctx, "Get-CrossTenantRecallConfiguration", p.params())
 }
 
 // GetCustomDlpEmailTemplatesParams are the parameters of Get-CustomDlpEmailTemplates.
@@ -11657,9 +11640,10 @@ func (s *Service) GetUnifiedGroup(ctx context.Context, p GetUnifiedGroupParams) 
 // GetUnifiedGroupLinksParams are the parameters of Get-UnifiedGroupLinks.
 // DefaultParameterSetName: Identity
 type GetUnifiedGroupLinksParams struct {
-	Identity   any `ps:"Identity"`
-	LinkType   any `ps:"LinkType"`
-	ResultSize any `ps:"ResultSize"`
+	Identity     any    `ps:"Identity"`
+	LinkType     any    `ps:"LinkType"`
+	ResultSize   any    `ps:"ResultSize"`
+	SearchString string `ps:"SearchString"`
 }
 
 func (p GetUnifiedGroupLinksParams) params() map[string]any {
@@ -11672,6 +11656,9 @@ func (p GetUnifiedGroupLinksParams) params() map[string]any {
 	}
 	if p.ResultSize != nil {
 		m["ResultSize"] = p.ResultSize
+	}
+	if p.SearchString != "" {
+		m["SearchString"] = p.SearchString
 	}
 	return m
 }
@@ -11814,11 +11801,12 @@ func (s *Service) InvokeBirthdayCalendarSync(ctx context.Context, p InvokeBirthd
 }
 
 // InvokeChangeMeetingOrganizerParams are the parameters of Invoke-ChangeMeetingOrganizer.
-// DefaultParameterSetName: ByEventId
+// DefaultParameterSetName: ByMeetingId
 type InvokeChangeMeetingOrganizerParams struct {
 	EventId                 string `ps:"EventId"`
 	Identity                any    `ps:"Identity"`
-	NewOrganizer            string `ps:"NewOrganizer"`
+	MeetingId               string `ps:"MeetingId"`
+	NewOrganizer            any    `ps:"NewOrganizer"`
 	Subject                 string `ps:"Subject"`
 	TransferSeriesStartDate any    `ps:"TransferSeriesStartDate"`
 }
@@ -11831,7 +11819,10 @@ func (p InvokeChangeMeetingOrganizerParams) params() map[string]any {
 	if p.Identity != nil {
 		m["Identity"] = p.Identity
 	}
-	if p.NewOrganizer != "" {
+	if p.MeetingId != "" {
+		m["MeetingId"] = p.MeetingId
+	}
+	if p.NewOrganizer != nil {
 		m["NewOrganizer"] = p.NewOrganizer
 	}
 	if p.Subject != "" {
@@ -14217,6 +14208,7 @@ type NewInboxRuleParams struct {
 	ApplyCategory                         any      `ps:"ApplyCategory"`
 	ApplySystemCategory                   any      `ps:"ApplySystemCategory"`
 	AssignedCategories                    any      `ps:"AssignedCategories"`
+	AutoReplyWithTemplate                 any      `ps:"AutoReplyWithTemplate"`
 	BodyContainsWords                     any      `ps:"BodyContainsWords"`
 	BulkCategory                          string   `ps:"BulkCategory"`
 	ClearCategories                       bool     `ps:"ClearCategories"`
@@ -14314,6 +14306,9 @@ func (p NewInboxRuleParams) params() map[string]any {
 	}
 	if p.AssignedCategories != nil {
 		m["AssignedCategories"] = p.AssignedCategories
+	}
+	if p.AutoReplyWithTemplate != nil {
+		m["AutoReplyWithTemplate"] = p.AutoReplyWithTemplate
 	}
 	if p.BodyContainsWords != nil {
 		m["BodyContainsWords"] = p.BodyContainsWords
@@ -15045,65 +15040,6 @@ func (s *Service) NewMailbox(ctx context.Context, p NewMailboxParams) (*adminapi
 	return s.C.Invoke(ctx, "New-Mailbox", p.params())
 }
 
-// NewMailboxAuditLogSearchParams are the parameters of New-MailboxAuditLogSearch.
-// DefaultParameterSetName: Identity
-type NewMailboxAuditLogSearchParams struct {
-	EndDate              any    `ps:"EndDate"`
-	ExternalAccess       any    `ps:"ExternalAccess"`
-	GroupMailbox         bool   `ps:"GroupMailbox"`
-	HasAttachments       any    `ps:"HasAttachments"`
-	LogonTypes           any    `ps:"LogonTypes"`
-	Mailboxes            any    `ps:"Mailboxes"`
-	Name                 string `ps:"Name"`
-	Operations           any    `ps:"Operations"`
-	ShowDetails          bool   `ps:"ShowDetails"`
-	StartDate            any    `ps:"StartDate"`
-	StatusMailRecipients any    `ps:"StatusMailRecipients"`
-}
-
-func (p NewMailboxAuditLogSearchParams) params() map[string]any {
-	m := map[string]any{}
-	if p.EndDate != nil {
-		m["EndDate"] = p.EndDate
-	}
-	if p.ExternalAccess != nil {
-		m["ExternalAccess"] = p.ExternalAccess
-	}
-	if p.GroupMailbox {
-		m["GroupMailbox"] = true
-	}
-	if p.HasAttachments != nil {
-		m["HasAttachments"] = p.HasAttachments
-	}
-	if p.LogonTypes != nil {
-		m["LogonTypes"] = p.LogonTypes
-	}
-	if p.Mailboxes != nil {
-		m["Mailboxes"] = p.Mailboxes
-	}
-	if p.Name != "" {
-		m["Name"] = p.Name
-	}
-	if p.Operations != nil {
-		m["Operations"] = p.Operations
-	}
-	if p.ShowDetails {
-		m["ShowDetails"] = true
-	}
-	if p.StartDate != nil {
-		m["StartDate"] = p.StartDate
-	}
-	if p.StatusMailRecipients != nil {
-		m["StatusMailRecipients"] = p.StatusMailRecipients
-	}
-	return m
-}
-
-// NewMailboxAuditLogSearch runs the New-MailboxAuditLogSearch cmdlet.
-func (s *Service) NewMailboxAuditLogSearch(ctx context.Context, p NewMailboxAuditLogSearchParams) (*adminapi.Result, error) {
-	return s.C.Invoke(ctx, "New-MailboxAuditLogSearch", p.params())
-}
-
 // NewMailboxExtendedPropertyCleanupRequestParams are the parameters of New-MailboxExtendedPropertyCleanupRequest.
 // DefaultParameterSetName: Identity
 type NewMailboxExtendedPropertyCleanupRequestParams struct {
@@ -15750,6 +15686,7 @@ type NewMigrationBatchParams struct {
 	TargetDatabases            any      `ps:"TargetDatabases"`
 	TargetDeliveryDomain       any      `ps:"TargetDeliveryDomain"`
 	TargetEndpoint             any      `ps:"TargetEndpoint"`
+	TenantScan                 bool     `ps:"TenantScan"`
 	TimeZone                   any      `ps:"TimeZone"`
 	UserIds                    any      `ps:"UserIds"`
 	Users                      any      `ps:"Users"`
@@ -15937,6 +15874,9 @@ func (p NewMigrationBatchParams) params() map[string]any {
 	if p.TargetEndpoint != nil {
 		m["TargetEndpoint"] = p.TargetEndpoint
 	}
+	if p.TenantScan {
+		m["TenantScan"] = true
+	}
 	if p.TimeZone != nil {
 		m["TimeZone"] = p.TimeZone
 	}
@@ -15971,6 +15911,7 @@ type NewMigrationEndpointParams struct {
 	AppSecretKeyVaultUrl               string   `ps:"AppSecretKeyVaultUrl"`
 	Authentication                     any      `ps:"Authentication"`
 	Autodiscover                       bool     `ps:"Autodiscover"`
+	AzureStorageContainerPath          string   `ps:"AzureStorageContainerPath"`
 	Compliance                         bool     `ps:"Compliance"`
 	Credentials                        any      `ps:"Credentials"`
 	EmailAddress                       any      `ps:"EmailAddress"`
@@ -15987,6 +15928,7 @@ type NewMigrationEndpointParams struct {
 	OAuthCode                          any      `ps:"OAuthCode"`
 	Partition                          any      `ps:"Partition"`
 	Port                               int      `ps:"Port"`
+	PSTImport                          bool     `ps:"PSTImport"`
 	PublicFolder                       bool     `ps:"PublicFolder"`
 	PublicFolderDatabaseServerLegacyDN string   `ps:"PublicFolderDatabaseServerLegacyDN"`
 	PublicFolderToUnifiedGroup         bool     `ps:"PublicFolderToUnifiedGroup"`
@@ -15999,6 +15941,7 @@ type NewMigrationEndpointParams struct {
 	SkipVerification                   bool     `ps:"SkipVerification"`
 	SourceMailboxLegacyDN              string   `ps:"SourceMailboxLegacyDN"`
 	TestMailbox                        any      `ps:"TestMailbox"`
+	UseOAuth                           bool     `ps:"UseOAuth"`
 }
 
 func (p NewMigrationEndpointParams) params() map[string]any {
@@ -16017,6 +15960,9 @@ func (p NewMigrationEndpointParams) params() map[string]any {
 	}
 	if p.Autodiscover {
 		m["Autodiscover"] = true
+	}
+	if p.AzureStorageContainerPath != "" {
+		m["AzureStorageContainerPath"] = p.AzureStorageContainerPath
 	}
 	if p.Compliance {
 		m["Compliance"] = true
@@ -16066,6 +16012,9 @@ func (p NewMigrationEndpointParams) params() map[string]any {
 	if p.Port != 0 {
 		m["Port"] = p.Port
 	}
+	if p.PSTImport {
+		m["PSTImport"] = true
+	}
 	if p.PublicFolder {
 		m["PublicFolder"] = true
 	}
@@ -16101,6 +16050,9 @@ func (p NewMigrationEndpointParams) params() map[string]any {
 	}
 	if p.TestMailbox != nil {
 		m["TestMailbox"] = p.TestMailbox
+	}
+	if p.UseOAuth {
+		m["UseOAuth"] = true
 	}
 	return m
 }
@@ -17949,15 +17901,18 @@ func (s *Service) NewRoleGroup(ctx context.Context, p NewRoleGroupParams) (*admi
 
 // NewSafeAttachmentPolicyParams are the parameters of New-SafeAttachmentPolicy.
 type NewSafeAttachmentPolicyParams struct {
-	Action                any    `ps:"Action"`
-	AdminDisplayName      string `ps:"AdminDisplayName"`
-	Enable                bool   `ps:"Enable"`
-	MakeBuiltInProtection bool   `ps:"MakeBuiltInProtection"`
-	Name                  string `ps:"Name"`
-	QuarantineTag         string `ps:"QuarantineTag"`
-	RecommendedPolicyType any    `ps:"RecommendedPolicyType"`
-	Redirect              bool   `ps:"Redirect"`
-	RedirectAddress       any    `ps:"RedirectAddress"`
+	Action                                        any    `ps:"Action"`
+	AdminDisplayName                              string `ps:"AdminDisplayName"`
+	Enable                                        bool   `ps:"Enable"`
+	EnableBlockingEncryptedAttachments            bool   `ps:"EnableBlockingEncryptedAttachments"`
+	ExcludedTypesFromBlockingEncryptedAttachments any    `ps:"ExcludedTypesFromBlockingEncryptedAttachments"`
+	MakeBuiltInProtection                         bool   `ps:"MakeBuiltInProtection"`
+	Name                                          string `ps:"Name"`
+	QuarantineTag                                 string `ps:"QuarantineTag"`
+	QuarantineTagForBlockingEncryptedAttachments  string `ps:"QuarantineTagForBlockingEncryptedAttachments"`
+	RecommendedPolicyType                         any    `ps:"RecommendedPolicyType"`
+	Redirect                                      bool   `ps:"Redirect"`
+	RedirectAddress                               any    `ps:"RedirectAddress"`
 }
 
 func (p NewSafeAttachmentPolicyParams) params() map[string]any {
@@ -17971,6 +17926,12 @@ func (p NewSafeAttachmentPolicyParams) params() map[string]any {
 	if p.Enable {
 		m["Enable"] = true
 	}
+	if p.EnableBlockingEncryptedAttachments {
+		m["EnableBlockingEncryptedAttachments"] = true
+	}
+	if p.ExcludedTypesFromBlockingEncryptedAttachments != nil {
+		m["ExcludedTypesFromBlockingEncryptedAttachments"] = p.ExcludedTypesFromBlockingEncryptedAttachments
+	}
 	if p.MakeBuiltInProtection {
 		m["MakeBuiltInProtection"] = true
 	}
@@ -17979,6 +17940,9 @@ func (p NewSafeAttachmentPolicyParams) params() map[string]any {
 	}
 	if p.QuarantineTag != "" {
 		m["QuarantineTag"] = p.QuarantineTag
+	}
+	if p.QuarantineTagForBlockingEncryptedAttachments != "" {
+		m["QuarantineTagForBlockingEncryptedAttachments"] = p.QuarantineTagForBlockingEncryptedAttachments
 	}
 	if p.RecommendedPolicyType != nil {
 		m["RecommendedPolicyType"] = p.RecommendedPolicyType
@@ -24273,6 +24237,28 @@ func (s *Service) SetContact(ctx context.Context, p SetContactParams) (*adminapi
 	return s.C.Invoke(ctx, "Set-Contact", p.params())
 }
 
+// SetCrossTenantRecallConfigurationParams are the parameters of Set-CrossTenantRecallConfiguration.
+type SetCrossTenantRecallConfigurationParams struct {
+	AllowedSenderTenantIds   any `ps:"AllowedSenderTenantIds"`
+	CrossTenantRecallEnabled any `ps:"CrossTenantRecallEnabled"`
+}
+
+func (p SetCrossTenantRecallConfigurationParams) params() map[string]any {
+	m := map[string]any{}
+	if p.AllowedSenderTenantIds != nil {
+		m["AllowedSenderTenantIds"] = p.AllowedSenderTenantIds
+	}
+	if p.CrossTenantRecallEnabled != nil {
+		m["CrossTenantRecallEnabled"] = p.CrossTenantRecallEnabled
+	}
+	return m
+}
+
+// SetCrossTenantRecallConfiguration runs the Set-CrossTenantRecallConfiguration cmdlet.
+func (s *Service) SetCrossTenantRecallConfiguration(ctx context.Context, p SetCrossTenantRecallConfigurationParams) (*adminapi.Result, error) {
+	return s.C.Invoke(ctx, "Set-CrossTenantRecallConfiguration", p.params())
+}
+
 // SetDataClassificationParams are the parameters of Set-DataClassification.
 type SetDataClassificationParams struct {
 	Description  string `ps:"Description"`
@@ -26187,6 +26173,7 @@ type SetInboxRuleParams struct {
 	ApplyCategory                         any      `ps:"ApplyCategory"`
 	ApplySystemCategory                   any      `ps:"ApplySystemCategory"`
 	AssignedCategories                    any      `ps:"AssignedCategories"`
+	AutoReplyWithTemplate                 any      `ps:"AutoReplyWithTemplate"`
 	BodyContainsWords                     any      `ps:"BodyContainsWords"`
 	BulkCategory                          string   `ps:"BulkCategory"`
 	ClearCategories                       bool     `ps:"ClearCategories"`
@@ -26283,6 +26270,9 @@ func (p SetInboxRuleParams) params() map[string]any {
 	}
 	if p.AssignedCategories != nil {
 		m["AssignedCategories"] = p.AssignedCategories
+	}
+	if p.AutoReplyWithTemplate != nil {
+		m["AutoReplyWithTemplate"] = p.AutoReplyWithTemplate
 	}
 	if p.BodyContainsWords != nil {
 		m["BodyContainsWords"] = p.BodyContainsWords
@@ -27589,6 +27579,7 @@ type SetMailboxParams struct {
 	BypassModerationFromSendersOrMembers      any      `ps:"BypassModerationFromSendersOrMembers"`
 	CalendarRepairDisabled                    bool     `ps:"CalendarRepairDisabled"`
 	CalendarVersionStoreDisabled              bool     `ps:"CalendarVersionStoreDisabled"`
+	ClearDisabledPrimary                      bool     `ps:"ClearDisabledPrimary"`
 	ClearThrottlingPolicyAssignment           bool     `ps:"ClearThrottlingPolicyAssignment"`
 	CustomAttribute1                          string   `ps:"CustomAttribute1"`
 	CustomAttribute10                         string   `ps:"CustomAttribute10"`
@@ -27663,6 +27654,7 @@ type SetMailboxParams struct {
 	ProvideConsent                            bool     `ps:"ProvideConsent"`
 	ProvisionedForOfficeGraph                 bool     `ps:"ProvisionedForOfficeGraph"`
 	PublicFolder                              bool     `ps:"PublicFolder"`
+	RapidRestrict                             bool     `ps:"RapidRestrict"`
 	RecalculateInactiveMailbox                bool     `ps:"RecalculateInactiveMailbox"`
 	RecipientLimits                           any      `ps:"RecipientLimits"`
 	RejectMessagesFrom                        any      `ps:"RejectMessagesFrom"`
@@ -27693,8 +27685,8 @@ type SetMailboxParams struct {
 	StartDateForRetentionHold                 any      `ps:"StartDateForRetentionHold"`
 	StsRefreshTokensValidFrom                 any      `ps:"StsRefreshTokensValidFrom"`
 	Type                                      any      `ps:"Type"`
+	UndoRapidRestrict                         bool     `ps:"UndoRapidRestrict"`
 	UniqueRecipientsCountLimitLevel           any      `ps:"UniqueRecipientsCountLimitLevel"`
-	UniqueUnrestrictedGroupsLimitEnabled      bool     `ps:"UniqueUnrestrictedGroupsLimitEnabled"`
 	UpdateEnforcedTimestamp                   bool     `ps:"UpdateEnforcedTimestamp"`
 	UseDatabaseQuotaDefaults                  any      `ps:"UseDatabaseQuotaDefaults"`
 	UseDatabaseRetentionDefaults              bool     `ps:"UseDatabaseRetentionDefaults"`
@@ -27755,6 +27747,9 @@ func (p SetMailboxParams) params() map[string]any {
 	}
 	if p.CalendarVersionStoreDisabled {
 		m["CalendarVersionStoreDisabled"] = true
+	}
+	if p.ClearDisabledPrimary {
+		m["ClearDisabledPrimary"] = true
 	}
 	if p.ClearThrottlingPolicyAssignment {
 		m["ClearThrottlingPolicyAssignment"] = true
@@ -27978,6 +27973,9 @@ func (p SetMailboxParams) params() map[string]any {
 	if p.PublicFolder {
 		m["PublicFolder"] = true
 	}
+	if p.RapidRestrict {
+		m["RapidRestrict"] = true
+	}
 	if p.RecalculateInactiveMailbox {
 		m["RecalculateInactiveMailbox"] = true
 	}
@@ -28068,11 +28066,11 @@ func (p SetMailboxParams) params() map[string]any {
 	if p.Type != nil {
 		m["Type"] = p.Type
 	}
+	if p.UndoRapidRestrict {
+		m["UndoRapidRestrict"] = true
+	}
 	if p.UniqueRecipientsCountLimitLevel != nil {
 		m["UniqueRecipientsCountLimitLevel"] = p.UniqueRecipientsCountLimitLevel
-	}
-	if p.UniqueUnrestrictedGroupsLimitEnabled {
-		m["UniqueUnrestrictedGroupsLimitEnabled"] = true
 	}
 	if p.UpdateEnforcedTimestamp {
 		m["UpdateEnforcedTimestamp"] = true
@@ -29621,6 +29619,7 @@ type SetMigrationEndpointParams struct {
 	ApplicationId                      string   `ps:"ApplicationId"`
 	AppSecretKeyVaultUrl               string   `ps:"AppSecretKeyVaultUrl"`
 	Authentication                     any      `ps:"Authentication"`
+	AzureStorageContainerPath          string   `ps:"AzureStorageContainerPath"`
 	Credentials                        any      `ps:"Credentials"`
 	ExchangeServer                     string   `ps:"ExchangeServer"`
 	Identity                           any      `ps:"Identity"`
@@ -29653,6 +29652,9 @@ func (p SetMigrationEndpointParams) params() map[string]any {
 	}
 	if p.Authentication != nil {
 		m["Authentication"] = p.Authentication
+	}
+	if p.AzureStorageContainerPath != "" {
+		m["AzureStorageContainerPath"] = p.AzureStorageContainerPath
 	}
 	if p.Credentials != nil {
 		m["Credentials"] = p.Credentials
@@ -32888,13 +32890,16 @@ func (s *Service) SetRoleGroup(ctx context.Context, p SetRoleGroupParams) (*admi
 // SetSafeAttachmentPolicyParams are the parameters of Set-SafeAttachmentPolicy.
 // DefaultParameterSetName: Identity
 type SetSafeAttachmentPolicyParams struct {
-	Action           any    `ps:"Action"`
-	AdminDisplayName string `ps:"AdminDisplayName"`
-	Enable           bool   `ps:"Enable"`
-	Identity         any    `ps:"Identity"`
-	QuarantineTag    string `ps:"QuarantineTag"`
-	Redirect         bool   `ps:"Redirect"`
-	RedirectAddress  any    `ps:"RedirectAddress"`
+	Action                                        any    `ps:"Action"`
+	AdminDisplayName                              string `ps:"AdminDisplayName"`
+	Enable                                        bool   `ps:"Enable"`
+	EnableBlockingEncryptedAttachments            bool   `ps:"EnableBlockingEncryptedAttachments"`
+	ExcludedTypesFromBlockingEncryptedAttachments any    `ps:"ExcludedTypesFromBlockingEncryptedAttachments"`
+	Identity                                      any    `ps:"Identity"`
+	QuarantineTag                                 string `ps:"QuarantineTag"`
+	QuarantineTagForBlockingEncryptedAttachments  string `ps:"QuarantineTagForBlockingEncryptedAttachments"`
+	Redirect                                      bool   `ps:"Redirect"`
+	RedirectAddress                               any    `ps:"RedirectAddress"`
 }
 
 func (p SetSafeAttachmentPolicyParams) params() map[string]any {
@@ -32908,11 +32913,20 @@ func (p SetSafeAttachmentPolicyParams) params() map[string]any {
 	if p.Enable {
 		m["Enable"] = true
 	}
+	if p.EnableBlockingEncryptedAttachments {
+		m["EnableBlockingEncryptedAttachments"] = true
+	}
+	if p.ExcludedTypesFromBlockingEncryptedAttachments != nil {
+		m["ExcludedTypesFromBlockingEncryptedAttachments"] = p.ExcludedTypesFromBlockingEncryptedAttachments
+	}
 	if p.Identity != nil {
 		m["Identity"] = p.Identity
 	}
 	if p.QuarantineTag != "" {
 		m["QuarantineTag"] = p.QuarantineTag
+	}
+	if p.QuarantineTagForBlockingEncryptedAttachments != "" {
+		m["QuarantineTagForBlockingEncryptedAttachments"] = p.QuarantineTagForBlockingEncryptedAttachments
 	}
 	if p.Redirect {
 		m["Redirect"] = true
@@ -35625,6 +35639,7 @@ func (s *Service) TestMAPIConnectivity(ctx context.Context, p TestMAPIConnectivi
 type TestMailboxAssistantParams struct {
 	AssistantName      string `ps:"AssistantName"`
 	DomainController   any    `ps:"DomainController"`
+	FilterGroupIndex   int    `ps:"FilterGroupIndex"`
 	IncludeWlmStatus   bool   `ps:"IncludeWlmStatus"`
 	Process            string `ps:"Process"` // one of: MSExchangeMailboxAssistants, MSExchangeMailboxAssistantsOrchestrator
 	SoftDeletedMailbox bool   `ps:"SoftDeletedMailbox"`
@@ -35637,6 +35652,9 @@ func (p TestMailboxAssistantParams) params() map[string]any {
 	}
 	if p.DomainController != nil {
 		m["DomainController"] = p.DomainController
+	}
+	if p.FilterGroupIndex != 0 {
+		m["FilterGroupIndex"] = p.FilterGroupIndex
 	}
 	if p.IncludeWlmStatus {
 		m["IncludeWlmStatus"] = true
@@ -35713,9 +35731,11 @@ type TestMigrationServerAvailabilityParams struct {
 	FilePath                           string   `ps:"FilePath"`
 	Gmail                              bool     `ps:"Gmail"`
 	Imap                               bool     `ps:"Imap"`
+	M365RcaTest                        bool     `ps:"M365RcaTest"`
 	MailboxPermission                  any      `ps:"MailboxPermission"`
 	Partition                          any      `ps:"Partition"`
 	Port                               int      `ps:"Port"`
+	PSTImport                          bool     `ps:"PSTImport"`
 	PublicFolder                       bool     `ps:"PublicFolder"`
 	PublicFolderDatabaseServerLegacyDN string   `ps:"PublicFolderDatabaseServerLegacyDN"`
 	PublicFolderToUnifiedGroup         bool     `ps:"PublicFolderToUnifiedGroup"`
@@ -35725,6 +35745,7 @@ type TestMigrationServerAvailabilityParams struct {
 	ServiceAccountKeyFileData          []string `ps:"ServiceAccountKeyFileData"`
 	SourceMailboxLegacyDN              string   `ps:"SourceMailboxLegacyDN"`
 	TestMailbox                        any      `ps:"TestMailbox"`
+	TokenStore                         string   `ps:"TokenStore"`
 }
 
 func (p TestMigrationServerAvailabilityParams) params() map[string]any {
@@ -35768,6 +35789,9 @@ func (p TestMigrationServerAvailabilityParams) params() map[string]any {
 	if p.Imap {
 		m["Imap"] = true
 	}
+	if p.M365RcaTest {
+		m["M365RcaTest"] = true
+	}
 	if p.MailboxPermission != nil {
 		m["MailboxPermission"] = p.MailboxPermission
 	}
@@ -35776,6 +35800,9 @@ func (p TestMigrationServerAvailabilityParams) params() map[string]any {
 	}
 	if p.Port != 0 {
 		m["Port"] = p.Port
+	}
+	if p.PSTImport {
+		m["PSTImport"] = true
 	}
 	if p.PublicFolder {
 		m["PublicFolder"] = true
@@ -35803,6 +35830,9 @@ func (p TestMigrationServerAvailabilityParams) params() map[string]any {
 	}
 	if p.TestMailbox != nil {
 		m["TestMailbox"] = p.TestMailbox
+	}
+	if p.TokenStore != "" {
+		m["TokenStore"] = p.TokenStore
 	}
 	return m
 }

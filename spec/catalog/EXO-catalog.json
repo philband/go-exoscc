@@ -4287,6 +4287,22 @@
           ],
           "validateSet": [],
           "aliases": []
+        },
+        {
+          "name": "UseAltSource",
+          "type": "switch",
+          "isSwitch": true,
+          "parameterSets": [
+            {
+              "name": "__AllParameterSets",
+              "mandatory": false,
+              "position": null,
+              "valueFromPipeline": false,
+              "valueFromPipelineByPropertyName": false
+            }
+          ],
+          "validateSet": [],
+          "aliases": []
         }
       ]
     },
@@ -4950,94 +4966,6 @@
       "noun": "AuditConfig",
       "defaultParameterSet": null,
       "parameters": []
-    },
-    {
-      "cmdlet": "Get-AuditLogSearch",
-      "verb": "Get",
-      "noun": "AuditLogSearch",
-      "defaultParameterSet": "Identity",
-      "parameters": [
-        {
-          "name": "CreatedAfter",
-          "type": "System.Object",
-          "isSwitch": false,
-          "parameterSets": [
-            {
-              "name": "Identity",
-              "mandatory": false,
-              "position": null,
-              "valueFromPipeline": false,
-              "valueFromPipelineByPropertyName": false
-            }
-          ],
-          "validateSet": [],
-          "aliases": []
-        },
-        {
-          "name": "CreatedBefore",
-          "type": "System.Object",
-          "isSwitch": false,
-          "parameterSets": [
-            {
-              "name": "Identity",
-              "mandatory": false,
-              "position": null,
-              "valueFromPipeline": false,
-              "valueFromPipelineByPropertyName": false
-            }
-          ],
-          "validateSet": [],
-          "aliases": []
-        },
-        {
-          "name": "Identity",
-          "type": "System.Object",
-          "isSwitch": false,
-          "parameterSets": [
-            {
-              "name": "Identity",
-              "mandatory": false,
-              "position": 0,
-              "valueFromPipeline": true,
-              "valueFromPipelineByPropertyName": true
-            }
-          ],
-          "validateSet": [],
-          "aliases": []
-        },
-        {
-          "name": "ResultSize",
-          "type": "int",
-          "isSwitch": false,
-          "parameterSets": [
-            {
-              "name": "Identity",
-              "mandatory": false,
-              "position": null,
-              "valueFromPipeline": false,
-              "valueFromPipelineByPropertyName": false
-            }
-          ],
-          "validateSet": [],
-          "aliases": []
-        },
-        {
-          "name": "Type",
-          "type": "string",
-          "isSwitch": false,
-          "parameterSets": [
-            {
-              "name": "Identity",
-              "mandatory": false,
-              "position": null,
-              "valueFromPipeline": false,
-              "valueFromPipelineByPropertyName": false
-            }
-          ],
-          "validateSet": [],
-          "aliases": []
-        }
-      ]
     },
     {
       "cmdlet": "Get-AuthenticationPolicy",
@@ -7321,6 +7249,13 @@
           "aliases": []
         }
       ]
+    },
+    {
+      "cmdlet": "Get-CrossTenantRecallConfiguration",
+      "verb": "Get",
+      "noun": "CrossTenantRecallConfiguration",
+      "defaultParameterSet": null,
+      "parameters": []
     },
     {
       "cmdlet": "Get-CustomDlpEmailTemplates",
@@ -26944,6 +26879,22 @@
           ],
           "validateSet": [],
           "aliases": []
+        },
+        {
+          "name": "SearchString",
+          "type": "string",
+          "isSwitch": false,
+          "parameterSets": [
+            {
+              "name": "__AllParameterSets",
+              "mandatory": false,
+              "position": null,
+              "valueFromPipeline": false,
+              "valueFromPipelineByPropertyName": false
+            }
+          ],
+          "validateSet": [],
+          "aliases": []
         }
       ]
     },
@@ -27271,7 +27222,7 @@
       "cmdlet": "Invoke-ChangeMeetingOrganizer",
       "verb": "Invoke",
       "noun": "ChangeMeetingOrganizer",
-      "defaultParameterSet": "ByEventId",
+      "defaultParameterSet": "ByMeetingId",
       "parameters": [
         {
           "name": "EventId",
@@ -27295,6 +27246,13 @@
           "isSwitch": false,
           "parameterSets": [
             {
+              "name": "ByMeetingId",
+              "mandatory": true,
+              "position": 0,
+              "valueFromPipeline": true,
+              "valueFromPipelineByPropertyName": true
+            },
+            {
               "name": "ByEventId",
               "mandatory": true,
               "position": 0,
@@ -27313,10 +27271,33 @@
           "aliases": []
         },
         {
-          "name": "NewOrganizer",
+          "name": "MeetingId",
           "type": "string",
           "isSwitch": false,
           "parameterSets": [
+            {
+              "name": "ByMeetingId",
+              "mandatory": true,
+              "position": 1,
+              "valueFromPipeline": false,
+              "valueFromPipelineByPropertyName": false
+            }
+          ],
+          "validateSet": [],
+          "aliases": []
+        },
+        {
+          "name": "NewOrganizer",
+          "type": "System.Object",
+          "isSwitch": false,
+          "parameterSets": [
+            {
+              "name": "ByMeetingId",
+              "mandatory": true,
+              "position": 2,
+              "valueFromPipeline": false,
+              "valueFromPipelineByPropertyName": false
+            },
             {
               "name": "ByEventId",
               "mandatory": true,
@@ -27356,6 +27337,13 @@
           "type": "System.Object",
           "isSwitch": false,
           "parameterSets": [
+            {
+              "name": "ByMeetingId",
+              "mandatory": false,
+              "position": null,
+              "valueFromPipeline": false,
+              "valueFromPipelineByPropertyName": false
+            },
             {
               "name": "ByEventId",
               "mandatory": false,
@@ -35197,6 +35185,22 @@
           "aliases": []
         },
         {
+          "name": "AutoReplyWithTemplate",
+          "type": "System.Object",
+          "isSwitch": false,
+          "parameterSets": [
+            {
+              "name": "Identity",
+              "mandatory": false,
+              "position": null,
+              "valueFromPipeline": false,
+              "valueFromPipelineByPropertyName": false
+            }
+          ],
+          "validateSet": [],
+          "aliases": []
+        },
+        {
           "name": "BodyContainsWords",
           "type": "System.Object",
           "isSwitch": false,
@@ -38071,190 +38075,6 @@
             {
               "name": "__AllParameterSets",
               "mandatory": false,
-              "position": null,
-              "valueFromPipeline": false,
-              "valueFromPipelineByPropertyName": false
-            }
-          ],
-          "validateSet": [],
-          "aliases": []
-        }
-      ]
-    },
-    {
-      "cmdlet": "New-MailboxAuditLogSearch",
-      "verb": "New",
-      "noun": "MailboxAuditLogSearch",
-      "defaultParameterSet": "Identity",
-      "parameters": [
-        {
-          "name": "EndDate",
-          "type": "System.Object",
-          "isSwitch": false,
-          "parameterSets": [
-            {
-              "name": "__AllParameterSets",
-              "mandatory": true,
-              "position": null,
-              "valueFromPipeline": false,
-              "valueFromPipelineByPropertyName": false
-            }
-          ],
-          "validateSet": [],
-          "aliases": []
-        },
-        {
-          "name": "ExternalAccess",
-          "type": "System.Object",
-          "isSwitch": false,
-          "parameterSets": [
-            {
-              "name": "__AllParameterSets",
-              "mandatory": false,
-              "position": null,
-              "valueFromPipeline": false,
-              "valueFromPipelineByPropertyName": false
-            }
-          ],
-          "validateSet": [],
-          "aliases": []
-        },
-        {
-          "name": "GroupMailbox",
-          "type": "switch",
-          "isSwitch": true,
-          "parameterSets": [
-            {
-              "name": "__AllParameterSets",
-              "mandatory": false,
-              "position": null,
-              "valueFromPipeline": false,
-              "valueFromPipelineByPropertyName": false
-            }
-          ],
-          "validateSet": [],
-          "aliases": []
-        },
-        {
-          "name": "HasAttachments",
-          "type": "System.Object",
-          "isSwitch": false,
-          "parameterSets": [
-            {
-              "name": "__AllParameterSets",
-              "mandatory": false,
-              "position": null,
-              "valueFromPipeline": false,
-              "valueFromPipelineByPropertyName": false
-            }
-          ],
-          "validateSet": [],
-          "aliases": []
-        },
-        {
-          "name": "LogonTypes",
-          "type": "System.Object",
-          "isSwitch": false,
-          "parameterSets": [
-            {
-              "name": "__AllParameterSets",
-              "mandatory": false,
-              "position": null,
-              "valueFromPipeline": false,
-              "valueFromPipelineByPropertyName": false
-            }
-          ],
-          "validateSet": [],
-          "aliases": []
-        },
-        {
-          "name": "Mailboxes",
-          "type": "System.Object",
-          "isSwitch": false,
-          "parameterSets": [
-            {
-              "name": "__AllParameterSets",
-              "mandatory": false,
-              "position": null,
-              "valueFromPipeline": false,
-              "valueFromPipelineByPropertyName": false
-            }
-          ],
-          "validateSet": [],
-          "aliases": []
-        },
-        {
-          "name": "Name",
-          "type": "string",
-          "isSwitch": false,
-          "parameterSets": [
-            {
-              "name": "__AllParameterSets",
-              "mandatory": false,
-              "position": null,
-              "valueFromPipeline": false,
-              "valueFromPipelineByPropertyName": false
-            }
-          ],
-          "validateSet": [],
-          "aliases": []
-        },
-        {
-          "name": "Operations",
-          "type": "System.Object",
-          "isSwitch": false,
-          "parameterSets": [
-            {
-              "name": "__AllParameterSets",
-              "mandatory": false,
-              "position": null,
-              "valueFromPipeline": false,
-              "valueFromPipelineByPropertyName": false
-            }
-          ],
-          "validateSet": [],
-          "aliases": []
-        },
-        {
-          "name": "ShowDetails",
-          "type": "switch",
-          "isSwitch": true,
-          "parameterSets": [
-            {
-              "name": "__AllParameterSets",
-              "mandatory": false,
-              "position": null,
-              "valueFromPipeline": false,
-              "valueFromPipelineByPropertyName": false
-            }
-          ],
-          "validateSet": [],
-          "aliases": []
-        },
-        {
-          "name": "StartDate",
-          "type": "System.Object",
-          "isSwitch": false,
-          "parameterSets": [
-            {
-              "name": "__AllParameterSets",
-              "mandatory": true,
-              "position": null,
-              "valueFromPipeline": false,
-              "valueFromPipelineByPropertyName": false
-            }
-          ],
-          "validateSet": [],
-          "aliases": []
-        },
-        {
-          "name": "StatusMailRecipients",
-          "type": "System.Object",
-          "isSwitch": false,
-          "parameterSets": [
-            {
-              "name": "__AllParameterSets",
-              "mandatory": true,
               "position": null,
               "valueFromPipeline": false,
               "valueFromPipelineByPropertyName": false
@@ -42476,6 +42296,22 @@
           "aliases": []
         },
         {
+          "name": "TenantScan",
+          "type": "switch",
+          "isSwitch": true,
+          "parameterSets": [
+            {
+              "name": "SlackPublicDataConnectorTenantScan",
+              "mandatory": true,
+              "position": null,
+              "valueFromPipeline": false,
+              "valueFromPipelineByPropertyName": false
+            }
+          ],
+          "validateSet": [],
+          "aliases": []
+        },
+        {
           "name": "TimeZone",
           "type": "System.Object",
           "isSwitch": false,
@@ -42709,6 +42545,22 @@
           "aliases": []
         },
         {
+          "name": "AzureStorageContainerPath",
+          "type": "string",
+          "isSwitch": false,
+          "parameterSets": [
+            {
+              "name": "PSTImportAzure",
+              "mandatory": true,
+              "position": null,
+              "valueFromPipeline": false,
+              "valueFromPipelineByPropertyName": false
+            }
+          ],
+          "validateSet": [],
+          "aliases": []
+        },
+        {
           "name": "Compliance",
           "type": "switch",
           "isSwitch": true,
@@ -42759,6 +42611,13 @@
             },
             {
               "name": "PSTImport",
+              "mandatory": false,
+              "position": null,
+              "valueFromPipeline": false,
+              "valueFromPipelineByPropertyName": false
+            },
+            {
+              "name": "PSTImportAzure",
               "mandatory": false,
               "position": null,
               "valueFromPipeline": false,
@@ -43091,6 +42950,29 @@
           "aliases": []
         },
         {
+          "name": "PSTImport",
+          "type": "switch",
+          "isSwitch": true,
+          "parameterSets": [
+            {
+              "name": "PSTImport",
+              "mandatory": true,
+              "position": null,
+              "valueFromPipeline": false,
+              "valueFromPipelineByPropertyName": false
+            },
+            {
+              "name": "PSTImportAzure",
+              "mandatory": true,
+              "position": null,
+              "valueFromPipeline": false,
+              "valueFromPipelineByPropertyName": false
+            }
+          ],
+          "validateSet": [],
+          "aliases": []
+        },
+        {
           "name": "PublicFolder",
           "type": "switch",
           "isSwitch": true,
@@ -43203,7 +43085,7 @@
             },
             {
               "name": "PSTImport",
-              "mandatory": true,
+              "mandatory": false,
               "position": null,
               "valueFromPipeline": false,
               "valueFromPipelineByPropertyName": false
@@ -43414,6 +43296,22 @@
             {
               "name": "MrsProxyPublicFolderToUnifiedGroup",
               "mandatory": false,
+              "position": null,
+              "valueFromPipeline": false,
+              "valueFromPipelineByPropertyName": false
+            }
+          ],
+          "validateSet": [],
+          "aliases": []
+        },
+        {
+          "name": "UseOAuth",
+          "type": "switch",
+          "isSwitch": true,
+          "parameterSets": [
+            {
+              "name": "ExchangeRemoteMoveOAuth",
+              "mandatory": true,
               "position": null,
               "valueFromPipeline": false,
               "valueFromPipelineByPropertyName": false
@@ -49696,6 +49594,38 @@
           "aliases": []
         },
         {
+          "name": "EnableBlockingEncryptedAttachments",
+          "type": "bool",
+          "isSwitch": false,
+          "parameterSets": [
+            {
+              "name": "__AllParameterSets",
+              "mandatory": false,
+              "position": null,
+              "valueFromPipeline": false,
+              "valueFromPipelineByPropertyName": false
+            }
+          ],
+          "validateSet": [],
+          "aliases": []
+        },
+        {
+          "name": "ExcludedTypesFromBlockingEncryptedAttachments",
+          "type": "System.Object",
+          "isSwitch": false,
+          "parameterSets": [
+            {
+              "name": "__AllParameterSets",
+              "mandatory": false,
+              "position": null,
+              "valueFromPipeline": false,
+              "valueFromPipelineByPropertyName": false
+            }
+          ],
+          "validateSet": [],
+          "aliases": []
+        },
+        {
           "name": "MakeBuiltInProtection",
           "type": "switch",
           "isSwitch": true,
@@ -49729,6 +49659,22 @@
         },
         {
           "name": "QuarantineTag",
+          "type": "string",
+          "isSwitch": false,
+          "parameterSets": [
+            {
+              "name": "__AllParameterSets",
+              "mandatory": false,
+              "position": null,
+              "valueFromPipeline": false,
+              "valueFromPipelineByPropertyName": false
+            }
+          ],
+          "validateSet": [],
+          "aliases": []
+        },
+        {
+          "name": "QuarantineTagForBlockingEncryptedAttachments",
           "type": "string",
           "isSwitch": false,
           "parameterSets": [
@@ -67075,6 +67021,46 @@
       ]
     },
     {
+      "cmdlet": "Set-CrossTenantRecallConfiguration",
+      "verb": "Set",
+      "noun": "CrossTenantRecallConfiguration",
+      "defaultParameterSet": null,
+      "parameters": [
+        {
+          "name": "AllowedSenderTenantIds",
+          "type": "System.Object",
+          "isSwitch": false,
+          "parameterSets": [
+            {
+              "name": "__AllParameterSets",
+              "mandatory": false,
+              "position": null,
+              "valueFromPipeline": false,
+              "valueFromPipelineByPropertyName": false
+            }
+          ],
+          "validateSet": [],
+          "aliases": []
+        },
+        {
+          "name": "CrossTenantRecallEnabled",
+          "type": "System.Object",
+          "isSwitch": false,
+          "parameterSets": [
+            {
+              "name": "__AllParameterSets",
+              "mandatory": false,
+              "position": null,
+              "valueFromPipeline": false,
+              "valueFromPipelineByPropertyName": false
+            }
+          ],
+          "validateSet": [],
+          "aliases": []
+        }
+      ]
+    },
+    {
       "cmdlet": "Set-DataClassification",
       "verb": "Set",
       "noun": "DataClassification",
@@ -73076,6 +73062,22 @@
           "aliases": []
         },
         {
+          "name": "AutoReplyWithTemplate",
+          "type": "System.Object",
+          "isSwitch": false,
+          "parameterSets": [
+            {
+              "name": "__AllParameterSets",
+              "mandatory": false,
+              "position": null,
+              "valueFromPipeline": false,
+              "valueFromPipelineByPropertyName": false
+            }
+          ],
+          "validateSet": [],
+          "aliases": []
+        },
+        {
           "name": "BodyContainsWords",
           "type": "System.Object",
           "isSwitch": false,
@@ -75563,6 +75565,22 @@
           "aliases": []
         },
         {
+          "name": "ClearDisabledPrimary",
+          "type": "switch",
+          "isSwitch": true,
+          "parameterSets": [
+            {
+              "name": "__AllParameterSets",
+              "mandatory": false,
+              "position": null,
+              "valueFromPipeline": false,
+              "valueFromPipelineByPropertyName": false
+            }
+          ],
+          "validateSet": [],
+          "aliases": []
+        },
+        {
           "name": "ClearThrottlingPolicyAssignment",
           "type": "switch",
           "isSwitch": true,
@@ -76310,6 +76328,13 @@
               "valueFromPipelineByPropertyName": true
             },
             {
+              "name": "EnableDelayReleaseHoldApplied",
+              "mandatory": true,
+              "position": 0,
+              "valueFromPipeline": true,
+              "valueFromPipelineByPropertyName": true
+            },
+            {
               "name": "RemoveDisabledArchive",
               "mandatory": true,
               "position": 0,
@@ -76887,6 +76912,22 @@
           "aliases": []
         },
         {
+          "name": "RapidRestrict",
+          "type": "switch",
+          "isSwitch": true,
+          "parameterSets": [
+            {
+              "name": "__AllParameterSets",
+              "mandatory": false,
+              "position": null,
+              "valueFromPipeline": false,
+              "valueFromPipelineByPropertyName": false
+            }
+          ],
+          "validateSet": [],
+          "aliases": []
+        },
+        {
           "name": "RecalculateInactiveMailbox",
           "type": "switch",
           "isSwitch": true,
@@ -77367,9 +77408,9 @@
           "aliases": []
         },
         {
-          "name": "UniqueRecipientsCountLimitLevel",
-          "type": "System.Object",
-          "isSwitch": false,
+          "name": "UndoRapidRestrict",
+          "type": "switch",
+          "isSwitch": true,
           "parameterSets": [
             {
               "name": "__AllParameterSets",
@@ -77383,8 +77424,8 @@
           "aliases": []
         },
         {
-          "name": "UniqueUnrestrictedGroupsLimitEnabled",
-          "type": "bool",
+          "name": "UniqueRecipientsCountLimitLevel",
+          "type": "System.Object",
           "isSwitch": false,
           "parameterSets": [
             {
@@ -83460,6 +83501,13 @@
               "valueFromPipelineByPropertyName": true
             },
             {
+              "name": "EnableDelayReleaseHoldApplied",
+              "mandatory": true,
+              "position": 0,
+              "valueFromPipeline": true,
+              "valueFromPipelineByPropertyName": true
+            },
+            {
               "name": "RemoveDisabledArchive",
               "mandatory": true,
               "position": 0,
@@ -85460,6 +85508,22 @@
         {
           "name": "Authentication",
           "type": "System.Object",
+          "isSwitch": false,
+          "parameterSets": [
+            {
+              "name": "__AllParameterSets",
+              "mandatory": false,
+              "position": null,
+              "valueFromPipeline": false,
+              "valueFromPipelineByPropertyName": false
+            }
+          ],
+          "validateSet": [],
+          "aliases": []
+        },
+        {
+          "name": "AzureStorageContainerPath",
+          "type": "string",
           "isSwitch": false,
           "parameterSets": [
             {
@@ -96877,6 +96941,38 @@
           "aliases": []
         },
         {
+          "name": "EnableBlockingEncryptedAttachments",
+          "type": "bool",
+          "isSwitch": false,
+          "parameterSets": [
+            {
+              "name": "__AllParameterSets",
+              "mandatory": false,
+              "position": null,
+              "valueFromPipeline": false,
+              "valueFromPipelineByPropertyName": false
+            }
+          ],
+          "validateSet": [],
+          "aliases": []
+        },
+        {
+          "name": "ExcludedTypesFromBlockingEncryptedAttachments",
+          "type": "System.Object",
+          "isSwitch": false,
+          "parameterSets": [
+            {
+              "name": "__AllParameterSets",
+              "mandatory": false,
+              "position": null,
+              "valueFromPipeline": false,
+              "valueFromPipelineByPropertyName": false
+            }
+          ],
+          "validateSet": [],
+          "aliases": []
+        },
+        {
           "name": "Identity",
           "type": "System.Object",
           "isSwitch": false,
@@ -96894,6 +96990,22 @@
         },
         {
           "name": "QuarantineTag",
+          "type": "string",
+          "isSwitch": false,
+          "parameterSets": [
+            {
+              "name": "__AllParameterSets",
+              "mandatory": false,
+              "position": null,
+              "valueFromPipeline": false,
+              "valueFromPipelineByPropertyName": false
+            }
+          ],
+          "validateSet": [],
+          "aliases": []
+        },
+        {
+          "name": "QuarantineTagForBlockingEncryptedAttachments",
           "type": "string",
           "isSwitch": false,
           "parameterSets": [
@@ -105677,6 +105789,22 @@
           "aliases": []
         },
         {
+          "name": "FilterGroupIndex",
+          "type": "int",
+          "isSwitch": false,
+          "parameterSets": [
+            {
+              "name": "__AllParameterSets",
+              "mandatory": false,
+              "position": null,
+              "valueFromPipeline": false,
+              "valueFromPipelineByPropertyName": false
+            }
+          ],
+          "validateSet": [],
+          "aliases": []
+        },
+        {
           "name": "IncludeWlmStatus",
           "type": "switch",
           "isSwitch": true,
@@ -106180,6 +106308,29 @@
           "aliases": []
         },
         {
+          "name": "M365RcaTest",
+          "type": "switch",
+          "isSwitch": true,
+          "parameterSets": [
+            {
+              "name": "IMAP",
+              "mandatory": false,
+              "position": null,
+              "valueFromPipeline": false,
+              "valueFromPipelineByPropertyName": false
+            },
+            {
+              "name": "TestEndpoint",
+              "mandatory": false,
+              "position": null,
+              "valueFromPipeline": false,
+              "valueFromPipelineByPropertyName": false
+            }
+          ],
+          "validateSet": [],
+          "aliases": []
+        },
+        {
           "name": "MailboxPermission",
           "type": "System.Object",
           "isSwitch": false,
@@ -106226,6 +106377,22 @@
             {
               "name": "IMAP",
               "mandatory": false,
+              "position": null,
+              "valueFromPipeline": false,
+              "valueFromPipelineByPropertyName": false
+            }
+          ],
+          "validateSet": [],
+          "aliases": []
+        },
+        {
+          "name": "PSTImport",
+          "type": "switch",
+          "isSwitch": true,
+          "parameterSets": [
+            {
+              "name": "PSTImport",
+              "mandatory": true,
               "position": null,
               "valueFromPipeline": false,
               "valueFromPipelineByPropertyName": false
@@ -106516,6 +106683,29 @@
             },
             {
               "name": "MrsProxyTest",
+              "mandatory": false,
+              "position": null,
+              "valueFromPipeline": false,
+              "valueFromPipelineByPropertyName": false
+            }
+          ],
+          "validateSet": [],
+          "aliases": []
+        },
+        {
+          "name": "TokenStore",
+          "type": "string",
+          "isSwitch": false,
+          "parameterSets": [
+            {
+              "name": "IMAP",
+              "mandatory": false,
+              "position": null,
+              "valueFromPipeline": false,
+              "valueFromPipelineByPropertyName": false
+            },
+            {
+              "name": "TestEndpoint",
               "mandatory": false,
               "position": null,
               "valueFromPipeline": false,
