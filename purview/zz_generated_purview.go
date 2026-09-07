@@ -8,7 +8,7 @@ import (
 	"github.com/philband/go-exoscc/adminapi"
 )
 
-// Service exposes the 418 cmdlets of Purview-ExchangeOnline.psm1 as typed methods.
+// Service exposes the 419 cmdlets of Purview-ExchangeOnline.psm1 as typed methods.
 type Service struct{ C *adminapi.Client }
 
 // New wraps an *adminapi.Client.
@@ -671,6 +671,7 @@ type GetAdaptiveScopeMembersParams struct {
 	PageResultSize        any    `ps:"PageResultSize"`
 	StartDateTime         any    `ps:"StartDateTime"`
 	State                 any    `ps:"State"`
+	UseAltSource          bool   `ps:"UseAltSource"`
 }
 
 func (p GetAdaptiveScopeMembersParams) params() map[string]any {
@@ -698,6 +699,9 @@ func (p GetAdaptiveScopeMembersParams) params() map[string]any {
 	}
 	if p.State != nil {
 		m["State"] = p.State
+	}
+	if p.UseAltSource {
+		m["UseAltSource"] = true
 	}
 	return m
 }
@@ -3707,6 +3711,32 @@ func (s *Service) GetSCInsights(ctx context.Context, p GetSCInsightsParams) (*ad
 	return s.C.Invoke(ctx, "Get-SCInsights", p.params())
 }
 
+// GetSPORestoreRequestStatusParams are the parameters of Get-SPORestoreRequestStatus.
+type GetSPORestoreRequestStatusParams struct {
+	Page                 int    `ps:"Page"`
+	RestorationRequestId any    `ps:"RestorationRequestId"`
+	SiteIds              string `ps:"SiteIds"`
+}
+
+func (p GetSPORestoreRequestStatusParams) params() map[string]any {
+	m := map[string]any{}
+	if p.Page != 0 {
+		m["Page"] = p.Page
+	}
+	if p.RestorationRequestId != nil {
+		m["RestorationRequestId"] = p.RestorationRequestId
+	}
+	if p.SiteIds != "" {
+		m["SiteIds"] = p.SiteIds
+	}
+	return m
+}
+
+// GetSPORestoreRequestStatus runs the Get-SPORestoreRequestStatus cmdlet.
+func (s *Service) GetSPORestoreRequestStatus(ctx context.Context, p GetSPORestoreRequestStatusParams) (*adminapi.Result, error) {
+	return s.C.Invoke(ctx, "Get-SPORestoreRequestStatus", p.params())
+}
+
 // GetScopeAdminsParams are the parameters of Get-ScopeAdmins.
 // DefaultParameterSetName: Identity
 type GetScopeAdminsParams struct {
@@ -4875,6 +4905,7 @@ type NewAutoSensitivityLabelPolicyParams struct {
 	SharePointAdaptiveScopesException       any      `ps:"SharePointAdaptiveScopesException"`
 	SharePointLocation                      any      `ps:"SharePointLocation"`
 	SharePointLocationException             any      `ps:"SharePointLocationException"`
+	SpoDocLibraryDefaultLabelSnapshot       any      `ps:"SpoDocLibraryDefaultLabelSnapshot"`
 	UnifiedAuditLogEnabled                  bool     `ps:"UnifiedAuditLogEnabled"`
 }
 
@@ -4991,6 +5022,9 @@ func (p NewAutoSensitivityLabelPolicyParams) params() map[string]any {
 	if p.SharePointLocationException != nil {
 		m["SharePointLocationException"] = p.SharePointLocationException
 	}
+	if p.SpoDocLibraryDefaultLabelSnapshot != nil {
+		m["SpoDocLibraryDefaultLabelSnapshot"] = p.SpoDocLibraryDefaultLabelSnapshot
+	}
 	if p.UnifiedAuditLogEnabled {
 		m["UnifiedAuditLogEnabled"] = true
 	}
@@ -5021,6 +5055,7 @@ type NewAutoSensitivityLabelRuleParams struct {
 	DocumentIsUnsupported                        bool     `ps:"DocumentIsUnsupported"`
 	DocumentNameMatchesWords                     any      `ps:"DocumentNameMatchesWords"`
 	DocumentSizeOver                             any      `ps:"DocumentSizeOver"`
+	EffectiveParentFolder                        []string `ps:"EffectiveParentFolder"`
 	ExceptIfAccessScope                          any      `ps:"ExceptIfAccessScope"`
 	ExceptIfAnyOfRecipientAddressContainsWords   any      `ps:"ExceptIfAnyOfRecipientAddressContainsWords"`
 	ExceptIfAnyOfRecipientAddressMatchesPatterns any      `ps:"ExceptIfAnyOfRecipientAddressMatchesPatterns"`
@@ -5032,11 +5067,13 @@ type NewAutoSensitivityLabelRuleParams struct {
 	ExceptIfDocumentIsUnsupported                bool     `ps:"ExceptIfDocumentIsUnsupported"`
 	ExceptIfDocumentNameMatchesWords             any      `ps:"ExceptIfDocumentNameMatchesWords"`
 	ExceptIfDocumentSizeOver                     any      `ps:"ExceptIfDocumentSizeOver"`
+	ExceptIfEffectiveParentFolder                []string `ps:"ExceptIfEffectiveParentFolder"`
 	ExceptIfFrom                                 []string `ps:"ExceptIfFrom"`
 	ExceptIfFromAddressContainsWords             any      `ps:"ExceptIfFromAddressContainsWords"`
 	ExceptIfFromAddressMatchesPatterns           any      `ps:"ExceptIfFromAddressMatchesPatterns"`
 	ExceptIfFromMemberOf                         []string `ps:"ExceptIfFromMemberOf"`
 	ExceptIfHeaderMatchesPatterns                any      `ps:"ExceptIfHeaderMatchesPatterns"`
+	ExceptIfParentFolder                         []string `ps:"ExceptIfParentFolder"`
 	ExceptIfProcessingLimitExceeded              bool     `ps:"ExceptIfProcessingLimitExceeded"`
 	ExceptIfRecipientDomainIs                    any      `ps:"ExceptIfRecipientDomainIs"`
 	ExceptIfSenderDomainIs                       any      `ps:"ExceptIfSenderDomainIs"`
@@ -5053,6 +5090,7 @@ type NewAutoSensitivityLabelRuleParams struct {
 	HeaderMatchesPatterns                        any      `ps:"HeaderMatchesPatterns"`
 	ImmutableId                                  any      `ps:"ImmutableId"`
 	Name                                         string   `ps:"Name"`
+	ParentFolder                                 []string `ps:"ParentFolder"`
 	Policy                                       any      `ps:"Policy"`
 	Priority                                     any      `ps:"Priority"`
 	ProcessingLimitExceeded                      bool     `ps:"ProcessingLimitExceeded"`
@@ -5122,6 +5160,9 @@ func (p NewAutoSensitivityLabelRuleParams) params() map[string]any {
 	if p.DocumentSizeOver != nil {
 		m["DocumentSizeOver"] = p.DocumentSizeOver
 	}
+	if len(p.EffectiveParentFolder) > 0 {
+		m["EffectiveParentFolder"] = p.EffectiveParentFolder
+	}
 	if p.ExceptIfAccessScope != nil {
 		m["ExceptIfAccessScope"] = p.ExceptIfAccessScope
 	}
@@ -5155,6 +5196,9 @@ func (p NewAutoSensitivityLabelRuleParams) params() map[string]any {
 	if p.ExceptIfDocumentSizeOver != nil {
 		m["ExceptIfDocumentSizeOver"] = p.ExceptIfDocumentSizeOver
 	}
+	if len(p.ExceptIfEffectiveParentFolder) > 0 {
+		m["ExceptIfEffectiveParentFolder"] = p.ExceptIfEffectiveParentFolder
+	}
 	if len(p.ExceptIfFrom) > 0 {
 		m["ExceptIfFrom"] = p.ExceptIfFrom
 	}
@@ -5169,6 +5213,9 @@ func (p NewAutoSensitivityLabelRuleParams) params() map[string]any {
 	}
 	if p.ExceptIfHeaderMatchesPatterns != nil {
 		m["ExceptIfHeaderMatchesPatterns"] = p.ExceptIfHeaderMatchesPatterns
+	}
+	if len(p.ExceptIfParentFolder) > 0 {
+		m["ExceptIfParentFolder"] = p.ExceptIfParentFolder
 	}
 	if p.ExceptIfProcessingLimitExceeded {
 		m["ExceptIfProcessingLimitExceeded"] = true
@@ -5217,6 +5264,9 @@ func (p NewAutoSensitivityLabelRuleParams) params() map[string]any {
 	}
 	if p.Name != "" {
 		m["Name"] = p.Name
+	}
+	if len(p.ParentFolder) > 0 {
+		m["ParentFolder"] = p.ParentFolder
 	}
 	if p.Policy != nil {
 		m["Policy"] = p.Policy
@@ -6828,6 +6878,7 @@ type NewDlpComplianceRuleParams struct {
 	DocumentNameMatchesPatterns                  any      `ps:"DocumentNameMatchesPatterns"`
 	DocumentNameMatchesWords                     any      `ps:"DocumentNameMatchesWords"`
 	DocumentSizeOver                             any      `ps:"DocumentSizeOver"`
+	EffectiveParentFolder                        []string `ps:"EffectiveParentFolder"`
 	EncryptRMSTemplate                           any      `ps:"EncryptRMSTemplate"`
 	EndpointDlpBrowserRestrictions               []string `ps:"EndpointDlpBrowserRestrictions"`
 	EndpointDlpRestrictions                      []string `ps:"EndpointDlpRestrictions"`
@@ -6855,6 +6906,7 @@ type NewDlpComplianceRuleParams struct {
 	ExceptIfDocumentNameMatchesPatterns          any      `ps:"ExceptIfDocumentNameMatchesPatterns"`
 	ExceptIfDocumentNameMatchesWords             any      `ps:"ExceptIfDocumentNameMatchesWords"`
 	ExceptIfDocumentSizeOver                     any      `ps:"ExceptIfDocumentSizeOver"`
+	ExceptIfEffectiveParentFolder                []string `ps:"ExceptIfEffectiveParentFolder"`
 	ExceptIfFrom                                 []string `ps:"ExceptIfFrom"`
 	ExceptIfFromAddressContainsWords             any      `ps:"ExceptIfFromAddressContainsWords"`
 	ExceptIfFromAddressMatchesPatterns           any      `ps:"ExceptIfFromAddressMatchesPatterns"`
@@ -6867,6 +6919,7 @@ type NewDlpComplianceRuleParams struct {
 	ExceptIfMessageLabelChangeDetected           any      `ps:"ExceptIfMessageLabelChangeDetected"`
 	ExceptIfMessageSizeOver                      any      `ps:"ExceptIfMessageSizeOver"`
 	ExceptIfMessageTypeMatches                   any      `ps:"ExceptIfMessageTypeMatches"`
+	ExceptIfParentFolder                         []string `ps:"ExceptIfParentFolder"`
 	ExceptIfProcessingLimitExceeded              bool     `ps:"ExceptIfProcessingLimitExceeded"`
 	ExceptIfRecipientADAttributeContainsWords    any      `ps:"ExceptIfRecipientADAttributeContainsWords"`
 	ExceptIfRecipientADAttributeMatchesPatterns  any      `ps:"ExceptIfRecipientADAttributeMatchesPatterns"`
@@ -6931,6 +6984,7 @@ type NewDlpComplianceRuleParams struct {
 	NotifyUser                                   any      `ps:"NotifyUser"`
 	NotifyUserType                               any      `ps:"NotifyUserType"`
 	OnPremisesScannerDlpRestrictions             []string `ps:"OnPremisesScannerDlpRestrictions"`
+	ParentFolder                                 []string `ps:"ParentFolder"`
 	Policy                                       any      `ps:"Policy"`
 	PowerBIDlpRestrictions                       []string `ps:"PowerBIDlpRestrictions"`
 	PrependSubject                               string   `ps:"PrependSubject"`
@@ -7097,6 +7151,9 @@ func (p NewDlpComplianceRuleParams) params() map[string]any {
 	if p.DocumentSizeOver != nil {
 		m["DocumentSizeOver"] = p.DocumentSizeOver
 	}
+	if len(p.EffectiveParentFolder) > 0 {
+		m["EffectiveParentFolder"] = p.EffectiveParentFolder
+	}
 	if p.EncryptRMSTemplate != nil {
 		m["EncryptRMSTemplate"] = p.EncryptRMSTemplate
 	}
@@ -7178,6 +7235,9 @@ func (p NewDlpComplianceRuleParams) params() map[string]any {
 	if p.ExceptIfDocumentSizeOver != nil {
 		m["ExceptIfDocumentSizeOver"] = p.ExceptIfDocumentSizeOver
 	}
+	if len(p.ExceptIfEffectiveParentFolder) > 0 {
+		m["ExceptIfEffectiveParentFolder"] = p.ExceptIfEffectiveParentFolder
+	}
 	if len(p.ExceptIfFrom) > 0 {
 		m["ExceptIfFrom"] = p.ExceptIfFrom
 	}
@@ -7213,6 +7273,9 @@ func (p NewDlpComplianceRuleParams) params() map[string]any {
 	}
 	if p.ExceptIfMessageTypeMatches != nil {
 		m["ExceptIfMessageTypeMatches"] = p.ExceptIfMessageTypeMatches
+	}
+	if len(p.ExceptIfParentFolder) > 0 {
+		m["ExceptIfParentFolder"] = p.ExceptIfParentFolder
 	}
 	if p.ExceptIfProcessingLimitExceeded {
 		m["ExceptIfProcessingLimitExceeded"] = true
@@ -7405,6 +7468,9 @@ func (p NewDlpComplianceRuleParams) params() map[string]any {
 	}
 	if len(p.OnPremisesScannerDlpRestrictions) > 0 {
 		m["OnPremisesScannerDlpRestrictions"] = p.OnPremisesScannerDlpRestrictions
+	}
+	if len(p.ParentFolder) > 0 {
+		m["ParentFolder"] = p.ParentFolder
 	}
 	if p.Policy != nil {
 		m["Policy"] = p.Policy
@@ -9526,6 +9592,7 @@ type NewRetentionCompliancePolicyParams struct {
 	TeamsChannelLocationException any    `ps:"TeamsChannelLocationException"`
 	TeamsChatLocation             any    `ps:"TeamsChatLocation"`
 	TeamsChatLocationException    any    `ps:"TeamsChatLocationException"`
+	VersionCleanup                bool   `ps:"VersionCleanup"`
 }
 
 func (p NewRetentionCompliancePolicyParams) params() map[string]any {
@@ -9613,6 +9680,9 @@ func (p NewRetentionCompliancePolicyParams) params() map[string]any {
 	}
 	if p.TeamsChatLocationException != nil {
 		m["TeamsChatLocationException"] = p.TeamsChatLocationException
+	}
+	if p.VersionCleanup {
+		m["VersionCleanup"] = true
 	}
 	return m
 }
@@ -12236,8 +12306,6 @@ func (s *Service) RemoveUnifiedAuditLogRetentionPolicy(ctx context.Context, p Re
 // RestoreItemsDeletedByRetentionSystemParams are the parameters of Restore-ItemsDeletedByRetentionSystem.
 type RestoreItemsDeletedByRetentionSystemParams struct {
 	PolicyIdOrRuleIdOrTagTd any    `ps:"PolicyIdOrRuleIdOrTagTd"`
-	RestoreFrom             any    `ps:"RestoreFrom"`
-	RestoreTo               any    `ps:"RestoreTo"`
 	SiteIds                 string `ps:"SiteIds"`
 }
 
@@ -12245,12 +12313,6 @@ func (p RestoreItemsDeletedByRetentionSystemParams) params() map[string]any {
 	m := map[string]any{}
 	if p.PolicyIdOrRuleIdOrTagTd != nil {
 		m["PolicyIdOrRuleIdOrTagTd"] = p.PolicyIdOrRuleIdOrTagTd
-	}
-	if p.RestoreFrom != nil {
-		m["RestoreFrom"] = p.RestoreFrom
-	}
-	if p.RestoreTo != nil {
-		m["RestoreTo"] = p.RestoreTo
 	}
 	if p.SiteIds != "" {
 		m["SiteIds"] = p.SiteIds
@@ -12693,6 +12755,7 @@ type SetAutoSensitivityLabelPolicyParams struct {
 	SharePointAdaptiveScopes                any      `ps:"SharePointAdaptiveScopes"`
 	SharePointAdaptiveScopesException       any      `ps:"SharePointAdaptiveScopesException"`
 	SpoAipIntegrationEnabled                bool     `ps:"SpoAipIntegrationEnabled"`
+	SpoDocLibraryDefaultLabelSnapshot       any      `ps:"SpoDocLibraryDefaultLabelSnapshot"`
 	StartSimulation                         bool     `ps:"StartSimulation"`
 }
 
@@ -12836,6 +12899,9 @@ func (p SetAutoSensitivityLabelPolicyParams) params() map[string]any {
 	if p.SpoAipIntegrationEnabled {
 		m["SpoAipIntegrationEnabled"] = true
 	}
+	if p.SpoDocLibraryDefaultLabelSnapshot != nil {
+		m["SpoDocLibraryDefaultLabelSnapshot"] = p.SpoDocLibraryDefaultLabelSnapshot
+	}
 	if p.StartSimulation {
 		m["StartSimulation"] = true
 	}
@@ -12866,6 +12932,7 @@ type SetAutoSensitivityLabelRuleParams struct {
 	DocumentIsUnsupported                        bool     `ps:"DocumentIsUnsupported"`
 	DocumentNameMatchesWords                     any      `ps:"DocumentNameMatchesWords"`
 	DocumentSizeOver                             any      `ps:"DocumentSizeOver"`
+	EffectiveParentFolder                        []string `ps:"EffectiveParentFolder"`
 	ExceptIfAccessScope                          any      `ps:"ExceptIfAccessScope"`
 	ExceptIfAnyOfRecipientAddressContainsWords   any      `ps:"ExceptIfAnyOfRecipientAddressContainsWords"`
 	ExceptIfAnyOfRecipientAddressMatchesPatterns any      `ps:"ExceptIfAnyOfRecipientAddressMatchesPatterns"`
@@ -12877,11 +12944,13 @@ type SetAutoSensitivityLabelRuleParams struct {
 	ExceptIfDocumentIsUnsupported                bool     `ps:"ExceptIfDocumentIsUnsupported"`
 	ExceptIfDocumentNameMatchesWords             any      `ps:"ExceptIfDocumentNameMatchesWords"`
 	ExceptIfDocumentSizeOver                     any      `ps:"ExceptIfDocumentSizeOver"`
+	ExceptIfEffectiveParentFolder                []string `ps:"ExceptIfEffectiveParentFolder"`
 	ExceptIfFrom                                 []string `ps:"ExceptIfFrom"`
 	ExceptIfFromAddressContainsWords             any      `ps:"ExceptIfFromAddressContainsWords"`
 	ExceptIfFromAddressMatchesPatterns           any      `ps:"ExceptIfFromAddressMatchesPatterns"`
 	ExceptIfFromMemberOf                         []string `ps:"ExceptIfFromMemberOf"`
 	ExceptIfHeaderMatchesPatterns                any      `ps:"ExceptIfHeaderMatchesPatterns"`
+	ExceptIfParentFolder                         []string `ps:"ExceptIfParentFolder"`
 	ExceptIfProcessingLimitExceeded              bool     `ps:"ExceptIfProcessingLimitExceeded"`
 	ExceptIfRecipientDomainIs                    any      `ps:"ExceptIfRecipientDomainIs"`
 	ExceptIfSenderDomainIs                       any      `ps:"ExceptIfSenderDomainIs"`
@@ -12897,6 +12966,7 @@ type SetAutoSensitivityLabelRuleParams struct {
 	FromMemberOf                                 []string `ps:"FromMemberOf"`
 	HeaderMatchesPatterns                        any      `ps:"HeaderMatchesPatterns"`
 	Identity                                     any      `ps:"Identity"`
+	ParentFolder                                 []string `ps:"ParentFolder"`
 	Priority                                     any      `ps:"Priority"`
 	ProcessingLimitExceeded                      bool     `ps:"ProcessingLimitExceeded"`
 	RecipientDomainIs                            any      `ps:"RecipientDomainIs"`
@@ -12965,6 +13035,9 @@ func (p SetAutoSensitivityLabelRuleParams) params() map[string]any {
 	if p.DocumentSizeOver != nil {
 		m["DocumentSizeOver"] = p.DocumentSizeOver
 	}
+	if len(p.EffectiveParentFolder) > 0 {
+		m["EffectiveParentFolder"] = p.EffectiveParentFolder
+	}
 	if p.ExceptIfAccessScope != nil {
 		m["ExceptIfAccessScope"] = p.ExceptIfAccessScope
 	}
@@ -12998,6 +13071,9 @@ func (p SetAutoSensitivityLabelRuleParams) params() map[string]any {
 	if p.ExceptIfDocumentSizeOver != nil {
 		m["ExceptIfDocumentSizeOver"] = p.ExceptIfDocumentSizeOver
 	}
+	if len(p.ExceptIfEffectiveParentFolder) > 0 {
+		m["ExceptIfEffectiveParentFolder"] = p.ExceptIfEffectiveParentFolder
+	}
 	if len(p.ExceptIfFrom) > 0 {
 		m["ExceptIfFrom"] = p.ExceptIfFrom
 	}
@@ -13012,6 +13088,9 @@ func (p SetAutoSensitivityLabelRuleParams) params() map[string]any {
 	}
 	if p.ExceptIfHeaderMatchesPatterns != nil {
 		m["ExceptIfHeaderMatchesPatterns"] = p.ExceptIfHeaderMatchesPatterns
+	}
+	if len(p.ExceptIfParentFolder) > 0 {
+		m["ExceptIfParentFolder"] = p.ExceptIfParentFolder
 	}
 	if p.ExceptIfProcessingLimitExceeded {
 		m["ExceptIfProcessingLimitExceeded"] = true
@@ -13057,6 +13136,9 @@ func (p SetAutoSensitivityLabelRuleParams) params() map[string]any {
 	}
 	if p.Identity != nil {
 		m["Identity"] = p.Identity
+	}
+	if len(p.ParentFolder) > 0 {
+		m["ParentFolder"] = p.ParentFolder
 	}
 	if p.Priority != nil {
 		m["Priority"] = p.Priority
@@ -14762,6 +14844,7 @@ type SetDlpComplianceRuleParams struct {
 	DocumentNameMatchesPatterns                  any      `ps:"DocumentNameMatchesPatterns"`
 	DocumentNameMatchesWords                     any      `ps:"DocumentNameMatchesWords"`
 	DocumentSizeOver                             any      `ps:"DocumentSizeOver"`
+	EffectiveParentFolder                        []string `ps:"EffectiveParentFolder"`
 	EncryptRMSTemplate                           any      `ps:"EncryptRMSTemplate"`
 	EndpointDlpBrowserRestrictions               []string `ps:"EndpointDlpBrowserRestrictions"`
 	EndpointDlpRestrictions                      []string `ps:"EndpointDlpRestrictions"`
@@ -14789,6 +14872,7 @@ type SetDlpComplianceRuleParams struct {
 	ExceptIfDocumentNameMatchesPatterns          any      `ps:"ExceptIfDocumentNameMatchesPatterns"`
 	ExceptIfDocumentNameMatchesWords             any      `ps:"ExceptIfDocumentNameMatchesWords"`
 	ExceptIfDocumentSizeOver                     any      `ps:"ExceptIfDocumentSizeOver"`
+	ExceptIfEffectiveParentFolder                []string `ps:"ExceptIfEffectiveParentFolder"`
 	ExceptIfFrom                                 []string `ps:"ExceptIfFrom"`
 	ExceptIfFromAddressContainsWords             any      `ps:"ExceptIfFromAddressContainsWords"`
 	ExceptIfFromAddressMatchesPatterns           any      `ps:"ExceptIfFromAddressMatchesPatterns"`
@@ -14801,6 +14885,7 @@ type SetDlpComplianceRuleParams struct {
 	ExceptIfMessageLabelChangeDetected           any      `ps:"ExceptIfMessageLabelChangeDetected"`
 	ExceptIfMessageSizeOver                      any      `ps:"ExceptIfMessageSizeOver"`
 	ExceptIfMessageTypeMatches                   any      `ps:"ExceptIfMessageTypeMatches"`
+	ExceptIfParentFolder                         []string `ps:"ExceptIfParentFolder"`
 	ExceptIfProcessingLimitExceeded              bool     `ps:"ExceptIfProcessingLimitExceeded"`
 	ExceptIfRecipientADAttributeContainsWords    any      `ps:"ExceptIfRecipientADAttributeContainsWords"`
 	ExceptIfRecipientADAttributeMatchesPatterns  any      `ps:"ExceptIfRecipientADAttributeMatchesPatterns"`
@@ -14863,6 +14948,7 @@ type SetDlpComplianceRuleParams struct {
 	NotifyUser                                   any      `ps:"NotifyUser"`
 	NotifyUserType                               any      `ps:"NotifyUserType"`
 	OnPremisesScannerDlpRestrictions             []string `ps:"OnPremisesScannerDlpRestrictions"`
+	ParentFolder                                 []string `ps:"ParentFolder"`
 	PowerBIDlpRestrictions                       []string `ps:"PowerBIDlpRestrictions"`
 	PrependSubject                               string   `ps:"PrependSubject"`
 	Priority                                     any      `ps:"Priority"`
@@ -15026,6 +15112,9 @@ func (p SetDlpComplianceRuleParams) params() map[string]any {
 	if p.DocumentSizeOver != nil {
 		m["DocumentSizeOver"] = p.DocumentSizeOver
 	}
+	if len(p.EffectiveParentFolder) > 0 {
+		m["EffectiveParentFolder"] = p.EffectiveParentFolder
+	}
 	if p.EncryptRMSTemplate != nil {
 		m["EncryptRMSTemplate"] = p.EncryptRMSTemplate
 	}
@@ -15107,6 +15196,9 @@ func (p SetDlpComplianceRuleParams) params() map[string]any {
 	if p.ExceptIfDocumentSizeOver != nil {
 		m["ExceptIfDocumentSizeOver"] = p.ExceptIfDocumentSizeOver
 	}
+	if len(p.ExceptIfEffectiveParentFolder) > 0 {
+		m["ExceptIfEffectiveParentFolder"] = p.ExceptIfEffectiveParentFolder
+	}
 	if len(p.ExceptIfFrom) > 0 {
 		m["ExceptIfFrom"] = p.ExceptIfFrom
 	}
@@ -15142,6 +15234,9 @@ func (p SetDlpComplianceRuleParams) params() map[string]any {
 	}
 	if p.ExceptIfMessageTypeMatches != nil {
 		m["ExceptIfMessageTypeMatches"] = p.ExceptIfMessageTypeMatches
+	}
+	if len(p.ExceptIfParentFolder) > 0 {
+		m["ExceptIfParentFolder"] = p.ExceptIfParentFolder
 	}
 	if p.ExceptIfProcessingLimitExceeded {
 		m["ExceptIfProcessingLimitExceeded"] = true
@@ -15328,6 +15423,9 @@ func (p SetDlpComplianceRuleParams) params() map[string]any {
 	}
 	if len(p.OnPremisesScannerDlpRestrictions) > 0 {
 		m["OnPremisesScannerDlpRestrictions"] = p.OnPremisesScannerDlpRestrictions
+	}
+	if len(p.ParentFolder) > 0 {
+		m["ParentFolder"] = p.ParentFolder
 	}
 	if len(p.PowerBIDlpRestrictions) > 0 {
 		m["PowerBIDlpRestrictions"] = p.PowerBIDlpRestrictions
@@ -17250,6 +17348,7 @@ func (s *Service) SetOrganizationSegment(ctx context.Context, p SetOrganizationS
 type SetPolicyConfigParams struct {
 	AggregationTimeWindowForDlpAlerts          any      `ps:"AggregationTimeWindowForDlpAlerts"`
 	CaseHoldPolicyLimit                        int      `ps:"CaseHoldPolicyLimit"`
+	ClassificationMode                         any      `ps:"ClassificationMode"`
 	ClassificationScheme                       any      `ps:"ClassificationScheme"`
 	ComplianceUrl                              string   `ps:"ComplianceUrl"`
 	DlpAlertFoldingConfiguration               any      `ps:"DlpAlertFoldingConfiguration"`
@@ -17302,6 +17401,9 @@ func (p SetPolicyConfigParams) params() map[string]any {
 	}
 	if p.CaseHoldPolicyLimit != 0 {
 		m["CaseHoldPolicyLimit"] = p.CaseHoldPolicyLimit
+	}
+	if p.ClassificationMode != nil {
+		m["ClassificationMode"] = p.ClassificationMode
 	}
 	if p.ClassificationScheme != nil {
 		m["ClassificationScheme"] = p.ClassificationScheme
@@ -17868,6 +17970,7 @@ type SetRetentionCompliancePolicyParams struct {
 	RestrictiveRetention                bool   `ps:"RestrictiveRetention"`
 	RetryDistribution                   bool   `ps:"RetryDistribution"`
 	StartSimulation                     bool   `ps:"StartSimulation"`
+	VersionCleanup                      string `ps:"VersionCleanup"`
 }
 
 func (p SetRetentionCompliancePolicyParams) params() map[string]any {
@@ -18015,6 +18118,9 @@ func (p SetRetentionCompliancePolicyParams) params() map[string]any {
 	}
 	if p.StartSimulation {
 		m["StartSimulation"] = true
+	}
+	if p.VersionCleanup != "" {
+		m["VersionCleanup"] = p.VersionCleanup
 	}
 	return m
 }
